@@ -1,2 +1,2 @@
 # drphischel
-Segundo Proyecto de Bases de Datos CE 2016-I
+Segundo Proyecto de Bases de Datos CE Primer Semestre 2016
