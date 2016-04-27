@@ -26,6 +26,10 @@ N=0 if
 N=1 if 
 N=2 if 
 N is determined in the BLL
+BLL must:
+-insert a user
+-insert a doctor
+-insert the specialties (in the doctor's specialties table)
 
 ##########################################################################################
 api/patient/createbymedic
@@ -50,6 +54,9 @@ N=0 if
 N=1 if 
 N=2 if 
 N is determined in the BLL
+BLL must:
+-insert a user
+-insert the patient (in the doctor's patient table)
 
 ##########################################################################################
 api/patient/createbyadmin
@@ -73,3 +80,5 @@ N=0 if
 N=1 if 
 N=2 if 
 N is determined in the BLL
+BLL must:
+-insert a user
