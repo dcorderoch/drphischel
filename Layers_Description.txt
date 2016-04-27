@@ -14,7 +14,6 @@ receives:
 "LastName2":"",
 "PlaceResidence":"",
 "BirthDate":"",
-"ClinicAddress":"",
 "Specialties":["",""]
 }
 
@@ -30,6 +29,35 @@ BLL must:
 -insert a user
 -insert a doctor
 -insert the specialties (in the doctor's specialties table)
+
+##########################################################################################
+api/doctor/getbypatient
+
+receives:
+{
+"UserId":""
+}
+
+returns:
+[
+{
+"DoctorId",
+"OfficeAddress":"",
+"Name":"",
+"LastName1":"",
+"LastName2":""
+},
+{
+"DoctorId",
+"OfficeAddress":"",
+"Name":"",
+"LastName1":"",
+"LastName2":""
+}
+]
+
+BLL must:
+-get all the doctors the patient is associated with and return a list of them
 
 ##########################################################################################
 api/patient/createbymedic
@@ -82,3 +110,24 @@ N=2 if
 N is determined in the BLL
 BLL must:
 -insert a user
+
+##########################################################################################
+api/appointment/create
+
+receives:
+{
+"DoctorId":"",
+"AppointmentDate":""
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-verify the appointment can be made
+-make the appointment
