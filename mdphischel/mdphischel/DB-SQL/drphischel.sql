@@ -81,8 +81,7 @@ DoctorId nvarchar(15) NOT NULL,
 UserId char(9) NOT NULL,
 OfficeAddress nvarchar(100) NOT NULL,
 Approved Bit NOT NULL,
-CreditCardNumber nvarchar(30) NOT NULL,
-MedicalSpecialty uniqueidentifier NOT NULL
+CreditCardNumber nvarchar(30) NOT NULL
 )
 
 --Creates table PatientOfDoctor. 
