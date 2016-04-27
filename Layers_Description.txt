@@ -1,0 +1,75 @@
+##########################################################################################
+api/doctor/create
+
+receives:
+{
+"DoctorId",
+"UserId",
+"Pass":"",
+"OfficeAddress":"",
+"Approved":"",
+"CreditCardNumber:"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"PlaceResidence":"",
+"BirthDate":"",
+"ClinicAddress":"",
+"Specialties":["",""]
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+
+##########################################################################################
+api/patient/createbymedic
+
+receives:
+{
+"UserId":""
+"Pass":""
+"Name":""
+"LastName1":""
+"LastName2":""
+"ResidencePlace":""
+"BirthDate":"",
+"DoctorID":""
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+
+##########################################################################################
+api/patient/createbyadmin
+
+receives:
+{
+"UserId":""
+"Pass":""
+"Name":""
+"LastName1":""
+"LastName2":""
+"ResidencePlace":""
+"BirthDate":""
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
