@@ -1,4 +1,19 @@
 ##########################################################################################
+api/view/action
+
+receives:
+{
+"":""
+}
+
+returns:
+{
+"":""
+}
+DESC of what the return values mean
+BLL must:
+-something the BLL must do
+##########################################################################################
 api/doctor/create
 
 receives:
@@ -131,3 +146,12 @@ N is determined in the BLL
 BLL must:
 -verify the appointment can be made
 -make the appointment
+
+##########################################################################################
+api/prescription
+
+##########################################################################################
+api/medicalrecords/create
+
+##########################################################################################
+api/doctor/getlistofpending
