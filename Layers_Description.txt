@@ -13,7 +13,8 @@ returns:
 }
 DESC of what the return values mean
 BLL must:
--something the BLL must do
+-TBD, something the BLL must do
+
 ##########################################################################################
 HTTP VERB: POST
 api/doctor/create
@@ -75,7 +76,7 @@ returns:
 ]
 
 BLL must:
--get all the doctors the patient is associated with and return a list of them
+-get all the doctors the patient with the received UserId is associated with
 
 ##########################################################################################
 HTTP VERB: POST
@@ -167,6 +168,8 @@ returns: ## no estoy seguro
 {
 }
 ]
+BLL must:
+-TDB
 
 ##########################################################################################
 HTTP VERB: POST
@@ -184,7 +187,7 @@ returns: ## no estoy seguro
 }
 DESC of what the return values mean
 BLL must:
--something the BLL must do
+-TBD
 
 ##########################################################################################
 HTTP VERB: GET
@@ -222,8 +225,6 @@ returns:
 ]
 
 BLL must:
--get all the doctors the patient is associated with and return a list of them
+-get all the doctors pending to be approved by an admin user
 
 ##########################################################################################
-HTTP VERB: UNKNOWN
-api/controller/action
