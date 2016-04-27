@@ -1,5 +1,5 @@
 ##########################################################################################
-HTTP VERB: UNKNOWN
+HTTP VERB: TBD
 api/controller/action
 
 receives:
@@ -14,6 +14,39 @@ returns:
 DESC of what the return values mean
 BLL must:
 -TBD, something the BLL must do
+
+##########################################################################################
+HTTP VERB: GET
+api/doctor/getlistofpending
+
+returns:
+[
+{
+"DoctorId",
+"OfficeAddress":"",
+"CreditCardNumber:"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"PlaceResidence":"",
+"BirthDate":"",
+"Specialties":["",""]
+},
+{
+"DoctorId",
+"OfficeAddress":"",
+"CreditCardNumber:"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"PlaceResidence":"",
+"BirthDate":"",
+"Specialties":["",""]
+}
+]
+
+BLL must:
+-get all the doctors pending to be approved by an admin user
 
 ##########################################################################################
 HTTP VERB: POST
@@ -47,6 +80,62 @@ BLL must:
 -insert a user
 -insert a doctor
 -insert the specialties (in the doctor's specialties table)
+
+##########################################################################################
+HTTP VERB: POST
+api/doctor/update
+
+receives:
+{
+"DoctorId",
+"UserId",
+"Pass":"",
+"OfficeAddress":"",
+"Approved":"",
+"CreditCardNumber:"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"PlaceResidence":"",
+"BirthDate":"",
+"Specialties":["",""]
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-update a user
+-update a doctor
+-update the specialties (in the doctor's specialties table)
+
+##########################################################################################
+HTTP VERB: POST
+api/doctor/delete
+
+receives:
+{
+"DoctorId",
+"UserId"
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-delete a user
+-delete a doctor
+-delete the doctor's specialties (in the doctor's specialties table)
 
 ##########################################################################################
 HTTP VERB: POST
@@ -84,12 +173,12 @@ api/patient/createbymedic
 
 receives:
 {
-"UserId":""
-"Pass":""
-"Name":""
-"LastName1":""
-"LastName2":""
-"ResidencePlace":""
+"UserId":"",
+"Pass":"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"ResidencePlace":"",
 "BirthDate":"",
 "DoctorID":""
 }
@@ -112,12 +201,12 @@ api/patient/createbyadmin
 
 receives:
 {
-"UserId":""
-"Pass":""
-"Name":""
-"LastName1":""
-"LastName2":""
-"ResidencePlace":""
+"UserId":"",
+"Pass":"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"ResidencePlace":"",
 "BirthDate":""
 }
 
@@ -131,6 +220,53 @@ N=2 if
 N is determined in the BLL
 BLL must:
 -insert a user
+
+##########################################################################################
+HTTP VERB: POST
+api/patient/update
+
+receives:
+{
+"UserId":"",
+"Pass":"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"ResidencePlace":"",
+"BirthDate":""
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-update a user
+-restrict UserId update (PKs are immutable)
+
+##########################################################################################
+HTTP VERB: POST
+api/patient/delete
+
+receives:
+{
+"UserId":""}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-update a user
+-restrict UserId update (PKs are immutable)
 
 ##########################################################################################
 HTTP VERB: POST
@@ -163,7 +299,7 @@ receives:
 "UserId":""
 }
 
-returns: ## no estoy seguro
+returns: ## TBD
 [
 {
 }
@@ -175,13 +311,13 @@ BLL must:
 HTTP VERB: POST
 api/medicalrecords/create
 
-receives: ## no estoy seguro
+receives: ## TBD
 {
 "UserId":"",
 "Description":""
 }
 
-returns: ## no estoy seguro
+returns: ## TBD
 {
 "":""
 }
@@ -189,42 +325,3 @@ DESC of what the return values mean
 BLL must:
 -TBD
 
-##########################################################################################
-HTTP VERB: GET
-api/doctor/getlistofpending
-
-receives:
-{
-"UserId":""
-}
-
-returns:
-[
-{
-"DoctorId",
-"OfficeAddress":"",
-"CreditCardNumber:"",
-"Name":"",
-"LastName1":"",
-"LastName2":"",
-"PlaceResidence":"",
-"BirthDate":"",
-"Specialties":["",""]
-},
-{
-"DoctorId",
-"OfficeAddress":"",
-"CreditCardNumber:"",
-"Name":"",
-"LastName1":"",
-"LastName2":"",
-"PlaceResidence":"",
-"BirthDate":"",
-"Specialties":["",""]
-}
-]
-
-BLL must:
--get all the doctors pending to be approved by an admin user
-
-##########################################################################################
