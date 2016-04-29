@@ -5,56 +5,58 @@
 
 <head>
       <meta charset="utf-8" />
-
-  <!-- SCROLLS -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
-    <title>Dr Phischel</title>
-  <!-- SPELLS -->
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-  <script src="script.js"></script>
-</head>
-    
 <style>
     ul{
         position: fixed;
     }
-</style>    
+    p.text {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 1.2em; /* 14px/16=0.875em */
+    }            
+</style>
+    
+  <!-- STYLES -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+  <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.min.css" />    
+    <title>Dr Phischel</title>
 
+</head>
+        
 <!-- define angular controller -->
-<body >
-
-  <nav class="navbar navbar-default">
-    <div class="container">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#/">Dr Phischel</a>
-      </div>
-
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#/"><i class="fa fa-home"></i> Home</a></li>
-        <li><a href="#/patient"><i class="fa-user-plus"></i> Pacientes</a></li>
-        <li><a href="#/appointment"><i class="fa fa-hospital-o"></i> Citas</a></li>
-        <li><a href="#/medicalrecod"><i class="fa fa-file-text"></i>Historial Médico</a></li>
-        <li><a href="#/order"><i class="fa fa-paper-plane-o"></i></a></li>
-        <li><a href="#/newdoctor"><i class="fa fa-user-md" ></i></a></li>    
-        <li><a href="#/login"><i class="fa-sign-out"></i>Cerrar Sesión</a></li>  
-      </ul>
-    </div>
-  </nav>
-
-  <div id="main">
-  
-    <!-- angular templating -->
+<body>
+      <!-- angular templating -->
 		<!-- this is where content will be injected -->
     <div ng-view></div>
-    
-  </div>
   
   <footer class="text-center">
     <p> © 2016  Dr Phischel </p>
   </footer>
   
+      <!-- SCRIPTS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script src="bower_components/angular-ui-calendar/calendar.js"></script>
+    <script src="bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+    
+    <!--SCRIPTS DE LA APP-->
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="authentication.service.js"></script>
+    <script type="text/javascript" src="doctor.service.js"></script>
+    <script type="text/javascript" src="order.service.js"></script>
+    <script type="text/javascript" src="patient.service.js"></script>
+    <script type="text/javascript" src="record.service.js"></script>
+    <script type="text/javascript" src="appointement.controller.js"></script>
+    <script type="text/javascript" src="home.controller.js"></script>
+    <script type="text/javascript" src="login.controller.js"></script>
+    <script type="text/javascript" src="newdoctor.controller.js"></script>
+    <script type="text/javascript" src="order.controller.js"></script>
+    <script type="text/javascript" src="patient.controller.js"></script>
+    <script type="text/javascript" src="record.controller.js"></script>
+
+    
 </body>
 
 </html>
