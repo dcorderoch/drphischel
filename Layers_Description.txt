@@ -1,5 +1,6 @@
 ##########################################################################################
-api/view/action
+HTTP VERB: TBD
+api/controller/action
 
 receives:
 {
@@ -10,10 +11,45 @@ returns:
 {
 "":""
 }
-DESC of what the return values mean
+[DESC of what the return values mean]
 BLL must:
--something the BLL must do
+-TBD, something the BLL must do
+
 ##########################################################################################
+HTTP VERB: GET
+api/doctor/getlistofpending
+
+returns:
+[
+{
+"DoctorId",
+"OfficeAddress":"",
+"CreditCardNumber:"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"PlaceResidence":"",
+"BirthDate":"",
+"Specialties":["",""]
+},
+{
+"DoctorId",
+"OfficeAddress":"",
+"CreditCardNumber:"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"PlaceResidence":"",
+"BirthDate":"",
+"Specialties":["",""]
+}
+]
+
+BLL must:
+-get all the doctors pending to be approved by an admin user
+
+##########################################################################################
+HTTP VERB: POST
 api/doctor/create
 
 receives:
@@ -46,6 +82,63 @@ BLL must:
 -insert the specialties (in the doctor's specialties table)
 
 ##########################################################################################
+HTTP VERB: POST
+api/doctor/update
+
+receives:
+{
+"DoctorId",
+"UserId",
+"Pass":"",
+"OfficeAddress":"",
+"Approved":"",
+"CreditCardNumber:"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"PlaceResidence":"",
+"BirthDate":"",
+"Specialties":["",""]
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-update a user
+-update a doctor
+-update the specialties (in the doctor's specialties table)
+
+##########################################################################################
+HTTP VERB: POST
+api/doctor/delete
+
+receives:
+{
+"DoctorId",
+"UserId"
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-delete a user
+-delete a doctor
+-delete the doctor's specialties (in the doctor's specialties table)
+
+##########################################################################################
+HTTP VERB: POST
 api/doctor/getbypatient
 
 receives:
@@ -72,19 +165,20 @@ returns:
 ]
 
 BLL must:
--get all the doctors the patient is associated with and return a list of them
+-get all the doctors the patient with the received UserId is associated with
 
 ##########################################################################################
+HTTP VERB: POST
 api/patient/createbymedic
 
 receives:
 {
-"UserId":""
-"Pass":""
-"Name":""
-"LastName1":""
-"LastName2":""
-"ResidencePlace":""
+"UserId":"",
+"Pass":"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"ResidencePlace":"",
 "BirthDate":"",
 "DoctorID":""
 }
@@ -102,16 +196,17 @@ BLL must:
 -insert the patient (in the doctor's patient table)
 
 ##########################################################################################
+HTTP VERB: POST
 api/patient/createbyadmin
 
 receives:
 {
-"UserId":""
-"Pass":""
-"Name":""
-"LastName1":""
-"LastName2":""
-"ResidencePlace":""
+"UserId":"",
+"Pass":"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"ResidencePlace":"",
 "BirthDate":""
 }
 
@@ -127,10 +222,60 @@ BLL must:
 -insert a user
 
 ##########################################################################################
+HTTP VERB: POST
+api/patient/update
+
+receives:
+{
+"UserId":"",
+"Pass":"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"ResidencePlace":"",
+"BirthDate":""
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-update a user
+-restrict UserId update (PKs are immutable)
+
+##########################################################################################
+HTTP VERB: POST
+api/patient/delete
+
+receives:
+{
+"UserId":""
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-delete a user
+-restrict UserId deletion (PKs are immutable)
+
+##########################################################################################
+HTTP VERB: POST
 api/appointment/create
 
 receives:
 {
+"UserId":"",
 "DoctorId":"",
 "AppointmentDate":""
 }
@@ -145,13 +290,154 @@ N=2 if
 N is determined in the BLL
 BLL must:
 -verify the appointment can be made
--make the appointment
+-create/make the appointment
 
 ##########################################################################################
-api/prescription
+HTTP VERB: POST
+api/appointment/update
+
+receives:
+{
+"UserId":"",
+"DoctorId":"",
+"AppointmentDate":""
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-verify the appointment can be updated
+-update the appointment
 
 ##########################################################################################
+HTTP VERB: POST
+api/appointment/delete
+
+receives:
+{
+"UserId":"",
+"DoctorId":"",
+"AppointmentDate":""
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-verify the appointment can be deleted
+-delete the appointment
+
+##########################################################################################
+HTTP VERB: POST
+api/appointment/getbyDoctorId
+
+receives:
+{
+"DoctorId":""
+}
+
+returns:
+[
+{
+"UserId":"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"Date":""
+},
+{
+"UserId":"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"Date":""
+}
+]
+
+##########################################################################################
+HTTP VERB: POST
+api/medicalrecords/viewallbypatient
+
+receives:
+{
+"UserId":""
+}
+
+returns:
+[
+{
+"AppointmentDate": "",
+"MRDescription":"",
+"MRDiagnosis":"",
+[{"MedicineName":"","BranchOfficeName":""},{"MedicineName":"","BranchOfficeName":""}]
+},
+{
+"AppointmentDate": "",
+"MRDescription":"",
+"MRDiagnosis":"",
+[{"MedicineName":"","BranchOfficeName":""},{"MedicineName":"","BranchOfficeName":""}]
+}
+]
+BLL must:
+- make CSMedicineNames as a single string value out of the names of the drugs the doctor prescribed
+
+##########################################################################################
+HTTP VERB: POST
 api/medicalrecords/create
 
+receives:
+{
+"UserId":"",
+"Date":"",
+"Description":"",
+"Diagnosis":"",
+[{"MedicineName":"","BranchOfficeName":""},{"MedicineName":"","BranchOfficeName":""}]
+}
+-The last of the received values is a list (of 1 or more elements) of pairs of medicine names and the branch office they belong to that were prescribed by the doctor to the patient
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-insert the medicalrecord data and the corresponding intermediate tables data
+
 ##########################################################################################
-api/doctor/getlistofpending
+HTTP VERB: POST
+api/medicalrecords/update
+
+receives:
+{
+"UserId":"",
+"Date":"",
+"Description":"",
+"Diagnosis":"",
+[{"MedicineName":"","BranchOfficeName":""},{"MedicineName":"","BranchOfficeName":""}]
+}
+-The last of the received values is a list (of 1 or more elements) of pairs of medicine names and the branch office they belong to that were prescribed by the doctor to the patient
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-update the medicalrecord data and the corresponding intermediate tables data
