@@ -94,7 +94,7 @@ PrescriptionId int NOT NULL
 GO
 CREATE TABLE Doctor
 (
-DoctorId int NOT NULL,
+DoctorId int identity(1,1) NOT NULL,
 DoctorCode nvarchar (15) NOT NULL,
 UserId int NOT NULL,
 OfficeAddress nvarchar(100) NOT NULL,
@@ -515,3 +515,105 @@ VALUES ('123456789', 'moradodecorazon32', 'Kevin', 'Umaña', 'Ortega', 'Heredia',
 	   ('101230456', 'adelrio', 'Alberto', 'Del Rio', '', 'Puntarenas', '1964-09-10',1),
 	   ('991230456', 'bsmith', 'Ben', 'Smith', ' ', 'Miami','1975-12-08',1)
 	   ;
+GO
+--Insertion of Doctors
+
+INSERT INTO Doctor
+VALUES ('ABC001', 5,'Puntarenas',1,'1234567890123'),
+	   ('ABC005', 6,'Miami',1,'9876567890123')
+;
+GO
+-- Insertion of BranchOffices
+
+INSERT INTO BranchOffice
+VALUES ('Medio Queso', '27849596', 'Los Chiles', 'Farmatica'),
+	   ('Manuel Antonio', '26709596', 'Quepos', 'Phischel'),
+	   ('Cariari', '25325960', 'Pococi','Farmatica'),
+	   ('San Antonio', '22395960', 'Belen', 'Phischel'),
+	   ('La Aurora', '22934364', 'Heredia', 'Phischel'),
+	   ('Chomes', '28734364', 'Puntarenas','Farmatica'),
+	   ('Miami', '1998293451', 'Florida','Farmatica'),
+	   ('Escazu', '22157084', 'San Jose', 'Farmatica')
+	   ;
+GO
+-- Insertion of Appointments
+
+INSERT INTO Appointment
+VALUES (2, 1, '20160503 14:00:00');
+GO
+--Insertion of MedicalRecords
+
+INSERT INTO MedicalRecord
+VALUES (1),
+	   (2),
+	   (3)
+;
+GO
+-- Insertion of Prescription
+
+INSERT INTO Prescription
+VALUES (1,2);
+GO
+-- Insertion of MedicalRecordData
+
+INSERT INTO MedicalRecordData
+VALUES (2,1, 'Dolores de cabeza severos', 'Migrañas',1);
+GO
+--Insertion of Medical Specialties
+
+INSERT INTO MedicalSpecialty
+VALUES ('Ginecologia'),
+	   ('Otorrinolaringologia'),	
+	   ('Urologia'),
+	   ('Ortopedia'),
+	   ('Odontologia'),
+	   ('Cardiologia'),
+	   ('Urologia'),
+	   ('Neurologia');
+GO	   
+-- Insertion of Medicines
+
+INSERT INTO Medicine
+VALUES ('Acetaminofen'),
+	   ('Ibuprofeno'),
+	   ('Dorival'),
+	   ('Espasmo Canulase'),
+	   ('Ritalina'),
+	   ('Concerta'),
+	   ('Selfemra')
+	   ;	   
+	   GO
+-- Insertion of MedicinesPerBO
+
+INSERT INTO MedicinesPerBranchOffice
+VALUES (17, 1, 20, 11,13.50);	   
+GO
+
+-- Insertion of MedicinesPerPrescription
+
+INSERT INTO MedicinesPerPrescription
+VALUES (1,2),
+	   (1,3),
+	   (1,7),
+	   (1,5);
+GO
+-- Insertion of PatientByDoctor
+
+INSERT INTO PatientByDoctor
+VALUES (1,1),
+	   (1,2);
+GO
+-- Insertion of RolesPerUser
+
+INSERT INTO RolesPerUser
+VALUES (1,1),
+	   (2,3),
+	   (3,5);
+GO
+
+-- Insertion of SpecialtyPerDoctor
+
+INSERT INTO SpecialtyPerDoctor
+VALUES (2,2),
+	   (7,2);
+GO
