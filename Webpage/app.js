@@ -14,42 +14,36 @@
                 templateUrl: 'home/home.view.html',  //El controlador de este when home.controller.js
                 controllerAs: 'vm'     //Vista es el archivo home/home.view.html
             })                                            //un alias del controlador, vm significa view model
-
            .when('/login', {
                 controller: 'LoginController',
                 templateUrl: 'login/login.view.html',
                 controllerAs: 'vm'
             })
-            .when('/stats',{
-                controller:  'StatsController', 
-                templateUrl: 'stats/stats.view.html', 
+            .when('/appointment',{
+                controller:  'AppointmentController', 
+                templateUrl: 'appointment/appointment.view.html', 
                 controlerAs: 'vm'
             })
-            .when('/viewP',{
-                controller:  'PedidosController', 
-                templateUrl: 'pedidos/pedidos.view.html', 
+            .when('/order',{
+                controller:  'OrderController', 
+                templateUrl: 'order/order.view.html', 
                 controlerAs: 'vm'
             })
-            .when('/ClientsManagement',{
-                controller: 'ClientController',
-                templateUrl: 'cliente/cliente.view.html',
+            .when('/newdoctor',{
+                controller: 'NewDoctorController',
+                templateUrl: 'newdoctor/newdoctor.view.html',
                 controlerAs: 'vm'
             })
-            .when('/DoctorsManagement',{
-                controller: 'DoctorController',
-                templateUrl: 'doctor/doctor.view.html',
+            .when('/patient',{
+                controller: 'PatientController',
+                templateUrl: 'patient/patient.view.html',
                 controlerAs: 'vm'
             }) 
-            .when('/RecetasManagement',{
-                controller: 'RecetaController',
-                templateUrl: 'receta/receta.view.html',
+            .when('/record',{
+                controller: 'RecordController',
+                templateUrl: 'record/record.view.html',
                 controlerAs: 'vm'
             })   
-            .when('/MedicamentoManagement',{
-                controller: 'MedicamentoController',
-                templateUrl: 'medicamento/medicamento.view.html',
-                controllerAs:'vm'
-            })
 
             .otherwise({ redirectTo: '/login' });//Esta es la url por defecto
     }
@@ -65,7 +59,7 @@
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // Redirige a la pagina de login cuando se intenta hacer trampa (Watch out evil-doers)
-            var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
+            var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
             var loggedIn = $rootScope.globals.currentUser;
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');
