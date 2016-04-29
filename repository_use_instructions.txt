@@ -1,0 +1,196 @@
+pautas para uso de git
+
+USAR LA TERMINAL (ésto es recomendado por todos los que dan cursos y tutoriales sobre git)
+
+decidir qué se va a usar (makefiles, IDEs, etc. de usar un IDE, qué tipo de template que tiene el IDE), para generar un .gitignore (de ser necesario)
+
+
+hacer configuraciones globales, como colores, tipo de push, tipo de pull, aliases, log, usuario, nombre, etc. y configurar llages ssh (éso es recomendado) antes de comenzar a usar repositorios
+
+e.g.
+para usar Sublime Text 3 como editor en lugar de vi/vim en git bash (en Windows)
+git config --global core.editor "'C:/Program Files/Sublime Text 3/subl.exe' -n -w"
+un alias de log resumido y de menos lineas (cualquier plataforma)
+git config --global alias.hist 'log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short'
+
+
+uso de llaves ssh (recomendado) [acá menciono lo que hago en Windows]
+
+si usan https van a tener que poner username y password cada vez que quieran hacer fetch, pull o push
+yo uso ssh porque sólo tengo que poner la passphrase de mi llave ssh una vez (siempre y cuando mantenga la misma terminal abierta)
+
+si no tienen llaves ssh vean ésto
+https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
+
+si ya tienen llaves ssh vean ésto para verificar
+https://help.github.com/articles/checking-for-existing-ssh-keys/
+y usen éstas instrucciones para usarlas
+https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/#adding-your-ssh-key-to-the-ssh-agent
+
+
+al hacer un commit, el mensaje debe describir 'lo que el commit hace', no lo que uno hizo, debe estar en presente imperativo, y ser descriptivo
+
+e.g.
+
+git commit -m "I change file X.ext" <-- evitar ésto
+git commit -m "change file X.ext" <--así está mejor
+
+git commit -m "changed file X.ext" <-- evitar ésto
+git commit -m "change file X.ext" <--así está mejor
+
+git commit -m "added something" <-- evitar ésto
+git commit -m "added foo() to X.ext file" <--así está mejor
+git commit -m "added foo() to X.ext file, because <reason>" <--así está todavía mejor
+git commit [ENTER] # y luego 'documentar' el commit en el editor es lo mejor
+
+VER ANEXO #3
+
+
+WorkFlow (o 'cómo se van a hacer las cosas')
+
+MACRO
+1 - se crea el repositorio en GitHub, probablemente se agregue un .gitignore
+2 - cada uno lo clona
+3 - git remote show origin (acá se ve la branch <branch propia> en que cada uno va a trabajar, sólo hacer cambios en una branch propia)
+4 - CONFIGURACIÓN MICRO
+5 - MICRO
+6 - make pull request in GitHub Website, resuelta sólo por el encargado de resolverlas
+7 - ciclo #5 a #6
+
+CONFIGURACIÓN MICRO
+1 - git checkout <branch propia>
+2 - git branch cambios (éste paso sólo se hace una vez)
+
+MICRO
+0 - git checkout cambios
+1 - git rebase <branch propia>
+2 - hacer cambios (add, commit)
+3 - git checkout <branch propia> && git merge cambios
+4 - de ser necesario resolver conflictos, VER ANEXO #4
+5 - git fetch --all
+6 - git checkout <branch propia> && git rebase origin/master
+7 - de ser necesario resolver conflictos, VER ANEXO #4
+8 - git checkout <branch propia> && git push
+9 - ciclo #0 a #8 hasta poder ir a MACRO #6
+
+NO HACER PUSH DE LA branch cambios, es para cambios de código propio y pruebas que hagan, se maneja sólamente local
+
+siguiendo éstos pasos podemos mantener las branches en el repo con sólo cosas que funcionan y han sido probadas, además nos podemos ahorrar muchos conflictos en la master branch, e inclusive en la branch de cada uno
+
+ver ANEXO #5
+
+
+Anexo
+
+e.g. = exempli gratia, latín para decir 'por ejemplo', pero 'entrega' una lista de hasta N ejemplos, mientras que 'por ejemplo' sólo es un ejemplo
+
+i.e. = id est, latín para 'es decir', e.g. 'ropa sintética, i.e. no de algodón o cuero'
+
+
+Anexo 2: recursos útiles
+
+éste es un tutorial/referencia
+por lo menos léguenle a éste, explica muy claro desde lo básico hasta lo intermedio
+http://gitimmersion.com
+
+éste sirve como referencia de comandos
+http://www.ndpsoftware.com/git-cheatsheet.html
+
+éstas dos últimas son sobre 'workflow', muy importante, pero no las lean hasta haber leído TODO lo anterior, porque asume que el lector ya maneja conceptos básicos y hasta intermedios (al menos)
+http://nvie.com/posts/a-successful-git-branching-model/
+
+http://scottchacon.com/2011/08/31/github-flow.html
+
+
+Anexo 3: Writing a Good Commit Message
+
+First line, no more than 50 characters
+
+Details section, as long as you want. Not always necessary, but
+available if you need it. Wrapped at 72 characters. Present imperative
+tense is preferred for commits. That means "fix bug", not "fixes bug" or
+"fixed bug".
+
+- Use bullets if you need
+- Bullets are a good way to summarize a few things
+
+If you have too much info here, it might be a good candidate to break
+down into multiple commits. You can use emoji here too :sparkles:
+
+
+Anexo 4: cómo resolver conflictos
+
+en un git merge o un git rebase
+pueden aparecer conflictos, en uno o más archivos
+los conflictos se ven más o menos así
+
+en un rebase
+""
+<<<<<<< 5567c945d760179f71d937b922f90f4e2fe1e220
+último contenido en el commit en la branch que se quiere tomar de base con el rebase
+=======
+último contenido en el commit en la branch donde se está haciendo el rebase
+>>>>>>> on purpose
+""
+
+ésto se debe cambiar a ésto
+""
+último contenido en el commit en la branch donde se está haciendo el rebase
+""
+o al que esté más actualizado o correcto
+
+luego se debe correr
+git add <archivo(s) en que se resolvieron conflicto(s)>
+y por último
+git rebase --continue
+
+en un merge
+""
+<<<<<<< HEAD
+último commit en la branch donde se ejecutó git merge
+=======
+último commit en la branch que se quiere combinar con la branch actual
+>>>>>>> cambios
+""
+
+ésto se debe cambiar a ésto
+""
+último commit en la branch que se quiere combinar con la branch actual
+""
+o al que esté más actualizado o correcto
+
+luego se debe correr
+git add <archivo(s) en que se resolvieron conflicto(s)>
+git commit -m "mensaje de commit del merge"
+o
+git commit (y escribir un mensaje más detallado, ésto es preferible)
+
+
+ANEXO 5: tags
+
+algo útil para marcar commits en que algo ya funciona o recuperar algo pasado es git tag
+
+para crear una tag inmediatamente después de hacer el commit donde quiero tener la tag
+git commit
+git tag -a my-tag -m "tag description"
+
+para crear una tag en un commit anterior a HEAD (anterior al último commit hecho)
+git log <-- ver el SHA del commit, algo como 7st8hjy9
+git tag -a my-tag <commit-SHA> -m "tag description"
+
+e.g.
+'tengo una clase X que ya terminé y ya sé que funciona/ya la probé'
+git add <archivos cambiados>
+git commit -m "clase X trabajando"
+git tag -a class-x -m "class x starts working in this tag"
+
+éstas tags se pueden usar para recuperar cosas anteriores, de borrarlas en commits posteriores
+
+e.g.
+commit
+tag my-tag
+archivo.txt > hola
+commit
+archivo.txt > adios
+¿cómo recupero 'hola'?
+git checkout my-tag, hola está aquí, si quiero puedo crear una branch y tener otra copia para trabajar desde éste punto
