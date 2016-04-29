@@ -374,29 +374,70 @@ receives:
 "UserId":""
 }
 
-returns: ## TBD
+returns:
 [
 {
+"AppointmentDate": "",
+"MRDescription":"",
+"MRDiagnosis":"",
+[{"MedicineName":"","BranchOfficeName":""},{"MedicineName":"","BranchOfficeName":""}]
+},
+{
+"AppointmentDate": "",
+"MRDescription":"",
+"MRDiagnosis":"",
+[{"MedicineName":"","BranchOfficeName":""},{"MedicineName":"","BranchOfficeName":""}]
 }
 ]
 BLL must:
--TDB
+- make CSMedicineNames as a single string value out of the names of the drugs the doctor prescribed
 
 ##########################################################################################
 HTTP VERB: POST
 api/medicalrecords/create
 
-receives: ## TBD
+receives:
 {
 "UserId":"",
-"Description":""
+"Date":"",
+"Description":"",
+"Diagnosis":"",
+[{"MedicineName":"","BranchOfficeName":""},{"MedicineName":"","BranchOfficeName":""}]
 }
+-The last of the received values is a list (of 1 or more elements) of pairs of medicine names and the branch office they belong to that were prescribed by the doctor to the patient
 
-returns: ## TBD
+returns:
 {
-"":""
+"StatusCode":"N"
 }
-DESC of what the return values mean
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
 BLL must:
--TBD
+-insert the medicalrecord data and the corresponding intermediate tables data
 
+##########################################################################################
+HTTP VERB: POST
+api/medicalrecords/update
+
+receives:
+{
+"UserId":"",
+"Date":"",
+"Description":"",
+"Diagnosis":"",
+[{"MedicineName":"","BranchOfficeName":""},{"MedicineName":"","BranchOfficeName":""}]
+}
+-The last of the received values is a list (of 1 or more elements) of pairs of medicine names and the branch office they belong to that were prescribed by the doctor to the patient
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-update the medicalrecord data and the corresponding intermediate tables data
