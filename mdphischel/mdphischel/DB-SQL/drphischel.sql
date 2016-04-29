@@ -18,10 +18,11 @@ GO
 CREATE DATABASE DrPhischelDB;
 GO
 
+USE DrPhischelDB
 Grant ALTER to DrPhischelDBUser;
 GO
 
-
+DROP DATABASE DrPhischelDB
 --******************************************************************************************************************************************
 --**
 --**                                      Main definition of tables in DrPhischelDB
@@ -33,21 +34,28 @@ GO
 GO
 CREATE TABLE SystemUser
 	(
-	UserId char(9) NOT NULL,
+	UserId int identity(1,1) NOT NULL,
+	IdNumber char(9) unique NOT NULL,
 	Pass nvarchar(30) NOT NULL,
 	Name nvarchar(30) NOT NULL,
 	LastName1 nvarchar(30) NOT NULL,
 	LastName2 nvarchar(30),
 	ResidencePlace nvarchar(100) NOT NULL,
-	BirthDate Date NOT NULL
+	BirthDate Date NOT NULL,
+	IsActive Bit NOT NULL
 	)
+
+-- Adds unique constraint to IdNumber.
+
+	ALTER TABLE SystemUser
+		ADD UNIQUE (IdNumber)
 
 --Creates table SystemRole. 
 
 GO
 CREATE TABLE SystemRole
 (
-RoleId tinyint NOT NULL,
+RoleId int identity(1,1) NOT NULL,
 RoleName nvarchar(15) NOT NULL
 )
 
@@ -56,8 +64,8 @@ RoleName nvarchar(15) NOT NULL
 GO
 CREATE TABLE RolesPerUser
 (
-RoleId tinyint NOT NULL,
-UserId char(9) NOT NULL
+RoleId int NOT NULL,
+UserId int NOT NULL
 )
 
 --Creates table MedicalRecord.
@@ -65,11 +73,20 @@ UserId char(9) NOT NULL
 GO
 CREATE TABLE MedicalRecord
 (
-MedicalRecordId uniqueidentifier NOT NULL,
-UserId char(9) NOT NULL,
-MRDate Date NOT NULL,
+MedicalRecordId int identity(1,1) NOT NULL,
+UserId int NOT NULL
+)
+
+--Creates table MedicalRecordData.
+
+GO
+CREATE TABLE MedicalRecordData
+(
+MedicalRecordId int NOT NULL,
+AppointmentId int NOT NULL,
 MRDescription varchar(max) NOT NULL,
-MRDiagnosis varchar(max) NOT NULL
+MRDiagnosis varchar(max) NOT NULL,
+PrescriptionId int NOT NULL
 )
 
 --Creates table Doctor. 
@@ -77,20 +94,29 @@ MRDiagnosis varchar(max) NOT NULL
 GO
 CREATE TABLE Doctor
 (
-DoctorId nvarchar(15) NOT NULL,
-UserId char(9) NOT NULL,
+DoctorId int NOT NULL,
+DoctorCode nvarchar (15) NOT NULL,
+UserId int NOT NULL,
 OfficeAddress nvarchar(100) NOT NULL,
-Approved Bit NOT NULL,
+IsActive Bit NOT NULL,
 CreditCardNumber nvarchar(30) NOT NULL
 )
 
---Creates table PatientOfDoctor. 
+-- Set unique constraints on DoctorCode and CreditCardNumber.
+
+ALTER TABLE Doctor
+		ADD UNIQUE (DoctorCode)
+
+ALTER TABLE Doctor
+		ADD UNIQUE (CreditCardNumber)
+
+--Creates table PatientByDoctor. 
 
 GO
-CREATE TABLE PatientOfDoctor
+CREATE TABLE PatientByDoctor
 (
-PatientId char(9) NOT NULL,
-DoctorId nvarchar(15) NOT NULL
+PatientId int NOT NULL,
+DoctorId int NOT NULL
 )
 
 --Creates table Prescription. 
@@ -98,26 +124,18 @@ DoctorId nvarchar(15) NOT NULL
 GO
 CREATE TABLE Prescription
 (
-PrescriptionId uniqueidentifier NOT NULL,
-DoctorId nvarchar(15) NOT NULL,
-PatientId char(9) NOT NULL
+PrescriptionId int identity(1,1) NOT NULL,
+DoctorId int NOT NULL,
+PatientId int NOT NULL
 )
 
---Creates table PrescriptionPerMedicalRecord. 
-
-GO
-CREATE TABLE PrescriptionPerMedicalRecord
-(
-MedicalRecordId uniqueidentifier NOT NULL,
-PrescriptionId uniqueidentifier NOT NULL
-)
 
 --Creates table MedicalSpecialty. 
 
 GO
 CREATE TABLE MedicalSpecialty
 (
-MedicalSpecialtyId uniqueidentifier NOT NULL,
+MedicalSpecialtyId int identity(1,1) NOT NULL,
 Name nvarchar(30) NOT NULL
 )
 
@@ -126,8 +144,8 @@ Name nvarchar(30) NOT NULL
 GO
 CREATE TABLE SpecialtyPerDoctor
 (
-SpecialtyId uniqueidentifier NOT NULL,
-DoctorId nvarchar(15) NOT NULL
+SpecialtyId int NOT NULL,
+DoctorId int NOT NULL
 )
 
 --Creates table Appointment. 
@@ -135,9 +153,9 @@ DoctorId nvarchar(15) NOT NULL
 GO
 CREATE TABLE Appointment
 (
-AppointmentId uniqueidentifier NOT NULL,
-UserId char(9) NOT NULL,
-DoctorId nvarchar(15) NOT NULL,
+AppointmentId int identity(1,1) NOT NULL,
+UserId int NOT NULL,
+DoctorId int NOT NULL,
 AppointmentDate DateTime NOT NULL
 )
 
@@ -146,7 +164,7 @@ AppointmentDate DateTime NOT NULL
 GO
 CREATE TABLE BranchOffice
 (
-BranchOfficeId uniqueidentifier NOT NULL,
+BranchOfficeId int identity(1,1) NOT NULL,
 Name nvarchar(30) NOT NULL,
 PhoneNumber nvarchar(12) NOT NULL,
 BOLocation nvarchar(50) NOT NULL,
@@ -157,28 +175,39 @@ Company nvarchar(15)
 GO
 CREATE TABLE Medicine
 	(
-	MedicineId uniqueidentifier NOT NULL,
+	MedicineId int identity(1,1) NOT NULL,
 	Name nvarchar(50) NOT NULL
     )	
 
 -- Creates table MedicinesPerPrescription
+
 GO
 CREATE TABLE MedicinesPerPrescription
 	(
-	PrescriptionId uniqueidentifier NOT NULL,
-	MedicineId uniqueidentifier NOT NULL
+	PrescriptionId int NOT NULL,
+	MedicineId int NOT NULL
 	)
 
 -- Creates table MedicinesPerBranchOffice
+
 GO
 CREATE TABLE MedicinesPerBranchOffice
 	(
-	BranchOfficeId uniqueidentifier NOT NULL,
-	MedicineId uniqueidentifier NOT NULL,
+	BranchOfficeId int NOT NULL,
+	MedicineId int NOT NULL,
 	QuantityAvailable Integer NOT NULL,
 	Sales Integer NOT NULL,
 	Price decimal(10,2) NOT NULL
 	)
+
+-- Creates table Charges.
+
+GO
+CREATE TABLE Charges
+(
+DoctorId int NOT NULL,
+AppointmentId int NOT NULL
+)
 
 --******************************************************************************************************************************************
 --**
@@ -200,19 +229,19 @@ ALTER TABLE SystemRole
 	ADD CONSTRAINT PK_Role
 		PRIMARY KEY (RoleId)
 
--- Defines MedicalRecord primary key.
+-- Defines MedicalRecord primary keys.
 
 GO
 ALTER TABLE MedicalRecord
 	ADD CONSTRAINT PK_MedicalRecord
 		PRIMARY KEY (MedicalRecordId)
 
--- Defines PrescriptionPerMedicalRecord primary keys.
+-- Defines MedicalRecord primary keys.
 
 GO
-ALTER TABLE PrescriptionPerMedicalRecord
-	ADD CONSTRAINT PK_PrescriptionPerMedicalRecord
-		PRIMARY KEY (MedicalRecordId, PrescriptionId)
+ALTER TABLE MedicalRecordData
+	ADD CONSTRAINT PK_MedicalRecordData
+		PRIMARY KEY (MedicalRecordId, AppointmentId)
 
 -- Defines RolesPerUser primary keys.
 
@@ -228,10 +257,10 @@ ALTER TABLE Doctor
 	ADD CONSTRAINT PK_Doctor
 		PRIMARY KEY (DoctorId)
 
--- Defines PatientOfDoctor primary keys.
+-- Defines PatientByDoctor primary keys.
 
 GO
-ALTER TABLE PatientOfDoctor
+ALTER TABLE PatientByDoctor
 	ADD CONSTRAINT PK_PatientOfDoctor
 		PRIMARY KEY (PatientId, DoctorId)
 
@@ -256,7 +285,7 @@ ALTER TABLE MedicalSpecialty
 	ADD CONSTRAINT PK_MedicalSpecialty
 		PRIMARY KEY (MedicalSpecialtyId)
 
--- Defines SpecialtyDoctor primary key.
+-- Defines SpecialtyPerDoctor primary key.
 
 GO
 ALTER TABLE SpecialtyPerDoctor
@@ -290,6 +319,13 @@ GO
 ALTER TABLE MedicinesPerPrescription
 	ADD CONSTRAINT PK_MedicinesPerPrescription
 		PRIMARY KEY (PrescriptionId, MedicineId)
+
+-- Defines Charges primary key.
+
+GO
+ALTER TABLE Charges
+	ADD CONSTRAINT PK_Charges
+		PRIMARY KEY (DoctorId)
 
 --******************************************************************************************************************************************
 --**
@@ -327,33 +363,19 @@ ALTER TABLE Doctor
 		FOREIGN KEY (UserId)
 			REFERENCES SystemUser(UserId)
 
---Defines PatientOfDoctor foreign keys.
+--Defines PatientByDoctor foreign keys.
 
 GO
-ALTER TABLE PatientOfDoctor 
+ALTER TABLE PatientByDoctor 
 	ADD CONSTRAINT FK_PatientOfDoctor1
 		FOREIGN KEY (PatientId)
 			REFERENCES SystemUser(UserId)
 
 GO
-ALTER TABLE PatientOfDoctor 
+ALTER TABLE PatientByDoctor 
 	ADD CONSTRAINT FK_PatientOfDoctor2
 		FOREIGN KEY (DoctorId)
 			REFERENCES Doctor(DoctorId)
-
---Defines PrescriptionPerMedicalRecord foreign keys.
-
-GO
-ALTER TABLE PrescriptionPerMedicalRecord 
-	ADD CONSTRAINT FK_PrescriptionPerMedicalRecord1
-		FOREIGN KEY (MedicalRecordId)
-			REFERENCES MedicalRecord(MedicalRecordId)
-
-GO
-ALTER TABLE PrescriptionPerMedicalRecord 
-	ADD CONSTRAINT FK_PrescriptionPerMedicalRecord2
-		FOREIGN KEY (PrescriptionId)
-			REFERENCES Prescription(PrescriptionId)
 
 --Defines Appointment foreign keys.
 
@@ -424,3 +446,72 @@ ALTER TABLE MedicinesPerPrescription
 	ADD CONSTRAINT FK_MedicinesPerPrescription2
 		FOREIGN KEY (MedicineId)
 			REFERENCES Medicine(MedicineId)
+
+-- Defines Charges foreign key.
+GO
+ALTER TABLE Charges
+	ADD CONSTRAINT FK_Charges
+		FOREIGN KEY(DoctorId)
+			REFERENCES Doctor(DoctorId)
+
+-- Defines MedicalRecordData foreign keys.
+
+GO
+ALTER TABLE MedicalRecordData
+	ADD CONSTRAINT FK_MedicalRecordData1
+		FOREIGN KEY (MedicalRecordId)
+			REFERENCES MedicalRecord(MedicalRecordId)
+
+GO
+ALTER TABLE MedicalRecordData
+	ADD CONSTRAINT FK_MedicalRecordData2
+		FOREIGN KEY (AppointmentId)
+			REFERENCES Appointment(AppointmentId)
+
+GO
+ALTER TABLE MedicalRecordData
+	ADD CONSTRAINT FK_MedicalRecordData3
+		FOREIGN KEY (PrescriptionId)
+			REFERENCES Prescription(PrescriptionId)
+
+
+--******************************************************************************************************************************************
+--**
+--**                                      DrPhischelDB Population
+--**
+--******************************************************************************************************************************************
+
+-- Insertion of Roles
+
+GO
+INSERT INTO SystemRole
+VALUES ('Patient'),
+	   ('Administrator'),
+	   ('Doctor')
+	   ;
+GO
+
+-- Insertion of BranchOffices
+
+INSERT INTO BranchOffice
+VALUES ('Medio Queso', '27849596', 'Los Chiles', 'Farmatica'),
+	   ('Manuel Antonio', '26709596', 'Quepos', 'Phischel'),
+	   ('Cariari', '25325960', 'Pococi','Farmatica'),
+	   ('San Antonio', '22395960', 'Belen', 'Phischel'),
+	   ('La Aurora', '22934364', 'Heredia', 'Phischel'),
+	   ('Chomes', '28734364', 'Puntarenas','Farmatica'),
+	   ('Miami', '1998293451', 'Florida','Farmatica'),
+	   ('Escazu', '22157084', 'San Jose', 'Farmatica')
+	   ;
+GO
+
+-- Insertion of Users.
+
+INSERT INTO	SystemUser
+VALUES ('123456789', 'moradodecorazon32', 'Kevin', 'Umaña', 'Ortega', 'Heredia', '1992-10-03', 1),
+	   ('987654321', 'frenteampliorocks', 'Manuel', 'Zumbado', 'Corrales', 'Belen', '1993-11-11', 1),
+	   ('123581321', 'miamigohelo', 'Nicolas', 'Jimenez', 'Garcia', 'Tres Rios', '1994-12-12',1),
+	   ('111222333', 'soypoliglota', 'David', 'Cordero', 'Chavarria', 'Chomes', '1991-10-10',1),
+	   ('101230456', 'adelrio', 'Alberto', 'Del Rio', '', 'Puntarenas', '1964-09-10',1),
+	   ('991230456', 'bsmith', 'Ben', 'Smith', ' ', 'Miami','1975-12-08',1)
+	   ;
