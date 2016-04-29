@@ -11,7 +11,7 @@ returns:
 {
 "":""
 }
-DESC of what the return values mean
+[DESC of what the return values mean]
 BLL must:
 -TBD, something the BLL must do
 
@@ -254,7 +254,8 @@ api/patient/delete
 
 receives:
 {
-"UserId":""}
+"UserId":""
+}
 
 returns:
 {
@@ -265,8 +266,8 @@ N=1 if
 N=2 if 
 N is determined in the BLL
 BLL must:
--update a user
--restrict UserId update (PKs are immutable)
+-delete a user
+-restrict UserId deletion (PKs are immutable)
 
 ##########################################################################################
 HTTP VERB: POST
@@ -274,6 +275,7 @@ api/appointment/create
 
 receives:
 {
+"UserId":"",
 "DoctorId":"",
 "AppointmentDate":""
 }
@@ -288,7 +290,80 @@ N=2 if
 N is determined in the BLL
 BLL must:
 -verify the appointment can be made
--make the appointment
+-create/make the appointment
+
+##########################################################################################
+HTTP VERB: POST
+api/appointment/update
+
+receives:
+{
+"UserId":"",
+"DoctorId":"",
+"AppointmentDate":""
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-verify the appointment can be updated
+-update the appointment
+
+##########################################################################################
+HTTP VERB: POST
+api/appointment/delete
+
+receives:
+{
+"UserId":"",
+"DoctorId":"",
+"AppointmentDate":""
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+BLL must:
+-verify the appointment can be deleted
+-delete the appointment
+
+##########################################################################################
+HTTP VERB: POST
+api/appointment/getbyDoctorId
+
+receives:
+{
+"DoctorId":""
+}
+
+returns:
+[
+{
+"UserId":"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"Date":""
+},
+{
+"UserId":"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"Date":""
+}
+]
 
 ##########################################################################################
 HTTP VERB: POST
