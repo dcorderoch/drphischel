@@ -1,30 +1,5 @@
 --******************************************************************************************************************************************
 --**
---**                                     Azure configuration and user account creation
---**
---******************************************************************************************************************************************
-
-CREATE LOGIN DrPhischelDBUser
-	WITH PASSWORD = 'DrPhischel';
-GO
-
-CREATE USER DrPhischelDBUser FOR LOGIN DrPhischelDBUser;
-GO
-
---Grant permissions
-EXEC sp_addrolemember 'db_owner', 'DrPhischelDBUser';
-GO
-
-CREATE DATABASE DrPhischelDB;
-GO
-
-USE DrPhischelDB
-Grant ALTER to DrPhischelDBUser;
-GO
-
-DROP DATABASE DrPhischelDB
---******************************************************************************************************************************************
---**
 --**                                      Main definition of tables in DrPhischelDB
 --**
 --******************************************************************************************************************************************
@@ -86,7 +61,7 @@ MedicalRecordId int NOT NULL,
 AppointmentId int NOT NULL,
 MRDescription varchar(max) NOT NULL,
 MRDiagnosis varchar(max) NOT NULL,
-PrescriptionId int NOT NULL
+PrescriptionId uniqueidentifier NOT NULL
 )
 
 --Creates table Doctor. 
@@ -94,8 +69,7 @@ PrescriptionId int NOT NULL
 GO
 CREATE TABLE Doctor
 (
-DoctorId int identity(1,1) NOT NULL,
-DoctorCode nvarchar (15) NOT NULL,
+DoctorId nvarchar(15) NOT NULL,
 UserId int NOT NULL,
 OfficeAddress nvarchar(100) NOT NULL,
 IsActive Bit NOT NULL,
@@ -103,9 +77,6 @@ CreditCardNumber nvarchar(30) NOT NULL
 )
 
 -- Set unique constraints on DoctorCode and CreditCardNumber.
-
-ALTER TABLE Doctor
-		ADD UNIQUE (DoctorCode)
 
 ALTER TABLE Doctor
 		ADD UNIQUE (CreditCardNumber)
@@ -116,7 +87,7 @@ GO
 CREATE TABLE PatientByDoctor
 (
 PatientId int NOT NULL,
-DoctorId int NOT NULL
+DoctorId nvarchar(15) NOT NULL
 )
 
 --Creates table Prescription. 
@@ -124,8 +95,8 @@ DoctorId int NOT NULL
 GO
 CREATE TABLE Prescription
 (
-PrescriptionId int identity(1,1) NOT NULL,
-DoctorId int NOT NULL,
+PrescriptionId uniqueidentifier NOT NULL,
+DoctorId nvarchar(15) NOT NULL,
 PatientId int NOT NULL
 )
 
@@ -145,7 +116,7 @@ GO
 CREATE TABLE SpecialtyPerDoctor
 (
 SpecialtyId int NOT NULL,
-DoctorId int NOT NULL
+DoctorId nvarchar(15) NOT NULL
 )
 
 --Creates table Appointment. 
@@ -155,7 +126,7 @@ CREATE TABLE Appointment
 (
 AppointmentId int identity(1,1) NOT NULL,
 UserId int NOT NULL,
-DoctorId int NOT NULL,
+DoctorId nvarchar(15) NOT NULL,
 AppointmentDate DateTime NOT NULL
 )
 
@@ -164,7 +135,7 @@ AppointmentDate DateTime NOT NULL
 GO
 CREATE TABLE BranchOffice
 (
-BranchOfficeId int identity(1,1) NOT NULL,
+BranchOfficeId uniqueidentifier NOT NULL,
 Name nvarchar(30) NOT NULL,
 PhoneNumber nvarchar(12) NOT NULL,
 BOLocation nvarchar(50) NOT NULL,
@@ -175,7 +146,7 @@ Company nvarchar(15)
 GO
 CREATE TABLE Medicine
 	(
-	MedicineId int identity(1,1) NOT NULL,
+	MedicineId uniqueidentifier NOT NULL,
 	Name nvarchar(50) NOT NULL
     )	
 
@@ -184,8 +155,8 @@ CREATE TABLE Medicine
 GO
 CREATE TABLE MedicinesPerPrescription
 	(
-	PrescriptionId int NOT NULL,
-	MedicineId int NOT NULL
+	PrescriptionId uniqueidentifier NOT NULL,
+	MedicineId uniqueidentifier NOT NULL
 	)
 
 -- Creates table MedicinesPerBranchOffice
@@ -193,8 +164,8 @@ CREATE TABLE MedicinesPerPrescription
 GO
 CREATE TABLE MedicinesPerBranchOffice
 	(
-	BranchOfficeId int NOT NULL,
-	MedicineId int NOT NULL,
+	BranchOfficeId uniqueidentifier NOT NULL,
+	MedicineId uniqueidentifier NOT NULL,
 	QuantityAvailable Integer NOT NULL,
 	Sales Integer NOT NULL,
 	Price decimal(10,2) NOT NULL
@@ -205,7 +176,7 @@ CREATE TABLE MedicinesPerBranchOffice
 GO
 CREATE TABLE Charges
 (
-DoctorId int NOT NULL,
+DoctorId nvarchar(15) NOT NULL,
 AppointmentId int NOT NULL
 )
 
@@ -261,7 +232,7 @@ ALTER TABLE Doctor
 
 GO
 ALTER TABLE PatientByDoctor
-	ADD CONSTRAINT PK_PatientOfDoctor
+	ADD CONSTRAINT PK_PatientByDoctor
 		PRIMARY KEY (PatientId, DoctorId)
 
 -- Defines Appointment primary key.
@@ -491,20 +462,6 @@ VALUES ('Patient'),
 	   ;
 GO
 
--- Insertion of BranchOffices
-
-INSERT INTO BranchOffice
-VALUES ('Medio Queso', '27849596', 'Los Chiles', 'Farmatica'),
-	   ('Manuel Antonio', '26709596', 'Quepos', 'Phischel'),
-	   ('Cariari', '25325960', 'Pococi','Farmatica'),
-	   ('San Antonio', '22395960', 'Belen', 'Phischel'),
-	   ('La Aurora', '22934364', 'Heredia', 'Phischel'),
-	   ('Chomes', '28734364', 'Puntarenas','Farmatica'),
-	   ('Miami', '1998293451', 'Florida','Farmatica'),
-	   ('Escazu', '22157084', 'San Jose', 'Farmatica')
-	   ;
-GO
-
 -- Insertion of Users.
 
 INSERT INTO	SystemUser
@@ -516,6 +473,16 @@ VALUES ('123456789', 'moradodecorazon32', 'Kevin', 'Umaña', 'Ortega', 'Heredia',
 	   ('991230456', 'bsmith', 'Ben', 'Smith', ' ', 'Miami','1975-12-08',1)
 	   ;
 GO
+
+
+-- Insertion of RolesPerUser
+
+INSERT INTO RolesPerUser
+VALUES (1,1),
+	   (2,3),
+	   (3,5);
+GO
+
 --Insertion of Doctors
 
 INSERT INTO Doctor
@@ -523,42 +490,15 @@ VALUES ('ABC001', 5,'Puntarenas',1,'1234567890123'),
 	   ('ABC005', 6,'Miami',1,'9876567890123')
 ;
 GO
--- Insertion of BranchOffices
 
-INSERT INTO BranchOffice
-VALUES ('Medio Queso', '27849596', 'Los Chiles', 'Farmatica'),
-	   ('Manuel Antonio', '26709596', 'Quepos', 'Phischel'),
-	   ('Cariari', '25325960', 'Pococi','Farmatica'),
-	   ('San Antonio', '22395960', 'Belen', 'Phischel'),
-	   ('La Aurora', '22934364', 'Heredia', 'Phischel'),
-	   ('Chomes', '28734364', 'Puntarenas','Farmatica'),
-	   ('Miami', '1998293451', 'Florida','Farmatica'),
-	   ('Escazu', '22157084', 'San Jose', 'Farmatica')
-	   ;
-GO
--- Insertion of Appointments
+-- Insertion of PatientByDoctor
 
-INSERT INTO Appointment
-VALUES (2, 1, '20160503 14:00:00');
+INSERT INTO PatientByDoctor
+VALUES (1,'ABC001'),
+	   (1,'ABC005');
 GO
---Insertion of MedicalRecords
 
-INSERT INTO MedicalRecord
-VALUES (1),
-	   (2),
-	   (3)
-;
-GO
--- Insertion of Prescription
 
-INSERT INTO Prescription
-VALUES (1,2);
-GO
--- Insertion of MedicalRecordData
-
-INSERT INTO MedicalRecordData
-VALUES (2,1, 'Dolores de cabeza severos', 'Migrañas',1);
-GO
 --Insertion of Medical Specialties
 
 INSERT INTO MedicalSpecialty
@@ -570,50 +510,107 @@ VALUES ('Ginecologia'),
 	   ('Cardiologia'),
 	   ('Urologia'),
 	   ('Neurologia');
-GO	   
--- Insertion of Medicines
-
-INSERT INTO Medicine
-VALUES ('Acetaminofen'),
-	   ('Ibuprofeno'),
-	   ('Dorival'),
-	   ('Espasmo Canulase'),
-	   ('Ritalina'),
-	   ('Concerta'),
-	   ('Selfemra')
-	   ;	   
-	   GO
--- Insertion of MedicinesPerBO
-
-INSERT INTO MedicinesPerBranchOffice
-VALUES (17, 1, 20, 11,13.50);	   
-GO
-
--- Insertion of MedicinesPerPrescription
-
-INSERT INTO MedicinesPerPrescription
-VALUES (1,2),
-	   (1,3),
-	   (1,7),
-	   (1,5);
-GO
--- Insertion of PatientByDoctor
-
-INSERT INTO PatientByDoctor
-VALUES (1,1),
-	   (1,2);
-GO
--- Insertion of RolesPerUser
-
-INSERT INTO RolesPerUser
-VALUES (1,1),
-	   (2,3),
-	   (3,5);
 GO
 
 -- Insertion of SpecialtyPerDoctor
 
 INSERT INTO SpecialtyPerDoctor
-VALUES (2,2),
-	   (7,2);
+VALUES (2,'ABC001'),
+	   (7,'ABC005');
 GO
+
+-- Insertion of BranchOffices
+
+INSERT INTO BranchOffice
+VALUES ('B37E8C8F-C87A-437F-A3EE-6BF8EE4A46A4','Medio Queso', '27849596', 'Los Chiles', 'Farmatica'),
+	   ('E9FF6BE1-E98F-4457-921C-9E9D252B1B82','Manuel Antonio', '26709596', 'Quepos', 'Phischel'),
+	   ('D8A579BE-787E-4BDA-BF41-9A8633658B53','Cariari', '25325960', 'Pococi','Farmatica'),
+	   ('10E29C84-D4C2-4912-800C-F5E85182FA23','San Antonio', '22395960', 'Belen', 'Phischel'),
+	   ('90F0E6EF-FD2B-444D-B1E2-8C214F796779','La Aurora', '22934364', 'Heredia', 'Phischel'),
+	   ('E0BE3E4A-76C6-4CAD-A5C5-FA29F6E510FB','Chomes', '28734364', 'Puntarenas','Farmatica'),
+	   ('56B8F386-9D3B-421F-9782-A87C28EFE38C','Miami', '1998293451', 'Florida','Farmatica'),
+	   ('BFFCF0E6-EBAC-45F2-8B12-B639A3EAF9C7','Escazu', '22157084', 'San Jose', 'Farmatica')
+	   ;
+GO
+-- Insertion of Appointments
+
+INSERT INTO Appointment
+VALUES (2, 'ABC001', '20160503 14:00:00');
+GO
+
+--Insertion of MedicalRecords
+
+INSERT INTO MedicalRecord
+VALUES (1),
+	   (2),
+	   (3)
+;
+GO
+
+-- Insertion of Medicines
+
+INSERT INTO Medicine
+VALUES ('13E4016D-8BCC-441C-9C23-E8BDC3A63D4F','Acetaminofen'),
+	   ('2385CC87-28CB-4F9E-9229-6F52899C7B53','Ibuprofeno'),
+	   ('4296C5AD-F84E-431A-87C0-EBC25566BEC4','Dorival'),
+	   ('BBA8328F-6DEF-4210-AFC7-EFC8E6D0EAAD','Espasmo Canulase'),
+	   ('063FBD7F-96CC-452D-85EC-E146C43F8577','Ritalina'),
+	   ('BA91B309-E91B-4873-94DC-82E021838F4C','Concerta'),
+	   ('C3F002DF-4E5E-41FF-97D6-933B50936EE6','Selfemra')
+	   ;	   
+GO
+
+-- Insertion of Prescription
+
+DECLARE @PrescriptionId UNIQUEIDENTIFIER = NEWID();
+
+INSERT INTO Prescription
+VALUES (@PrescriptionId,'ABC001',1);
+
+-- Insertion of MedicalRecordData
+
+INSERT INTO MedicalRecordData
+VALUES (2,1, 'Dolores de cabeza severos', 'Migrañas',@PrescriptionId);
+
+-- Insertion of MedicinesPerPrescription
+
+INSERT INTO MedicinesPerPrescription
+VALUES (@PrescriptionId,'13E4016D-8BCC-441C-9C23-E8BDC3A63D4F'),
+	   (@PrescriptionId,'BA91B309-E91B-4873-94DC-82E021838F4C'),
+	   (@PrescriptionId,'2385CC87-28CB-4F9E-9229-6F52899C7B53'),
+	   (@PrescriptionId,'BBA8328F-6DEF-4210-AFC7-EFC8E6D0EAAD');
+GO
+
+-- Insertion of MedicinesPerBO
+
+-- Miami
+INSERT INTO MedicinesPerBranchOffice
+VALUES ('56B8F386-9D3B-421F-9782-A87C28EFE38C', '13E4016D-8BCC-441C-9C23-E8BDC3A63D4F', 20, 11,13.50),
+	   ('56B8F386-9D3B-421F-9782-A87C28EFE38C', 'BA91B309-E91B-4873-94DC-82E021838F4C', 50, 25, 2.00),
+	   ('56B8F386-9D3B-421F-9782-A87C28EFE38C', '2385CC87-28CB-4F9E-9229-6F52899C7B53', 95, 80, 3.00)
+	   ;	   
+GO
+
+-- Cariari
+INSERT INTO MedicinesPerBranchOffice
+VALUES ('D8A579BE-787E-4BDA-BF41-9A8633658B53', 'BBA8328F-6DEF-4210-AFC7-EFC8E6D0EAAD', 20, 15, 10000),
+	   ('D8A579BE-787E-4BDA-BF41-9A8633658B53', '13E4016D-8BCC-441C-9C23-E8BDC3A63D4F', 30, 26, 3000),
+	   ('D8A579BE-787E-4BDA-BF41-9A8633658B53', '2385CC87-28CB-4F9E-9229-6F52899C7B53', 20, 8, 12500)
+	   ;	   
+GO
+
+-- Chomes
+
+INSERT INTO MedicinesPerBranchOffice
+VALUES ('E0BE3E4A-76C6-4CAD-A5C5-FA29F6E510FB', '13E4016D-8BCC-441C-9C23-E8BDC3A63D4F', 20, 15,10000),
+	   ('E0BE3E4A-76C6-4CAD-A5C5-FA29F6E510FB', '2385CC87-28CB-4F9E-9229-6F52899C7B53', 40, 35, 1500),
+	   ('E0BE3E4A-76C6-4CAD-A5C5-FA29F6E510FB', '4296C5AD-F84E-431A-87C0-EBC25566BEC4', 30, 26, 3000)
+	   ;	   
+GO
+
+
+--******************************************************************************************************************************************
+--**
+--**                                      Definition of Stored Procedures and Triggers
+--**
+--******************************************************************************************************************************************
