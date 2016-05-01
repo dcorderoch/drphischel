@@ -173,6 +173,23 @@ BLL must:
 
 ##########################################################################################
 HTTP VERB: POST
+api/patient/getbymedic
+
+receives:
+{
+"DoctorId"
+}
+
+returns:
+{
+"UserId":"",
+"Name":"",
+"LastName1":"",
+"LastName2":""
+}
+
+##########################################################################################
+HTTP VERB: POST
 api/patient/createbymedic
 
 receives:
