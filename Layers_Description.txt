@@ -481,7 +481,7 @@ receives:
 {
 "UserId":"",
 "DoctorId":"",
-[{"MedicineName":"","BranchOfficeName":""},{"MedicineName":"","BranchOfficeName":""}]
+[{"MedicineId":"","BranchOfficeId":""},{"MedicineId":"","BranchOfficeId":""}]
 }
 -The last of the received values is a list (of 1 or more elements) of pairs of medicine names and the branch office they belong to that were prescribed by the doctor to the patient
 
@@ -506,7 +506,7 @@ receives:
 "PrescriptionId ":"",
 "UserId":"",
 "DoctorId":"",
-[{"MedicineName":"","BranchOfficeName":""},{"MedicineName":"","BranchOfficeName":""}]
+[{"MedicineId":"","BranchOfficeId":""},{"MedicineId":"","BranchOfficeId":""}]
 }
 -The last of the received values is a list (of 1 or more elements) of pairs of medicine names and the branch office they belong to that were prescribed by the doctor to the patient
 
@@ -568,7 +568,7 @@ receives:
 "PrescriptionId ":"",
 "UserId":"",
 "DoctorId":"",
-[{"MedicineName":"","BranchOfficeName":""},{"MedicineName":"","BranchOfficeName":""}]
+[{"MedicineId":"","BranchOfficeId":""},{"MedicineId":"","BranchOfficeId":""}]
 }
 -The last of the received values is a list (of 1 or more elements) of pairs of medicine names and the branch office they belong to that were prescribed by the doctor to the patient
 
