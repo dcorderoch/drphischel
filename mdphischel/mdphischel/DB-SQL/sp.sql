@@ -41,10 +41,30 @@ BEGIN
 END
 GO
 
-GO
-	DECLARE @result int, @errorCode int;
-  EXEC usp_preregistDoc @docCode='DOC048',@idNumber='15467764',@pass='ccchhhaaa',@officeAddress= 'San Pedro',@creditCardNum='3457632873829383',
-                        @name='Esteban',@lastName1='Rodriguez',@lastName2='Vega', @residencePlace='San Jose', @birthDate='19700704',@result=@result OUTPUT, @errorNum=@errorCode OUTPUT;
-  SELECT @result AS ResultCode, @errorCode AS ErrorCode;
 
+ /*
+  *  Appprobation of doctors by doctorCode
+  */ 
+
+  GO
+  CREATE PROCEDURE usp_acceptDoc 
+		@docCode NVARCHAR(15), @result int OUTPUT, @errorNum int OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	BEGIN TRANSACTION t1
+		BEGIN TRY
+    		UPDATE Doctor SET IsActive = 1 WHERE DoctorId=@docCode
+		END TRY
+		BEGIN CATCH
+			SET @errorNum = Error_Number()
+			SET @result=0
+			ROLLBACK TRANSACTION t1
+			RETURN
+	    END CATCH
+	COMMIT TRANSACTION t1
+	SET @result = 1
+	RETURN
+END
 GO
+
