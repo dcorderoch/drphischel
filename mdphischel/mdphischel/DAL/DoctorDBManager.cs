@@ -8,9 +8,26 @@ using System.Web;
 
 namespace mdphischel.DAL
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class DoctorDBManager
     {
 
+        /// <summary>
+        /// This method calls a stored procedure to create a new doctor
+        /// </summary>
+        /// <param name="docCode"></param>
+        /// <param name="pass"></param>
+        /// <param name="idNumber"></param>
+        /// <param name="name"></param>
+        /// <param name="lastName1"></param>
+        /// <param name="lastName2"></param>
+        /// <param name="residencePlace"></param>
+        /// <param name="birthdate"></param>
+        /// <param name="officeAddres"></param>
+        /// <param name="creditCardNum"></param>
+        /// <returns></returns>
         public int[] PreRegistation(String docCode, String pass, String idNumber, String name, String lastName1, String lastName2, String residencePlace, String birthdate, String officeAddres, String creditCardNum)
         {
             int[] resultCodes = new int[2];
@@ -72,6 +89,57 @@ namespace mdphischel.DAL
                         resultCodes[1]=int.Parse(errorNumCode.ToString());
                     }
                     
+                }
+                else
+                {
+                    resultCodes[0] = 0;
+                    resultCodes[1] = 0;
+                }
+
+                connection.Close();
+            }
+            return resultCodes;
+        }
+
+        /// <summary>
+        /// This method calls a stored procedure to accept a previously created doctor
+        /// </summary>
+        /// <param name="docCode"></param>
+        /// <returns></returns>
+        public int[] AcceptDoctor(String docCode)
+        {
+            int[] resultCodes = new int[2];
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("usp_acceptDoc", connection))
+            {
+
+                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
+                errorCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter resultCodeParameter = cmd.Parameters.Add("@result", SqlDbType.Int);
+                resultCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter docCodeParameter = cmd.Parameters.Add("@docCode", SqlDbType.NVarChar);
+                docCodeParameter.Direction = ParameterDirection.Input;
+                docCodeParameter.Value = docCode;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                var resultCode = resultCodeParameter.Value;
+                var errorNumCode = errorCodeParameter.Value;
+                if (resultCode != DBNull.Value)
+                {
+                    resultCodes[0] = int.Parse(resultCode.ToString());
+                    if (errorNumCode == DBNull.Value)
+                    {
+                        resultCodes[1] = 0;
+                    }
+                    else
+                    {
+                        resultCodes[1] = int.Parse(errorNumCode.ToString());
+                    }
+
                 }
                 else
                 {
