@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using mdphischel.DAL.Models;
 
 namespace mdphischel.DAL
 {
@@ -30,11 +31,13 @@ namespace mdphischel.DAL
         /// <returns></returns>
         public int[] PreRegistation(String docCode, String pass, String idNumber, String name, String lastName1, String lastName2, String residencePlace, String birthdate, String officeAddres, String creditCardNum)
         {
+            //Initializing result code array. Pos 0 is the Result code (1= success, 0= fail) and pos 1 is the sql error code (if sp fails).
             int[] resultCodes = new int[2];
+            //Using temp connection and command objects
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
             using (SqlCommand cmd = new SqlCommand("usp_preregistDoc",connection))
             {
-                
+                //Definning input and output parameters of the SP
                 SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
                 errorCodeParameter.Direction = ParameterDirection.Output;
                 SqlParameter resultCodeParameter = cmd.Parameters.Add("@result", SqlDbType.Int);
@@ -70,11 +73,14 @@ namespace mdphischel.DAL
                 creditCardNumParameter.Direction = ParameterDirection.Input;
                 creditCardNumParameter.Value = creditCardNum;
 
+                //Definning command type
                 cmd.CommandType = CommandType.StoredProcedure;
 
+                //Open connection and then executes the SP
                 connection.Open();
                 cmd.ExecuteNonQuery();
 
+                //Getting resultCodes and errorcodes
                 var resultCode = resultCodeParameter.Value;
                 var errorNumCode = errorCodeParameter.Value;
                 if (resultCode != DBNull.Value)
@@ -96,6 +102,7 @@ namespace mdphischel.DAL
                     resultCodes[1] = 0;
                 }
 
+                //Closing connection
                 connection.Close();
             }
             return resultCodes;
@@ -153,6 +160,66 @@ namespace mdphischel.DAL
         }
 
 
+        /// <summary>
+        /// Retrieves doctors appointments of the specified month and year
+        /// </summary>
+        /// <param name="docCode">doctor id</param>
+        /// <param name="date"> desired year and month in the format YYYY-MM-01</param>
+        /// <returns></returns>
+        public MonthlyDocCharges GetMonthlyCharges(string docCode, string date)
+        {
+            MonthlyDocCharges chargesReport = new MonthlyDocCharges();
 
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("usp_doctorsCharges", connection))
+            {
+                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
+                errorCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter resultCodeParameter = cmd.Parameters.Add("@result", SqlDbType.Int);
+                resultCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter docCodeParameter = cmd.Parameters.Add("@docCode", SqlDbType.NVarChar);
+                docCodeParameter.Direction = ParameterDirection.Input;
+                docCodeParameter.Value = docCode;
+                SqlParameter dateParameter = cmd.Parameters.Add("@date", SqlDbType.NVarChar);
+                dateParameter.Direction = ParameterDirection.Input;
+                dateParameter.Value = date;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var resultCode=resultCodeParameter.Value;
+                    var errorNumCode = errorCodeParameter.Value;
+
+                    if (resultCode != DBNull.Value)
+                    {
+                        chargesReport.ResultCodes[0] = int.Parse(resultCode.ToString());
+                        if (errorNumCode == DBNull.Value)
+                        {
+                            chargesReport.ResultCodes[1] = 0;
+                        }
+                        else
+                        {
+                            chargesReport.ResultCodes[1] = int.Parse(errorNumCode.ToString());
+                        }
+
+                        while (reader.Read())
+                        {
+                            chargesReport.AddCharge(new DoctorsCharge() { UserId = reader["UserId"] as string, AppointmentDate = reader["AppointmentDate"] as string });
+
+                        }
+                    }
+                    else
+                    {
+                        chargesReport.ResultCodes[0] = 0;
+                        chargesReport.ResultCodes[1] = 0;
+                    }
+                }
+
+                connection.Close();
+            }
+            return chargesReport;
+        }
     }
 }
