@@ -100,10 +100,14 @@
     <Compile Include="BLL\MedicalRecordManager.cs" />
     <Compile Include="BLL\PatientManager.cs" />
     <Compile Include="BLL\PrescriptionManager.cs" />
+    <Compile Include="DAL\DBConfigurator.cs" />
+    <Compile Include="DAL\DoctorDBManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\DAL\DALTest.cs" />
+    <Compile Include="Test\DAL\DoctorDBTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
