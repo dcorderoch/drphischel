@@ -68,3 +68,28 @@ BEGIN
 END
 GO
 
+/*
+ * Doctor's charges per month
+ */
+
+ GO
+  CREATE PROCEDURE usp_doctorsCharges 
+		@docCode NVARCHAR(15), @result int OUTPUT, @errorNum int OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	BEGIN TRANSACTION t1
+		BEGIN TRY
+    		UPDATE Doctor SET IsActive = 1 WHERE DoctorId=@docCode
+		END TRY
+		BEGIN CATCH
+			SET @errorNum = Error_Number()
+			SET @result=0
+			ROLLBACK TRANSACTION t1
+			RETURN
+	    END CATCH
+	COMMIT TRANSACTION t1
+	SET @result = 1
+	RETURN
+END
+GO
