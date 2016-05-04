@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 using mdphischel.DAL.Models;
@@ -175,7 +176,7 @@ namespace mdphischel.DAL
             {
                 SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
                 errorCodeParameter.Direction = ParameterDirection.Output;
-                SqlParameter resultCodeParameter = cmd.Parameters.Add("@result", SqlDbType.Int);
+                SqlParameter resultCodeParameter = cmd.Parameters.Add("@resultCode", SqlDbType.Int);
                 resultCodeParameter.Direction = ParameterDirection.Output;
                 SqlParameter docCodeParameter = cmd.Parameters.Add("@docCode", SqlDbType.NVarChar);
                 docCodeParameter.Direction = ParameterDirection.Input;
@@ -189,6 +190,16 @@ namespace mdphischel.DAL
                 connection.Open();
                 using (var reader = cmd.ExecuteReader())
                 {
+                    while (reader.Read())
+                    {
+                        DoctorsCharge newcharge = new DoctorsCharge();
+                        newcharge.UserId =  (int) reader[0];
+                        var newDate= reader[1].ToString();
+                        newcharge.AppointmentDate = newDate.ToString();
+                        chargesReport.AddCharge(newcharge);
+
+                    }
+                    reader.Close();
                     var resultCode=resultCodeParameter.Value;
                     var errorNumCode = errorCodeParameter.Value;
 
@@ -202,12 +213,6 @@ namespace mdphischel.DAL
                         else
                         {
                             chargesReport.ResultCodes[1] = int.Parse(errorNumCode.ToString());
-                        }
-
-                        while (reader.Read())
-                        {
-                            chargesReport.AddCharge(new DoctorsCharge() { UserId = reader["UserId"] as string, AppointmentDate = reader["AppointmentDate"] as string });
-
                         }
                     }
                     else
