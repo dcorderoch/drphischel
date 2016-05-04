@@ -28,6 +28,7 @@
         <p>Es importante que la tabla de pacientes cumpla el formato establecido.</p>
          <input type = "file" file-model = "myFile"/>
          <button ng-click = "uploadFile()">Cargar Pacientes</button>
+        <br>
         
         <div class="row">       <!-- Formato bonito para tablas-->
             <div class="col-md-12" >
@@ -60,14 +61,15 @@
         <br>
 
 <button type="button" class="btn btn-primary"  ng-click="toggle()">Ingresar nuevo paciente</button> 
-
+<br>
+        
 <div ng-show="showCreate">
  <form name="createForm" ng-submit="createPatient()" role="form" novalidate><!--ng-submit se da cuando se presiona submit abajo-->
 
         <div class="form-group" ng-class="{ 'has-error': createForm.Id.$dirty && createForm.Id.$error.required }">
             <label>Nombre de Usuario</label>
             <input type="text" name="Id"  class="form-control" ng-model="newPatient.UserId" required />
-            <span ng-show="editForm.Id.$dirty && editForm.Id.$error.required" class="help-block">El nombre de usuario  es requerido</span>
+            <span ng-show="createForm.Id.$dirty && createForm.Id.$error.required" class="help-block">El nombre de usuario  es requerido</span>
         </div>
      
      <div class="form-group" ng-class="{ 'has-error': createForm.name.$dirty && createForm.name.$error.required }">
