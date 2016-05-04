@@ -1,0 +1,80 @@
+
+<div id="main">
+    <div class="col-md-6 col-md-offset-3">  
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/">Dr Phischel</a>
+                </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#/hA"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#/acceptDoctor"><i class="fa-user-plus"></i> Revisar Doctores</a></li>
+                <li><a href="#/addSpecialities"><i class="fa fa-stethoscope"></i>Agregar especialidades médicas</a></li>
+                <li><a href="#/sync"><i class="fa fa-ambulance"></i></a>Sincronizar medicamentos</li>
+                <li><a href="#/newPatient"><i class="fa fa-user-md" ></i></a>Agregar paciente</li>    
+                <li><a href="#/charge"><i class="fa fa-credit-card" ></i></a>Cobrar a los doctores</li>    
+                <li><a href="#/login"><i class="fa-sign-out"></i>Cerrar Sesión</a></li>  
+              </ul>
+            </div>
+        </nav>
+        
+            <br>
+        <h3 class ="lead" align="center">Crear paciente</h3>
+            <br>
+
+        
+<form name="createForm" ng-submit="createPatient()" role="form" novalidate><!--ng-submit se da cuando se presiona submit abajo-->
+
+    <div class="form-group" ng-class="{ 'has-error': createForm.Id.$dirty && createForm.Id.$error.required }">
+        <label>Nombre de Usuario</label>
+        <input type="text" name="Id"  class="form-control" ng-model="newPatient.UserId" required />
+        <span ng-show="createForm.Id.$dirty && createForm.Id.$error.required" class="help-block">El nombre de usuario  es requerido</span>
+    </div>
+
+     <div class="form-group" ng-class="{ 'has-error': createForm.name.$dirty && createForm.name.$error.required }">
+        <label>Nombre</label>
+        <input type="text" name="name"  class="form-control" ng-model="newPatient.Name" required />
+        <span ng-show="createForm.name.$dirty && createForm.name.$error.required" class="help-block">El nombre es requerido</span>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error': createForm.pass.$dirty && createForm.pass.$error.required }">
+        <label>Contraseña</label>
+        <input type="password" name="pass"  class="form-control" ng-model="newPatient.Pass" required />
+        <span ng-show="createForm.pass.$dirty && createForm.pass.$error.required" class="help-block">La contraseña es requerida</span>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error': createForm.lastname1.$dirty && createForm.lastname1.$error.required }">
+        <label>Primer Apellido 1</label>
+        <input type="text" name="lastname1"  class="form-control" ng-model="newPatient.LastName1" required />
+        <span ng-show="createForm.lastname1.$dirty && createForm.lastname1.$error.required" class="help-block">El primer apellido es requerido</span>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error': createForm.lastname2.$dirty && createForm.lastname2.$error.required }">
+        <label>Segundo Apellido</label>
+        <input type="text" name="lastname2" class="form-control" ng-model="newPatient.LastName2" required />
+        <span ng-show="createForm.lastname2.$dirty && createForm.lastname2.$error.required" class="help-block">La fecha es requerida</span>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error': createForm.lastname2.$dirty && createForm.lastname2.$error.required }">
+        <label>Lugar de Residencia</label>
+        <input type="text" name="residence" class="form-control" ng-model="newPatient.ResidencePlace" required />
+        <span ng-show="createForm.residence.$dirty && createForm.residence.$error.required" class="help-block">El lugar de nacimiento es requerido</span>
+    </div> 
+
+    <div class="form-group" ng-class="{ 'has-error': createForm.bdate.$dirty && createForm.bdate.$error.required }">
+        <label>Fecha de Nacimiento</label>
+        <input type="date" name="bdate" class="form-control" ng-model="newPatient.BirthDate" required />
+        <span ng-show="createForm.bdate.$dirty && createForm.bdate.$error.required" class="help-block">La fecha de nacimiento es requerida</span>
+    </div> 
+
+    <div class="form-actions">
+        <!--Boton submit-->
+        <button type="submit"  ng-disabled="dataLoading|| createForm.$invalid " class="btn btn-primary">Crear</button>
+        <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+     </div>
+
+</form>
+        
+    </div>
+</div>
