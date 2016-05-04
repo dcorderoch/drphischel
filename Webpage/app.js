@@ -9,29 +9,74 @@
     config.$inject = ['$routeProvider', '$locationProvider'];
     function config($routeProvider, $locationProvider) {  //Inyectar dependencias de routeProvider y locationProvider 
         $routeProvider
-            .when('/', {
-                controller: 'HomeController',//esta es la extension de url que sucede cuando se esta en el HomeController
-                templateUrl: 'home/home.view.html',  //El controlador de este when home.controller.js
-                controllerAs: 'vm'     //Vista es el archivo home/home.view.html
-            })                                            //un alias del controlador, vm significa view model
-           .when('/login', {
-                controller: 'LoginController',
-                templateUrl: 'login/login.view.html',
-                controllerAs: 'vm'
+                                      //un alias del controlador, vm significa view model
+
+            .when('/acceptDoctor',{
+                controller: 'AcceptDoctorController',
+                templateUrl: 'acceptDoctor/acceptDoctor.view.html',
+                controlerAs: 'vm'           
             })
+            .when('/addSpecialities',{
+                controller: 'AddSpecialities',
+                templateUrl: 'addSpecialities/addSpecialities.view.html',
+                controlerAs: 'vm'
+            })   
+        
             .when('/appointment',{
                 controller:  'AppointmentController', 
                 templateUrl: 'appointment/appointment.view.html', 
                 controlerAs: 'vm'
             })
+
+            .when('/charge',{
+                controller: 'ChargeController',
+                templateUrl: 'charge/charge.view.html',
+                controlerAs: 'vm'           
+            })
+
+            .when('/checkRecord',{
+                controller: 'CheckRecordController',
+                templateUrl: 'checkRecord/checkRecord.view.html',
+                controlerAs: 'vm'           
+            })
+            .when('/createAppointment',{
+                controller: 'createAppointmentController',
+                templateUrl: 'createAppointment/createAppointment.view.html',
+                controlerAs: 'vm'           
+            })
+            .when('/createPatient',{
+                controller: 'CreatePatientController',
+                templateUrl: 'createPatient/createPatient.view.html',
+                controlerAs: 'vm'           
+            })
+            .when('/', {
+                controller: 'HomeController',//esta es la extension de url que sucede cuando se esta en el HomeController
+                templateUrl: 'home/home.view.html',  //El controlador de este when home.controller.js
+                controllerAs: 'vm'     //Vista es el archivo home/home.view.html
+            })      
+            .when('/homeA',{
+                controller: 'HomeAController',
+                templateUrl: 'homeA/homeA.view.html',
+                controlerAs: 'vm'           
+            })
+            .when('/homeP',{
+                controller: 'HomePController',
+                templateUrl: 'homeP/homeP.view.html',
+                controlerAs: 'vm'           
+            })
+           .when('/login', {
+                controller: 'LoginController',
+                templateUrl: 'login/login.view.html',
+                controllerAs: 'vm'
+            })
+            .when('/newDoctor',{
+                controller: 'NewDoctorController',
+                templateUrl: 'newdoctor/newdoctor.view.html',
+                controlerAs: 'vm'
+            })
             .when('/order',{
                 controller:  'OrderController', 
                 templateUrl: 'order/order.view.html', 
-                controlerAs: 'vm'
-            })
-            .when('/newdoctor',{
-                controller: 'NewDoctorController',
-                templateUrl: 'newdoctor/newdoctor.view.html',
                 controlerAs: 'vm'
             })
             .when('/patient',{
@@ -40,10 +85,15 @@
                 controlerAs: 'vm'
             }) 
             .when('/record',{
-                controller: 'RecordController',
+                controller: 'RecordControlloer',
                 templateUrl: 'record/record.view.html',
-                controlerAs: 'vm'
-            })   
+                controlerAs: 'vm'           
+            })
+            .when('/sync',{
+                controller: 'SyncController',
+                templateUrl: 'sync/sync.view.html',
+                controlerAs: 'vm'           
+            })
 
             .otherwise({ redirectTo: '/login' });//Esta es la url por defecto
     }
