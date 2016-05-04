@@ -24,10 +24,10 @@
         <p class="lead">Aquí podés ver y editar los registros médicos de tus pacientes</p>
         <br>
 
-        <select ng-model="selectedPatient" ng-options="x for x in patients">
+        <select ng-model="selectedPatient" ng-options="x.Name for x in patients"/>
             
         <md-button class="btn1" ng-click="acceptOffer(selectedPatient);"> Seleccionar </md-button>  
-        
+        <br>
             
             
 <div ng-show="showPatient">
@@ -57,7 +57,7 @@
                 </table>
             </div>
         </div>
-        </br>
+        <br>
 
 <button type="button" class="btn btn-primary"  ng-click="toggle()">Ingresar nuevo registro</button> 
 
