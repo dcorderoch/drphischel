@@ -10,7 +10,7 @@ namespace mdphischel.DAL.Models
     /// </summary>
     public class DoctorsCharge
     {
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public string AppointmentDate { get; set; }
     }
 }
