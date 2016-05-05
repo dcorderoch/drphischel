@@ -13,7 +13,7 @@
         $scope.medicSpecialities = []; //Read
         //Crear
         $scope.createDoctor= createDoctor;    //Create
-        
+        $scope.newDoc={};
 
         function initController() {
             loadAllSpecialities();
