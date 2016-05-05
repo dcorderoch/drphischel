@@ -9,117 +9,86 @@
     function PatientController(location, PatientService, FlashService, $rootScope,$scope) {
         var vm = this;
  
-        vm.login = login;
+        //CRUD
+        $scope.allPatients = []; //Read
+        $scope.deletePatient = deletePatient; //Delete
+        $scope.editPatient = editPatient;   //Update
+        $scope.createPatient= createPatient;    //Create
+        
+        //Crear
+         $scope.showCreate = false;
+        $scope.newPatient={};
+        
+        //Editar
+        $scope.editPatientJson ={};
+        $scope.showEdit = false;
+        $scope.patientEditID;
+        
+        $scope.toggle = function() {
+        
+            $scope.showCreate = !$scope.showCreate;
+        };
+        
+        $scope.toggle2 = function(patientID){
+            
+            $scope.showEdit = !$scope.showEdit;
+            $scope.patientEditID = patientID;
+        }
  
         initController();
 
         function initController() {
             loadAllPatients();
-            console.log($scope.allMedicamentos);
+            console.log($scope.allPatients);
         }
- 
-        function login() {
-            vm.dataLoading = true;
-            AuthenticationService.Login(vm.username, vm.password, function (response) {
-                if (response.success) {
-                    AuthenticationService.SetCredentials(vm.username, vm.password);
-                    $location.path('/');
-                } else {
-                    FlashService.Error(response.message);
-                    vm.dataLoading = false;
-                }
+        
+        function loadAllPatients() {
+            PatientService.GetAll()
+                .then(function (patients) {
+                    $scope.allPatients = patients.data;
+            },function(){
+                 FlashService.Error("Error al cargar pacientes");       
             });
-        };
-    }
- 
-})();
+        }
 
-(function () {
-    'use strict';
-
-    angular
-        .module('app')
-        .controller('MedicamentoController', MedicamentoController);
-
-    MedicamentoController.$inject = ['MedicamentoService', '$rootScope','$scope'];
-    function MedicamentoController(MedicamentoService, $rootScope, $scope) {
-        var vm = this;
-
-        //CRUD
-        $scope.allMedicamentos = []; //Read
-        $scope.deleteMedicamento = deleteMedicamento; //Delete
-        $scope.editMedicamento = editMedicamento;   //Update
-        $scope.createMedicamento= createMedicamento;    //Create
+        function deletePatient(id) {
+            console.log(id);
+            PatientService.Delete(id)
+            .then(function () {
+                loadAllPatients();
+                FlashService.Success('Eliminado de paciente exitoso', true);   
+            },function(){
+                FlashService.Error("Error al eliminar pacientes");       
+            });
+        }
         
-        //Crear
-         $scope.mostrarCrear = false;
-        $scope.newMedicamento={};
-        
-        //Editar
-        $scope.editarMedicamento ={};
-        $scope.mostrarEditar = false;
-        $scope.medicamentoEditID;
-        
-        $scope.toggle = function() {
-        
-            $scope.mostrarCrear = !$scope.mostrarCrear;
-        };
-        $scope.toggle2 = function(medID){
+        function editPatient(patient){
             
-            $scope.mostrarEditar = !$scope.mostrarEditar;
-            $scope.medicamentoEditID = medID;
-            console.log($scope.medicamentoEditID);
-        }
+            $scope.editPatientJson.UserId = $scope.patientEditID;
+            $scope.toggle2(" ");    
         
-        initController();
-
-        function initController() {
-            loadAllMedicamentos();
-            console.log($scope.allMedicamentos);
-        }
-
-
-        function loadAllMedicamentos() {
-            MedicamentoService.GetAll()
-                .then(function (medicamentos) {
-                    $scope.allMedicamentos = medicamentos.data;
-                console.log($scope.allMedicamentos);
+            PatientService.Update($scope.editPatientJson)
+                .then(function() {
+                    loadAllPatients();  
+                    FlashService.Success('Actualización de paciente exitosos', true);
+                    $scope.editPatientJson = {};
+                },function(response){
+                
+                    FlashService.Error('Error en la actualización de paciente');
                 });
         }
-
-        function deleteMedicamento(id) {
-            console.log(id);
-            MedicamentoService.Delete(id)
-            .then(function () {
-                loadAllMedicamentos();
-            });
-        }
         
-        function editMedicamento(medicamento){
-            $scope.editarMedicamento.medID = $scope.medicamentoEditID;
-            $scope.toggle2();
-            console.log(medicamento);
-            console.log($scope.medicamentoEditID);
-            console.log($scope.editarMedicamento);
-            MedicamentoService.Update($scope.editarMedicamento)
-                .then(function() {
-                    loadAllMedicamentos();  
-                $scope.editarMedicamento = {};
-                console.log($scope.editarMedicamento);
-            });
-        }
-        
-        function createMedicamento(){
+        function createPatient(){
             
             $scope.toggle();
-            console.log($scope.newMedicamento);
-            MedicamentoService.Create($scope.newMedicamento)
+            PatientService.Create($scope.newPatient)
                 .then(function() {
-                    loadAllMedicamentos();
-                    $scope.newMedicamento ={};   
-            });
+                    loadAllPatients();
+                    $scope.newPatient ={};   
+                },function(response){
+                    FlashService.Error('Error en la creacion de paciente');      
+                });
         }
-        
     }
-
+ 
 })();
