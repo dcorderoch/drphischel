@@ -27,7 +27,7 @@
          
         <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.creditCardNumber.$error.required }">
             <label>Nombre de la especialidad</label>
-            <input type="text" name="name" class="form-control" ng-model="speciality.Name" required />
+            <input type="text" name="name" class="form-control" ng-model="speciality.specName" required />
             <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">El nombre de la especialiadad es requerido</span>
         </div>      
          
