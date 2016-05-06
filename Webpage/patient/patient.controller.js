@@ -84,7 +84,9 @@
             PatientService.Create($scope.newPatient)
                 .then(function() {
                     loadAllPatients();
+                    FlashService.Success('Creacion de paciente exitosa');      
                     $scope.newPatient ={};   
+                
                 },function(response){
                     FlashService.Error('Error en la creacion de paciente');      
                 });

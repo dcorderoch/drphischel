@@ -92,7 +92,7 @@
             <label ng-repeat="speciality in medicSpecialities">
                 <input type="checkbox" name="specialities" class="form-control" checklist-model="newDoc.Specialities" checklist-value="speciality.Name"> {{speciality.name}}
             </label>
-        <span ng-show="form.specialities.$dirty && form.specialities.$error.required" class="help-block">Vuestro número de tarjeta de crédito es requerido</span>
+        <span ng-show="form.specialities.$dirty && form.specialities.$error.required" class="help-block">Es requerido escoger ciertas especialidades</span>
     </div>      
              
 

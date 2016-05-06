@@ -9,14 +9,11 @@
     function CheckRecordController(location, RecordService, FlashService, $rootScope,$scope) {
         var vm = this;
  
-
         $scope.allRecords = []; //get read
- 
         initController();
 
         function initController() {
-            loadAllRecords();
-            
+            loadAllRecords();            
         }
         
         function loadAllRecords() {
@@ -27,9 +24,5 @@
                  FlashService.Error("Error al cargar los registros");       
             });
         }
-
-
-
     }
- 
 })();
