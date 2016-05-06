@@ -857,24 +857,24 @@ GO
 -- Insert medicine into branch office stored procedure.
 
 GO
-CREATE PROCEDURE uspInsertMedicineIntoBranchOffice @BranchOfficeId uniqueidentifier, @MedicineId uniqueidentifier, @Quantity int, @Sales int, @Price decimal(10,2)
+CREATE PROCEDURE uspInsertMedicineIntoBranchOffice @BranchOfficeId uniqueidentifier, @MedicineId uniqueidentifier, @Quantity int, @Sales int, @Price decimal(10,2), @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t109
   BEGIN TRY
-  DECLARE @errorNum int
-  BEGIN
 	INSERT INTO MedicinesPerBranchOffice
 	VALUES(@BranchOfficeId, @MedicineId, @Quantity, @Sales, @Price)
-  END
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t109
-		RETURN @errorNum
-     END CATCH
+		RETURN
+  END CATCH
  COMMIT TRANSACTION t109
+ SET @result = 1
+ RETURN
 END
 GO
 
