@@ -1,7 +1,5 @@
 <div id="main">
 
-    <div class="col-md-6 col-md-offset-3">
-    
         <nav class="navbar navbar-default">
             <div class="container">
                 <div class="navbar-header">
@@ -20,6 +18,8 @@
             </div>
         </nav>
         
+        <div class="col-md-6 col-md-offset-3">
+    
         <br>
         <p align = "center" class="lead">Aquí podés dar mantenimiento a tus pacientes</p>
         <br>
@@ -117,60 +117,57 @@
     </form>
 </div>
 
-<div ng-show="showEdit">
-    
-   <form name="editForm" ng-submit="editPatient()" role="form" novalidate><!-- ng-submit se da cuando se presiona submit abajo-->
+    <div ng-show="showEdit">
 
-    <div class="form-group" ng-class="{ 'has-error': editForm.name.$dirty && form.name.$error.required }">
-        <label>Nombre</label>
-        <input type="text" name="name"  class="form-control" ng-model="updatePatient.Name" required />
-        <span ng-show="editForm.name.$dirty && editForm.name.$error.required" class="help-block">El nombre es requerido</span>
+       <form name="editForm" ng-submit="editPatient()" role="form" novalidate><!-- ng-submit se da cuando se presiona submit abajo-->
+
+        <div class="form-group" ng-class="{ 'has-error': editForm.name.$dirty && form.name.$error.required }">
+            <label>Nombre</label>
+            <input type="text" name="name"  class="form-control" ng-model="updatePatient.Name" required />
+            <span ng-show="editForm.name.$dirty && editForm.name.$error.required" class="help-block">El nombre es requerido</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': editForm.pass.$dirty && editForm.pass.$error.required }">
+            <label>Contraseña</label>
+            <input type="password" name="pass"  class="form-control" ng-model="updatePatient.Pass" required />
+            <span ng-show="editForm.pass.$dirty && editForm.pass.$error.required" class="help-block">La contraseña es requerida</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': editForm.lastname1.$dirty && form.lastname1.$error.required }">
+            <label>Primer Apellido 1</label>
+            <input type="text" name="lastname1"  class="form-control" ng-model="updatePatient.LastName1" required />
+            <span ng-show="editForm.lastname1.$dirty && editForm.lastname1.$error.required" class="help-block">El primer apellido es requerido</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': editForm.lastname2.$dirty && form.lastname2.$error.required }">
+            <label>Segundo Apellido</label>
+            <input type="text" name="lastname2" class="form-control" ng-model="updatePatient.LastName2" required />
+            <span ng-show="editForm.lastname2.$dirty && editForm.lastname2.$error.required" class="help-block">La fecha es requerida</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': editForm.lastname2.$dirty && form.lastname2.$error.required }">
+            <label>Lugar de Residencia</label>
+            <input type="text" name="residence" class="form-control" ng-model="updatePatient.ResidencePlace" required />
+            <span ng-show="editForm.residence.$dirty && editForm.residence.$error.required" class="help-block">El lugar de nacimiento es requerido</span>
+        </div> 
+
+        <div class="form-group" ng-class="{ 'has-error': editForm.bdate.$dirty && editForm.bdate.$error.required }">
+            <label>Fecha de Nacimiento</label>
+            <input type="date" name="bdate" class="form-control" ng-model="updatePatient.BirthDate" required />
+            <span ng-show="editForm.bdate.$dirty && editForm.bdate.$error.required" class="help-block">La fecha de nacimiento es requerida</span>
+        </div> 
+
+        <div class="form-actions">
+            <!--Boton submit-->
+            <button type="submit"  ng-disabled="editForm.$invalid || dataLoading" class="btn btn-primary">Crear</button>
+            <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+
+        </div>
+
+        </form> 
     </div>
-       
-    <div class="form-group" ng-class="{ 'has-error': editForm.pass.$dirty && editForm.pass.$error.required }">
-        <label>Contraseña</label>
-        <input type="password" name="pass"  class="form-control" ng-model="updatePatient.Pass" required />
-        <span ng-show="editForm.pass.$dirty && editForm.pass.$error.required" class="help-block">La contraseña es requerida</span>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error': editForm.lastname1.$dirty && form.lastname1.$error.required }">
-        <label>Primer Apellido 1</label>
-        <input type="text" name="lastname1"  class="form-control" ng-model="updatePatient.LastName1" required />
-        <span ng-show="editForm.lastname1.$dirty && editForm.lastname1.$error.required" class="help-block">El primer apellido es requerido</span>
-    </div>
-
-    <div class="form-group" ng-class="{ 'has-error': editForm.lastname2.$dirty && form.lastname2.$error.required }">
-        <label>Segundo Apellido</label>
-        <input type="text" name="lastname2" class="form-control" ng-model="updatePatient.LastName2" required />
-        <span ng-show="editForm.lastname2.$dirty && editForm.lastname2.$error.required" class="help-block">La fecha es requerida</span>
-    </div>
-       
-    <div class="form-group" ng-class="{ 'has-error': editForm.lastname2.$dirty && form.lastname2.$error.required }">
-        <label>Lugar de Residencia</label>
-        <input type="text" name="residence" class="form-control" ng-model="updatePatient.ResidencePlace" required />
-        <span ng-show="editForm.residence.$dirty && editForm.residence.$error.required" class="help-block">El lugar de nacimiento es requerido</span>
-    </div> 
-       
-    <div class="form-group" ng-class="{ 'has-error': editForm.bdate.$dirty && editForm.bdate.$error.required }">
-        <label>Fecha de Nacimiento</label>
-        <input type="date" name="bdate" class="form-control" ng-model="updatePatient.BirthDate" required />
-        <span ng-show="editForm.bdate.$dirty && editForm.bdate.$error.required" class="help-block">La fecha de nacimiento es requerida</span>
-    </div> 
-
-    <div class="form-actions">
-        <!--Boton submit-->
-        <button type="submit"  ng-disabled="editForm.$invalid || dataLoading" class="btn btn-primary">Crear</button>
-        <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-
-    </div>
-
-    </form> 
-</div>
         
-            
-    </div>
-
-<p>&nbsp;</p>
-<p><a href="#/login" class="btn btn-primary">Cerrar Sesion</a></p>
-
+    </div>      
 </div>
+
+

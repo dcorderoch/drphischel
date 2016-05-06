@@ -5,7 +5,7 @@
 
 
 <div id="main">
-    <div class="col-md-6 col-md-offset-3">  
+
         <nav class="navbar navbar-default">
             <div class="container">
                 <div class="navbar-header">
@@ -24,6 +24,8 @@
             </div>
         </nav>
 
+    <div class="col-md-6 col-md-offset-3">
+
         <br>
         <h3 align="center">Crea un pedido de medicamentos para Farmatica</h3>
         <p align="center">Escoge tu sucursal más cercana</p>
@@ -35,49 +37,49 @@
         <br>
         
         
-<div ng-show="branchSelected">
-    <form name="form" ng-submit="createOrder()" role="form">
-            <!--Crear un pedido normal -->
+    <div ng-show="branchSelected">
+        <form name="form" ng-submit="createOrder()" role="form">
+                <!--Crear un pedido normal -->
 
-        <div class="form-group" ng-class="{ 'has-error': form.pickupOfficeId.$dirty && form.pickupOfficeId.$error.required }">
-            <label >Sucursal de Recojo</label>
-            <input type="text" name="pickupOfficeId"  class="form-control" ng-model="order.pickupOfficeId" required />
-            <span ng-show="form.pickupOfficeId.$dirty && form.pickupOfficeId.$error.required" class="help-block">La Sucursal de Recojo es requerida</span>
-        </div>
+            <div class="form-group" ng-class="{ 'has-error': form.pickupOfficeId.$dirty && form.pickupOfficeId.$error.required }">
+                <label >Sucursal de Recojo</label>
+                <input type="text" name="pickupOfficeId"  class="form-control" ng-model="order.pickupOfficeId" required />
+                <span ng-show="form.pickupOfficeId.$dirty && form.pickupOfficeId.$error.required" class="help-block">La Sucursal de Recojo es requerida</span>
+            </div>
 
-        <div class="form-group" ng-class="{ 'has-error': form.clientId.$dirty && form.clientId.$error.required }">
-            <label >Cliente (Número de Cédula)</label>
-            <input type="text" name="clientId"  class="form-control" ng-model="order.clientId" required />
-             <span ng-show="form.clientId.$dirty && form.clientId.$error.required" class="help-block">El número de cédula del cliente es requerido</span>
-        </div>
+            <div class="form-group" ng-class="{ 'has-error': form.clientId.$dirty && form.clientId.$error.required }">
+                <label >Cliente (Número de Cédula)</label>
+                <input type="text" name="clientId"  class="form-control" ng-model="order.clientId" required />
+                 <span ng-show="form.clientId.$dirty && form.clientId.$error.required" class="help-block">El número de cédula del cliente es requerido</span>
+            </div>
 
-        <div class="form-group" ng-class="{ 'has-error': form.prefPhoneNumber.$dirty && form.prefPhoneNumber.$error.required }">
-            <label >Teléfono Preferido</label>
-            <input type="text" name="prefPhoneNumber"  class="form-control" ng-model="order.prefPhoneNumber" required />
-             <span ng-show="form.prefPhoneNumber.$dirty && form.prefPhoneNumber.$error.required" class="help-block">El teléfono preferido es requerido </span>
-        </div>
+            <div class="form-group" ng-class="{ 'has-error': form.prefPhoneNumber.$dirty && form.prefPhoneNumber.$error.required }">
+                <label >Teléfono Preferido</label>
+                <input type="text" name="prefPhoneNumber"  class="form-control" ng-model="order.prefPhoneNumber" required />
+                 <span ng-show="form.prefPhoneNumber.$dirty && form.prefPhoneNumber.$error.required" class="help-block">El teléfono preferido es requerido </span>
+            </div>
 
-        <div class="form-group" ng-class="{ 'has-error': form.medicines.$dirty && form.medicines.$error.required }"> 
-            <label >Medicinas</label>
-            <label ng-repeat="medicine in medicinesBranch">
-                <input type="checkbox" name="medicines" class="form-control" checklist-model="order.medicineIds" checklist-value="medicine.Id">{{medicine.name}}
-            </label>
-            <span ng-show="form.medicines.$dirty && form.medicines.$error.required" class="help-block">Las medicinas son requeridas</span>
-        </div>
+            <div class="form-group" ng-class="{ 'has-error': form.medicines.$dirty && form.medicines.$error.required }"> 
+                <label >Medicinas</label>
+                <label ng-repeat="medicine in medicinesBranch">
+                    <input type="checkbox" name="medicines" class="form-control" checklist-model="order.medicineIds" checklist-value="medicine.Id">{{medicine.name}}
+                </label>
+                <span ng-show="form.medicines.$dirty && form.medicines.$error.required" class="help-block">Las medicinas son requeridas</span>
+            </div>
 
-        <div class="form-group"ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }" >
-            <label for="input">Fecha de Recojo</label>
-            <input type="text" name="pickUpdDate" id="input" class="form-control" ng-model="order.pickupdDate" required />
-             <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">La fecha de recojo es requerido</span>
-        </div>
+            <div class="form-group"ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }" >
+                <label for="input">Fecha de Recojo</label>
+                <input type="text" name="pickUpdDate" id="input" class="form-control" ng-model="order.pickupdDate" required />
+                 <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">La fecha de recojo es requerido</span>
+            </div>
 
-        <div class="form-actions">
-            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Crear Pedido</button>
-            <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-            <a href="#/login" class="btn btn-link">Cancelar</a>
-        </div>
-    </form>
-</div> 
-    
+            <div class="form-actions">
+                <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Crear Pedido</button>
+                <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                <a href="#/login" class="btn btn-link">Cancelar</a>
+            </div>
+        </form>
+    </div> 
     </div>
+
 </div>
