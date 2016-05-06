@@ -669,26 +669,27 @@ GO
 -- Update patient stored procedure.
 
 GO
-CREATE PROCEDURE uspUpdatePatient @IdNumber char(9), @Pass nvarchar(30), @Name nvarchar(30),@LastName1 nvarchar(30), @LastName2 nvarchar(30), @Residence nvarchar(30), @BirthDate Date  
+CREATE PROCEDURE uspUpdatePatient @IdNumber char(9), @Pass nvarchar(30), @Name nvarchar(30),@LastName1 nvarchar(30), @LastName2 nvarchar(30), @Residence nvarchar(30), @BirthDate Date, @result int OUTPUT, @errorNum int OUTPUT  
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t102
+  DECLARE @generatedId int
   BEGIN TRY
-  DECLARE @result int, @generatedId int, @errorNum int
-  BEGIN
 	SELECT @generatedId=UserId FROM SystemUser WHERE IdNumber=@IdNumber
 	UPDATE SystemUser
 	SET IdNumber =@IdNumber, Pass=@Pass, Name= @Name, LastName1=@LastName1, LastName2 =@LastName2, ResidencePlace = @Residence, BirthDate = @BirthDate
     WHERE UserId = @generatedId;
-  END
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t102
-		RETURN @errorNum
-     END CATCH
+		RETURN
+  END CATCH
  COMMIT TRANSACTION t102
+ SET @result = 1
+ RETURN 	
 END
 GO
 
