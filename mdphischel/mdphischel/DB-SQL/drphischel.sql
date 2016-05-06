@@ -725,13 +725,12 @@ GO
 -- Add new medical specialty.
 
 GO
-CREATE PROCEDURE uspAddMedicalSpecialty @MedicalSpecialtyName nvarchar(30)
+CREATE PROCEDURE uspAddMedicalSpecialty @MedicalSpecialtyName nvarchar(30), @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t104
   BEGIN TRY
-  DECLARE @result int, @errorNum int
   IF (NOT EXISTS(SELECT * FROM MedicalSpecialty WHERE MedicalSpecialty.Name = @MedicalSpecialtyName)) 
   BEGIN
 	INSERT INTO MedicalSpecialty
@@ -740,36 +739,42 @@ SET NOCOUNT ON
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t104
-		RETURN @errorNum
+		RETURN
      END CATCH
  COMMIT TRANSACTION t104
+ SET @result = 1
+ RETURN
 END
+GO
+
 
 -- *************************************************** Appointments ****************************************************************************
 
 -- Create new appointment
 
 GO
-CREATE PROCEDURE uspAddNewAppointment @UserId int, @DoctorId nvarchar (15), @AppointmentDateTime DateTime
+CREATE PROCEDURE uspAddNewAppointment @UserId int, @DoctorId nvarchar (15), @AppointmentDateTime DateTime, @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t105
+  DECLARE @generatedId int
   BEGIN TRY
-  DECLARE @generatedId int, @errorNum int
-  BEGIN
 	IF Convert(datetime, Convert(int, @AppointmentDateTime)) >= Convert(datetime, Convert(int, GetDate())) AND (NOT EXISTS(SELECT * FROM Appointment WHERE Appointment.AppointmentDate = @AppointmentDateTime AND DoctorId = @DoctorId)) 
 	INSERT INTO Appointment
 	VALUES(@UserId, @DoctorId, @AppointmentDateTime)
-  END
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t105
-		RETURN @errorNum
-     END CATCH
+		RETURN
+  END CATCH
  COMMIT TRANSACTION t105
+ SET @result = 1
+ RETURN
 END
 GO
 
