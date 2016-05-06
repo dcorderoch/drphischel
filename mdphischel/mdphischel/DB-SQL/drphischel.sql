@@ -617,24 +617,26 @@ GO
 
 -- Create patient
 GO
-CREATE PROCEDURE uspCreatePatient @IdNumber char(9),@Pass nvarchar(30),	@Name nvarchar(30),	@LastName1 nvarchar(30), @LastName2 nvarchar(30), @Residence nvarchar(30), @BirthDate Date  
+CREATE PROCEDURE uspCreatePatient @IdNumber char(9),@Pass nvarchar(30),	@Name nvarchar(30),	@LastName1 nvarchar(30), @LastName2 nvarchar(30), @Residence nvarchar(30), @BirthDate Date, @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t100
   BEGIN TRY
    DECLARE @generatedId int
-   DECLARE @errorNum int
-      INSERT INTO SystemUser VALUES (@IdNumber,@Pass,@Name,@LastName1,@LastName2,@Residence,@BirthDate,1)
+   INSERT INTO SystemUser VALUES (@IdNumber,@Pass,@Name,@LastName1,@LastName2,@Residence,@BirthDate,1)
    SELECT @generatedId=UserId FROM SystemUser WHERE IdNumber=@IdNumber
    INSERT INTO RolesPerUser VALUES(1,@generatedId)
   END TRY
   BEGIN CATCH
    SET @errorNum = Error_Number()
+   SET @result = 0
    ROLLBACK TRANSACTION t100
-   RETURN @errorNum
+   RETURN 
      END CATCH
  COMMIT TRANSACTION t100
+ SET @result =1
+ RETURN
 END
 GO
 
