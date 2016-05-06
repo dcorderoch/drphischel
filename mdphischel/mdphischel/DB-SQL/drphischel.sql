@@ -695,26 +695,28 @@ GO
 
 -- Delete patient stored procedure.
 
-CREATE PROCEDURE uspDeletePatient @IdNumber char(9)
+GO
+CREATE PROCEDURE uspDeletePatient @IdNumber char(9),@result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t103
+  DECLARE @generatedId int
   BEGIN TRY
-  DECLARE @result int, @generatedId int, @errorNum int
-  BEGIN
 	SELECT @generatedId=UserId FROM SystemUser WHERE IdNumber=@IdNumber
 	UPDATE SystemUser
 	SET IsActive = 0
 	WHERE UserId = @generatedId;
-  END
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result= 0
 		ROLLBACK TRANSACTION t103
-		RETURN @errorNum
+		RETURN 
      END CATCH
  COMMIT TRANSACTION t103
+ SET @result = 1
+ RETURN
 END
 GO
 
