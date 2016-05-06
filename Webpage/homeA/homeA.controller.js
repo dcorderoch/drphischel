@@ -11,14 +11,14 @@
  
         //Tomar nombre del paciente
         $scope.adminName ;
-        
+        initController();
 
         function initController() {
             loadAdminName();
-        }();
+        }
         
         function loadAdminName() {
             $scope.adminName = $rootScope.adminName;
-}
- 
+        }
+    }
 })();

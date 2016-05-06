@@ -15,9 +15,11 @@
         $scope.createDoctor= createDoctor;    //Create
         $scope.newDoc={};
 
+        initController();
+        
         function initController() {
             loadAllSpecialities();
-        }();
+        }
         
         function loadAllSpecialities() {
             SpecialityService.GetAll()

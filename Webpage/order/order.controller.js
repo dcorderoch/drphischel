@@ -17,9 +17,11 @@
         $scope.branchId;
         $scope.medicines=[];
         
+        initController();
+        
         function initController() {
             loadAllBranches();
-        }();
+        };
         
         
         function setBranch(selectedBranch){
