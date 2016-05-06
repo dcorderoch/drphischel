@@ -627,6 +627,7 @@ SET NOCOUNT ON
    INSERT INTO SystemUser VALUES (@IdNumber,@Pass,@Name,@LastName1,@LastName2,@Residence,@BirthDate,1)
    SELECT @generatedId=UserId FROM SystemUser WHERE IdNumber=@IdNumber
    INSERT INTO RolesPerUser VALUES(1,@generatedId)
+   INSERT INTO MedicalRecord VALUES(@generatedId)
   END TRY
   BEGIN CATCH
    SET @errorNum = Error_Number()
@@ -639,7 +640,6 @@ SET NOCOUNT ON
  RETURN
 END
 GO
-
 -- Link Patient to Specific Doctor stored procedure.
 
 GO
