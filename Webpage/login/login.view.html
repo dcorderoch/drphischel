@@ -14,7 +14,7 @@
         <form name="form" ng-submit="login()" role="form" novalidate>
 
             <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
-                <label >Número de Cédula</label>
+                <label >Nombre de usuario</label>
                 <input type="text" name="id"  class="form-control" ng-model="ID" required />
                 <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">El nombre de usuario es requerido</span>
             </div>
