@@ -39,13 +39,13 @@
                 
                 </thead>
                 <tbody>             <!-- el vm. algo debe exisitir en el controlador o en un servicio inyectado-->
-                    <tr ng-repeat="medic in allMedics track by $index">   <!--el ng-repeat es importantisimo -->
+                    <tr ng-repeat="medic in allDoctors track by $index">   <!--el ng-repeat es importantisimo -->
                                                         <!--es como un for, itera en una lista -->
                         <td>{{medic.Name}}</td>
                         <td>{{medic.LastName1}}</td>
                         <td>{{medic.LastName2}}</td>
-                        <td><button ng-click="aceptMedic(medic.DoctorId)" type="button" class="btn btn-default" >Aceptar Doctor</button></td>
-                        <td><button ng-click="rejectMedic(medic.DoctorId)" type="button" class="btn btn-default" >Rechazar Doctor</button> </td>
+                        <td><button ng-click="aceptDoctor(medic.DoctorId)" type="button" class="btn btn-default" >Aceptar Doctor</button></td>
+                        <td><button ng-click="rejectDoctor(medic.DoctorId)" type="button" class="btn btn-default" >Rechazar Doctor</button> </td>
                     </tr>           <!-- estos son los valores de la tabla-->
                   </tbody>    
                 </table>
