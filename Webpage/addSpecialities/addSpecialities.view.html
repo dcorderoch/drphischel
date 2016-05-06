@@ -24,12 +24,12 @@
         <h3 align="center">Agregar Especialidad médica</h3>
         <br>
 
-        <form name="form" ng-submit="addSpeciality()" role="form" novalidate><!--ng-submit se da cuando se presiona submit abajo-->
+        <form name="form" ng-submit="addSpeciality()" role="form" ><!--ng-submit se da cuando se presiona submit abajo-->
 
-        <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.creditCardNumber.$error.required }">
+        <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
             <label>Nombre de la especialidad</label>
             <input type="text" name="name" class="form-control" ng-model="speciality.specName" required />
-            <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">El nombre de la especialiadad es requerido</span>
+            <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">El nombre de la especialidad es requerido</span>
         </div>      
 
         <div class="form-actions">

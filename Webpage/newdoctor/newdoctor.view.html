@@ -84,7 +84,7 @@
          
     <div class="form-group" ng-class="{ 'has-error': form.creditCardNumber.$dirty && form.creditCardNumber.$error.required }">
         <label>Tarjeta de Crédito</label>
-        <input type="date" name="creditCardNumber" class="form-control" ng-model="newDoc.CreditCardNumber" required />
+        <input type="text" name="creditCardNumber" class="form-control" ng-model="newDoc.CreditCardNumber" required />
         <span ng-show="form.creditCardNumber.$dirty && form.creditCardNumber.$error.required" class="help-block">Vuestro número de tarjeta de crédito es requerido</span>
     </div>      
          

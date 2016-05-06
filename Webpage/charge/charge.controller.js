@@ -22,6 +22,8 @@
         };
         
         function charge() {
+            console.log($scope.showReport);
+            $scope.toggle();
             ChargeService.GetAll()
                 .then(function (charges) {
                     $scope.allCharges = charges.data;
