@@ -626,6 +626,26 @@ BLL must:
 -mark doctor as accepted in the corresponding table
 
 ##########################################################################################
+HTTP VERB: POST
+api/doctor/reject
+
+receives:
+{
+"DoctorId":""
+}
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if Error ocurred
+N=1 if operation Succesful
+N is determined in the BLL
+
+BLL must:
+-delete doctor from pending list
+
+##########################################################################################
 HTTP VERB: GET
 api/admin/charges
 
