@@ -644,3 +644,19 @@ N is determined in the BLL
 
 BLL must:
 -insert new medical specialty
+
+##########################################################################################
+HTTP VERB: GET
+api/admin/sync
+
+returns:
+{
+"StatusCode":"N"
+}
+N=0 if 
+N=1 if 
+N=2 if 
+N is determined in the BLL
+
+BLL must:
+-verify success and send apropriate reply
