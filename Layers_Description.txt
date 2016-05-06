@@ -683,3 +683,68 @@ N is determined in the BLL
 
 BLL must:
 -verify success and send apropriate reply
+
+##########################################################################################
+HTTP VERB: GET
+api/branchoffice/getall
+
+returns:
+[
+{
+"BranchOfficeId":"",
+"Name":"",
+"PhoneNumber":"",
+"BOLocation":""
+},
+{
+"BranchOfficeId":"",
+"Name":"",
+"PhoneNumber":"",
+"BOLocation":""
+}
+]
+
+BLL must:
+- return all branchoffice information
+
+##########################################################################################
+HTTP VERB: GET
+api/medicine/getall
+
+returns:
+[
+{
+"BranchOfficeId":"",
+"Name":"",
+"PhoneNumber":"",
+"BOLocation":""
+},
+{
+"BranchOfficeId":"",
+"Name":"",
+"PhoneNumber":"",
+"BOLocation":""
+}
+]
+
+BLL must:
+- return all branchoffice information
+
+##########################################################################################
+HTTP VERB: GET
+api/specialties/getall
+
+returns:
+[
+{
+"MedicalSpecialtyId":""
+"Name":""
+},
+{
+"MedicalSpecialtyId":""
+"Name":""
+}
+]
+
+BLL must:
+- return all medical specialties' information
