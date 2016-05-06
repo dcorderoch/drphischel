@@ -1,6 +1,6 @@
 ##########################################################################################
-HTTP VERB: TBD
-api/controller/action
+HTTP VERB: POST
+api/user/login
 
 receives:
 {
@@ -11,31 +11,13 @@ receives:
 
 returns:
 {
-UserId
-IdNumber
-Name
-LastName1
-LastName2
-BirthDate
+"UserId":"",
+"IdNumber":"",
+"Name":"",
+"LastName1":"",
+"LastName2":"",
+"BirthDate":""
 }
-
-##########################################################################################
-HTTP VERB: POST
-api/user/login
-
-receives:
-{
-"":""
-}
-
-returns:
-{
-"":""
-}
-[DESC of what the return values mean]
-
-BLL must:
--TBD, something the BLL must do
 
 ##########################################################################################
 HTTP VERB: GET
