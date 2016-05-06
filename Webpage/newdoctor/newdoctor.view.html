@@ -90,7 +90,7 @@
     <div class="form-group" ng-class="{ 'has-error': form.specialities.$dirty && form.specialities.$error.required }">
         <label>Especialidades Médicas</label>
             <label ng-repeat="speciality in medicSpecialities">
-                <input type="checkbox" name="specialities" class="form-control" checklist-model="newDoc.Specialities" checklist-value="speciality"> {{speciality.name}}
+                <input type="checkbox" name="specialities" class="form-control" checklist-model="newDoc.Specialities" checklist-value="speciality.Name"> {{speciality.name}}
             </label>
         <span ng-show="form.specialities.$dirty && form.specialities.$error.required" class="help-block">Vuestro número de tarjeta de crédito es requerido</span>
     </div>      
