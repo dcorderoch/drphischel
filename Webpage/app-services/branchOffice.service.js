@@ -2,26 +2,24 @@
     'use strict';
 
     angular
-        .module('app')
-        .factory('MedicamentoService', MedicamentoService);  //servicio de medicamentos
+        .module('app')          //servicio para el cliente
+        .factory('ChargeService', ChargeService);
 
-    MedicamentoService.$inject = ['$http'];
-    function MedicamentoService($http) {
+    ChargeService.$inject = ['$http'];
+    function ChargeService($http) {
         var service = {};
 
-        service.GetAll = GetAll; //las funciones que son expuestas
-       
+        service.GetAll = GetAll;
 
         return service;
 
         function GetAll() {
             var response=$http({
-                method:"post",
-                url:"api/medicine/getall"
+                method:"get",
+                url:"api/admin/charges"
             });
             return response;    
         }
-        
 
         // private functions
 
@@ -35,6 +33,5 @@
             };
         }
     }
-
 
 })();
