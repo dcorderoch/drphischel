@@ -12,43 +12,55 @@
     function LoginController($location, AuthenticationService, FlashService, $scope, $http, $rootScope) {
 
         var vm = this; //se pueden utilizar objetos y variables de las inyecciones en la vista
+        $scope.roles=[{"id":1,"Name":"Paciente"},{"id":2,"Name":"Doctor"},{"id":3,"Name":"Admin"}];
+        $scope.login = login;
+        $scope.loginData={};
 
-        login = login;
-        userInfo=[]; //variable para obtener los valores retornados del login, almacenado temporal
 
-        (function initController() {
-// Se inicializa el servicio de limpiar credenciales en AuthenticationService
-            AuthenticationService.ClearCredentials();
-        }) ();//Estos parentesis del final indican que esto se inicia automaticamente
+        initController();
+        function initController() { // Se inicializa el servicio de limpiar credenciales en AuthenticationService       
+           // AuthenticationService.ClearCredentials();
+            console.log($scope.roles);
+        }//Estos parentesis del final indican que esto se inicia automaticamente
 
-        function login() {
-            $scope.dataLoading = true;  //Aqui se hace el rest sin llamar a authentication service porque fue mas facil para mi
-            AuthenticationService.Login( ID, Pass)
-                .then(function(response)  {
-                    
-                    
-                
-                    AuthenticationService.SetCredentials(vm.ID, vm.Pass);
-                    vm.userInfo = response.data; 
-                    $rootScope.company = vm.userInfo[6];//la compania para una variable global
-                    $rootScope.sucursal = vm.userInfo[8];//la sucursal para una variable global
-                    console.log($rootScope.sucursal);
-                    if ( vm.userInfo[7] ==="2" ){ //se determina si es un gerente o dependiente
-                        $location.path('/stats'); //vista de stats
-                    }
-                    if (vm.userInfo[7] ==="1"){
-                        $location.path('/'); //vista de pedidos
-                    }  
-                    else{
-                    FlashService.Error(response.message);//errores
-                    vm.dataLoading = false;  
-                    } 
-                }, 
-                function(response) {             
-                  FlashService.Error(response.message);//errores
-                    $scope.dataLoading = false;   
-                });
+        function login(selectedRol) {
+            $scope.dataLoading = true; 
+            
+            if (selectedRol.id==1){
+                AuthenticationService.Login( $scope.loginData)
+                    .then(function(response){
+                        
+                        $rootScope.userId= response.data.UserId;
+                        $rootScope.patientName = response.data.Name;
+                        $location.path('/homeP');
+                    },function(response){
+                        FlashService.Error("Paciente no existe");//errores
+                        $scope.dataLoading = false;
+                });                   
             }
-
+            else if (selectedRol.id==2){
+                AuthenticationService.Login( $scope.loginData)
+                    .then(function(response){
+                    
+                        $rootScope.doctorId= response.data.UserId;
+                        $rootScope.doctorName = response.data.Name;        
+                        $location.path('/');
+                    },function(response){
+                        FlashService.Error("Doctor no existe");//errores
+                        $scope.dataLoading = false;
+                });  
+            }
+            else{
+                AuthenticationService.Login( $scope.loginData)
+                    .then(function(response){
+                    
+                        $rootScope.adminName = response.data.Name;   
+                        $location.path('/homeA');
+                    },function(response){
+                        FlashService.Error("Admin no existe");//errores
+                        $scope.dataLoading = false;
+                });  
+            }
         }
+    }
 }) ();

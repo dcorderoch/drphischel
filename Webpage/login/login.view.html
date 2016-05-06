@@ -11,43 +11,33 @@
 <!-- es importante que ng.model tenga el mismo nombre que se espera en el rest api -->
 <!-- El span se muestra si se omite una entrada del formulario --> 
 
-        <form name="form" ng-submit="login()" role="form" novalidate>
+        <form name="form" ng-submit="login(selectedRol)" role="form" novalidate>
 
             <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
                 <label >Nombre de usuario</label>
-                <input type="text" name="id"  class="form-control" ng-model="ID" required />
+                <input type="text" name="id"  class="form-control" ng-model="loginData.IdNumber" required />
                 <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">El nombre de usuario es requerido</span>
             </div>
 
-            <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+            <div class="form-group" ng-class="{'has-error': form.password.$dirty && form.password.$error.required }">
                 <label >Contraseña</label>
-                <input type="password" name="password" class="form-control" ng-model="Pass" required />
+                <input type="password" name="password" class="form-control" ng-model="loginData.Pass" required />
                 <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">La contraseña es requerida</span>
             </div> 
+            
+            <div class="form-group" >
+            
+                <label> Rol </label>
+                <select ng-model="selectedRol" ng-options="x.Name for x in roles"></select>
 
+            </div>
+            
             <div class="form-actions">
                 <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Ingresar</button>
                 <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
             </div>
         </form>
         
-     <form name="selectLogin" ng-submit="selectLoginType(chosedType)" role="form" novalidate>
 
-         <div class="form-group">
-             <ul>
-                 <li ng-repeat="userRole in roles">
-                     <label>{{userRole.type?}}
-                         <input type="radio" ng-model="chosedType" name="type" value="{{userRole.type?}}" required />
-                     </label>
-                </li>
-             </ul>
-         </div>
-
-         <div class="form-actions">
-             <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Escoger</button>
-             <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-         </div>
-
-     </form>
- </div>
+    </div>
 </div>
