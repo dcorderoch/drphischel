@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BLL\AppointmentManager.cs" />
+    <Compile Include="BLL\DoctorManager.cs" />
     <Compile Include="BLL\MedicalRecordManager.cs" />
     <Compile Include="BLL\PatientManager.cs" />
     <Compile Include="BLL\PrescriptionManager.cs" />
@@ -121,6 +122,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
+    <Folder Include="DAL\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
