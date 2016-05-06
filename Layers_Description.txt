@@ -4,6 +4,27 @@ api/controller/action
 
 receives:
 {
+"IdNumber":"",
+"Pass":"",
+"Role":""
+}
+
+returns:
+{
+UserId
+IdNumber
+Name
+LastName1
+LastName2
+BirthDate
+}
+
+##########################################################################################
+HTTP VERB: POST
+api/user/login
+
+receives:
+{
 "":""
 }
 
