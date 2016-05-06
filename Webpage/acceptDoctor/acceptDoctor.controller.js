@@ -17,11 +17,11 @@
         initController();
 
         function initController() {
-            loadAllDoctors(  );
+            loadPendingDoctors(  );
         }
         
-        function loadAllDoctors() {
-            DoctorService.GetAll()
+        function loadPendingDoctors() {
+            DoctorService.GetPending()
                 .then(function (doctors) {
                     $scope.allDoctors = doctors.data;
             },function(){
@@ -33,7 +33,7 @@
             
             DoctorService.acceptDoctor(Doctorid)
             .then(function () {
-                loadAllDoctors();
+                loadPendingDoctors();
                 FlashService.Success('Doctor aceptado', true);   
             },function(){
                 FlashService.Error("Doctor no ha podido ser aceptado, intente nuevamente mas tarde");       
@@ -45,7 +45,7 @@
             
             DoctorService.rejectDoctor(Doctorid)
                 .then(function() {
-                    loadAllDoctors();
+                    loadPendingDoctors();
                     FlashService.Success('Doctor rechazado', true); 
                 },function(response){
                     FlashService.Error('Doctor no ha podido ser rechazado, intente nuevamente mas tarde');      

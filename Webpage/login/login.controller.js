@@ -25,7 +25,7 @@
 
         function login(selectedRol) {
             $scope.dataLoading = true; 
-            
+            console.log(selectedRol);
             if (selectedRol.id==1){
                 AuthenticationService.Login( $scope.loginData)
                     .then(function(response){

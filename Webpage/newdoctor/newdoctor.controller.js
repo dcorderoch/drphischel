@@ -32,7 +32,7 @@
         
         function createDoctor(){
             
-            DoctorService.Create($scope.newDoc)
+            DoctorService.AddNew($scope.newDoc)
                 .then(function() {
                     $scope.newDoc ={};   
                 },function(response){

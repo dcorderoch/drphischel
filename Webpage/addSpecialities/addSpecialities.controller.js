@@ -14,9 +14,9 @@
         $scope.addSpeciality= addSpeciality;  //variables locales y para vistas
 
         function addSpeciality(){   //pedido sin prescripcion
- 
+            console.log($scope.speciality.specName);
             $scope.dataLoading=true;      //se muestra un data loading mientras se hace el pedido
-            SpecialityService.Create()
+            SpecialityService.AddNew()
             .then(function(response) {
                     
                 $scope.dataLoading= false;
@@ -31,6 +31,3 @@
     }
 } ) ();  // La funcion se auto llama
 ///importante no se pueden hacer dos pedidos (con y sin prescripcion al mismo tiempo)
-//
-//
-//
