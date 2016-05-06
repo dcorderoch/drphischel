@@ -12,15 +12,15 @@
       
         //Crear
         $scope.newPatient={};
-        $scope.createDoctor= createDoctor;    //Create
+        $scope.createPatient= createPatient;    //Create
     
-        function createDoctor(){
+        function createPatient(){
             
             PatientService.Create($scope.newPatient)
                 .then(function() {
                     $scope.newPatient ={};   
                 },function(response){
-                    FlashService.Error('Error en la creacion de doctor');      
+                    FlashService.Error('Error en la creacion de paciente');      
                 });
         }
     }
