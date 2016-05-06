@@ -81,6 +81,7 @@
         function createPatient(){
             
             $scope.toggle();
+            $scope.newPatient= $rootScope.doctorId;
             PatientService.Create($scope.newPatient)
                 .then(function() {
                     loadAllPatients();
