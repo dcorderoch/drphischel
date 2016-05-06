@@ -617,106 +617,106 @@ GO
 
 -- Create patient
 GO
-CREATE PROCEDURE uspCreatePatient @IdNumber char(9),@Pass nvarchar(30),	@Name nvarchar(30),	@LastName1 nvarchar(30), @LastName2 nvarchar(30), @Residence nvarchar(30), @BirthDate Date  
+CREATE PROCEDURE uspCreatePatient @IdNumber char(9),@Pass nvarchar(30),	@Name nvarchar(30),	@LastName1 nvarchar(30), @LastName2 nvarchar(30), @Residence nvarchar(30), @BirthDate Date, @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t100
   BEGIN TRY
    DECLARE @generatedId int
-   DECLARE @errorNum int
-      INSERT INTO SystemUser VALUES (@IdNumber,@Pass,@Name,@LastName1,@LastName2,@Residence,@BirthDate,1)
+   INSERT INTO SystemUser VALUES (@IdNumber,@Pass,@Name,@LastName1,@LastName2,@Residence,@BirthDate,1)
    SELECT @generatedId=UserId FROM SystemUser WHERE IdNumber=@IdNumber
    INSERT INTO RolesPerUser VALUES(1,@generatedId)
+   INSERT INTO MedicalRecord VALUES(@generatedId)
   END TRY
   BEGIN CATCH
    SET @errorNum = Error_Number()
+   SET @result = 0
    ROLLBACK TRANSACTION t100
-   RETURN @errorNum
+   RETURN 
      END CATCH
  COMMIT TRANSACTION t100
+ SET @result =1
+ RETURN
 END
 GO
-
 -- Link Patient to Specific Doctor stored procedure.
 
 GO
-CREATE PROCEDURE uspLinkToDoctor @doctorId nvarchar(15), @idNumber char(9),@pass nvarchar(30),	@name nvarchar(30),	@lastName1 nvarchar(30), @lastName2 nvarchar(30), @residence nvarchar(30), @birthDate Date
+CREATE PROCEDURE uspLinkToDoctor @doctorId nvarchar(15), @idNumber char(9), @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
 BEGIN TRANSACTION t101
+DECLARE @generatedId int
   BEGIN TRY
-	DECLARE @result int, @generatedId int, @errorNum int
-	EXEC @result=uspCreatePatient @IdNumber=@idNumber, @Pass=@pass, @Name = @name, @LastName1=@lastName1, @LastName2 =@lastName2, @Residence = @residence, @BirthDate =@birthDate
-	IF @result = 2627 
-	BEGIN
-	SELECT @generatedId=UserId FROM SystemUser WHERE IdNumber=@IdNumber	
-	INSERT INTO PatientByDoctor
-	VALUES (@generatedId, @doctorId)
-	END
-	ELSE
 	SELECT @generatedId=UserId FROM SystemUser WHERE IdNumber=@IdNumber	
 	INSERT INTO PatientByDoctor
 	VALUES (@generatedId, @doctorId)
   END TRY
 	BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t101
-		RETURN @errorNum
+		RETURN
      END CATCH
  COMMIT TRANSACTION t101
+ SET @result =1
+ RETURN
 END
 GO
 
 -- Update patient stored procedure.
 
 GO
-CREATE PROCEDURE uspUpdatePatient @IdNumber char(9), @Pass nvarchar(30), @Name nvarchar(30),@LastName1 nvarchar(30), @LastName2 nvarchar(30), @Residence nvarchar(30), @BirthDate Date  
+CREATE PROCEDURE uspUpdatePatient @IdNumber char(9), @Pass nvarchar(30), @Name nvarchar(30),@LastName1 nvarchar(30), @LastName2 nvarchar(30), @Residence nvarchar(30), @BirthDate Date, @result int OUTPUT, @errorNum int OUTPUT  
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t102
+  DECLARE @generatedId int
   BEGIN TRY
-  DECLARE @result int, @generatedId int, @errorNum int
-  BEGIN
 	SELECT @generatedId=UserId FROM SystemUser WHERE IdNumber=@IdNumber
 	UPDATE SystemUser
 	SET IdNumber =@IdNumber, Pass=@Pass, Name= @Name, LastName1=@LastName1, LastName2 =@LastName2, ResidencePlace = @Residence, BirthDate = @BirthDate
     WHERE UserId = @generatedId;
-  END
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t102
-		RETURN @errorNum
-     END CATCH
+		RETURN
+  END CATCH
  COMMIT TRANSACTION t102
+ SET @result = 1
+ RETURN 	
 END
 GO
 
 -- Delete patient stored procedure.
 
-CREATE PROCEDURE uspDeletePatient @IdNumber char(9)
+GO
+CREATE PROCEDURE uspDeletePatient @IdNumber char(9),@result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t103
+  DECLARE @generatedId int
   BEGIN TRY
-  DECLARE @result int, @generatedId int, @errorNum int
-  BEGIN
 	SELECT @generatedId=UserId FROM SystemUser WHERE IdNumber=@IdNumber
 	UPDATE SystemUser
 	SET IsActive = 0
 	WHERE UserId = @generatedId;
-  END
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result= 0
 		ROLLBACK TRANSACTION t103
-		RETURN @errorNum
+		RETURN 
      END CATCH
  COMMIT TRANSACTION t103
+ SET @result = 1
+ RETURN
 END
 GO
 
@@ -725,13 +725,12 @@ GO
 -- Add new medical specialty.
 
 GO
-CREATE PROCEDURE uspAddMedicalSpecialty @MedicalSpecialtyName nvarchar(30)
+CREATE PROCEDURE uspAddMedicalSpecialty @MedicalSpecialtyName nvarchar(30), @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t104
   BEGIN TRY
-  DECLARE @result int, @errorNum int
   IF (NOT EXISTS(SELECT * FROM MedicalSpecialty WHERE MedicalSpecialty.Name = @MedicalSpecialtyName)) 
   BEGIN
 	INSERT INTO MedicalSpecialty
@@ -740,48 +739,55 @@ SET NOCOUNT ON
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t104
-		RETURN @errorNum
+		RETURN
      END CATCH
  COMMIT TRANSACTION t104
+ SET @result = 1
+ RETURN
 END
+GO
+
 
 -- *************************************************** Appointments ****************************************************************************
 
 -- Create new appointment
 
 GO
-CREATE PROCEDURE uspAddNewAppointment @UserId int, @DoctorId nvarchar (15), @AppointmentDateTime DateTime
+CREATE PROCEDURE uspAddNewAppointment @UserId int, @DoctorId nvarchar (15), @AppointmentDateTime DateTime, @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t105
+  DECLARE @generatedId int
   BEGIN TRY
-  DECLARE @generatedId int, @errorNum int
-  BEGIN
 	IF Convert(datetime, Convert(int, @AppointmentDateTime)) >= Convert(datetime, Convert(int, GetDate())) AND (NOT EXISTS(SELECT * FROM Appointment WHERE Appointment.AppointmentDate = @AppointmentDateTime AND DoctorId = @DoctorId)) 
 	INSERT INTO Appointment
 	VALUES(@UserId, @DoctorId, @AppointmentDateTime)
-  END
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t105
-		RETURN @errorNum
-     END CATCH
+		RETURN
+  END CATCH
  COMMIT TRANSACTION t105
+ SET @result = 1
+ RETURN
 END
 GO
 
 -- Update Appointment Stored Procedure.
 
-CREATE PROCEDURE uspUpdateAppointment @UserId int, @DoctorId nvarchar(15), @OldAppointment DATETIME, @NewAppointment DATETIME
+GO
+CREATE PROCEDURE uspUpdateAppointment @UserId int, @DoctorId nvarchar(15), @OldAppointment DATETIME, @NewAppointment DATETIME, @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t106
   BEGIN TRY
-  DECLARE @generatedId int, @errorNum int
+  DECLARE @generatedId int
   BEGIN
 	IF Convert(datetime, Convert(int, @NewAppointment)) >= Convert(datetime, Convert(int, GetDate())) AND (NOT EXISTS(SELECT * FROM Appointment WHERE AppointmentDate = @NewAppointment AND DoctorId = @DoctorId))
 	SELECT @generatedId=AppointmentId FROM Appointment WHERE DoctorId=@DoctorId AND UserId = @UserId AND AppointmentDate = @OldAppointment
@@ -792,22 +798,26 @@ SET NOCOUNT ON
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t106
-		RETURN @errorNum
-     END CATCH
+		RETURN
+  END CATCH
  COMMIT TRANSACTION t106
+ SET @result = 1
+ RETURN
 END
 GO
 
 -- Delete Appointment stored procedure.
+
 GO
-CREATE PROCEDURE uspDeleteAppointment @UserId int, @DoctorId nvarchar(15), @AppointmentDate DATETIME
+CREATE PROCEDURE uspDeleteAppointment @UserId int, @DoctorId nvarchar(15), @AppointmentDate DATETIME, @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t107
   BEGIN TRY
-  DECLARE @generatedId int, @errorNum int
+  DECLARE @generatedId int
   BEGIN
 	IF Convert(datetime, Convert(int, @AppointmentDate)) > Convert(datetime, Convert(int, GetDate()))
 	SELECT @generatedId=AppointmentId FROM Appointment WHERE DoctorId=@DoctorId AND UserId = @UserId AND AppointmentDate = @AppointmentDate
@@ -817,14 +827,18 @@ SET NOCOUNT ON
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t107
-		RETURN @errorNum
+		RETURN
      END CATCH
  COMMIT TRANSACTION t107
+ SET @result = 1
+ RETURN
 END
 GO
 
 -- Obtain all appointments from Doctor stored procedure.
+
 GO
 CREATE PROCEDURE uspGetAppointmentsByDoctor @DoctorId nvarchar(15)
 AS
@@ -843,47 +857,47 @@ GO
 -- Insert medicine into branch office stored procedure.
 
 GO
-CREATE PROCEDURE uspInsertMedicineIntoBranchOffice @BranchOfficeId uniqueidentifier, @MedicineId uniqueidentifier, @Quantity int, @Sales int, @Price decimal(10,2)
+CREATE PROCEDURE uspInsertMedicineIntoBranchOffice @BranchOfficeId uniqueidentifier, @MedicineId uniqueidentifier, @Quantity int, @Sales int, @Price decimal(10,2), @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t109
   BEGIN TRY
-  DECLARE @errorNum int
-  BEGIN
 	INSERT INTO MedicinesPerBranchOffice
 	VALUES(@BranchOfficeId, @MedicineId, @Quantity, @Sales, @Price)
-  END
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t109
-		RETURN @errorNum
-     END CATCH
+		RETURN
+  END CATCH
  COMMIT TRANSACTION t109
+ SET @result = 1
+ RETURN
 END
 GO
 
 -- Synchronize MedicinesPerBranchOffice stored procedure.
-
-CREATE PROCEDURE uspSynchronizeMedicinesPerBranchOffice @BranchOfficeId uniqueidentifier, @MedicineId uniqueidentifier, @Quantity int, @Sales int
+GO
+CREATE PROCEDURE uspSynchronizeMedicinesPerBranchOffice @BranchOfficeId uniqueidentifier, @MedicineId uniqueidentifier, @Quantity int, @Sales int, @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t110
   BEGIN TRY
-  DECLARE @errorNum int
-  BEGIN
 	UPDATE MedicinesPerBranchOffice
 	SET QuantityAvailable = @Quantity, Sales = @Sales
 	WHERE BranchOfficeId = @BranchOfficeId AND MedicineId = @MedicineId;
-  END
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t110
-		RETURN @errorNum
-     END CATCH
+		RETURN
+  END CATCH
  COMMIT TRANSACTION t110
+ SET @result = 1
+ RETURN
 END
 GO

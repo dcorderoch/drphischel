@@ -96,6 +96,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="BLL\AppointmentManager.cs" />
+    <Compile Include="BLL\MedicalRecordManager.cs" />
+    <Compile Include="BLL\PatientManager.cs" />
+    <Compile Include="BLL\PrescriptionManager.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
