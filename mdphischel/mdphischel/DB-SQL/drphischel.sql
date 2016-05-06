@@ -780,13 +780,14 @@ GO
 
 -- Update Appointment Stored Procedure.
 
-CREATE PROCEDURE uspUpdateAppointment @UserId int, @DoctorId nvarchar(15), @OldAppointment DATETIME, @NewAppointment DATETIME
+GO
+CREATE PROCEDURE uspUpdateAppointment @UserId int, @DoctorId nvarchar(15), @OldAppointment DATETIME, @NewAppointment DATETIME, @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t106
   BEGIN TRY
-  DECLARE @generatedId int, @errorNum int
+  DECLARE @generatedId int
   BEGIN
 	IF Convert(datetime, Convert(int, @NewAppointment)) >= Convert(datetime, Convert(int, GetDate())) AND (NOT EXISTS(SELECT * FROM Appointment WHERE AppointmentDate = @NewAppointment AND DoctorId = @DoctorId))
 	SELECT @generatedId=AppointmentId FROM Appointment WHERE DoctorId=@DoctorId AND UserId = @UserId AND AppointmentDate = @OldAppointment
@@ -797,10 +798,13 @@ SET NOCOUNT ON
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t106
-		RETURN @errorNum
-     END CATCH
+		RETURN
+  END CATCH
  COMMIT TRANSACTION t106
+ SET @result = 1
+ RETURN
 END
 GO
 
