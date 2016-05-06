@@ -809,14 +809,15 @@ END
 GO
 
 -- Delete Appointment stored procedure.
+
 GO
-CREATE PROCEDURE uspDeleteAppointment @UserId int, @DoctorId nvarchar(15), @AppointmentDate DATETIME
+CREATE PROCEDURE uspDeleteAppointment @UserId int, @DoctorId nvarchar(15), @AppointmentDate DATETIME, @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t107
   BEGIN TRY
-  DECLARE @generatedId int, @errorNum int
+  DECLARE @generatedId int
   BEGIN
 	IF Convert(datetime, Convert(int, @AppointmentDate)) > Convert(datetime, Convert(int, GetDate()))
 	SELECT @generatedId=AppointmentId FROM Appointment WHERE DoctorId=@DoctorId AND UserId = @UserId AND AppointmentDate = @AppointmentDate
@@ -826,14 +827,18 @@ SET NOCOUNT ON
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t107
-		RETURN @errorNum
+		RETURN
      END CATCH
  COMMIT TRANSACTION t107
+ SET @result = 1
+ RETURN
 END
 GO
 
 -- Obtain all appointments from Doctor stored procedure.
+
 GO
 CREATE PROCEDURE uspGetAppointmentsByDoctor @DoctorId nvarchar(15)
 AS
