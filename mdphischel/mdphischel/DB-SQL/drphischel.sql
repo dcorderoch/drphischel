@@ -643,31 +643,26 @@ GO
 -- Link Patient to Specific Doctor stored procedure.
 
 GO
-CREATE PROCEDURE uspLinkToDoctor @doctorId nvarchar(15), @idNumber char(9),@pass nvarchar(30),	@name nvarchar(30),	@lastName1 nvarchar(30), @lastName2 nvarchar(30), @residence nvarchar(30), @birthDate Date
+CREATE PROCEDURE uspLinkToDoctor @doctorId nvarchar(15), @idNumber char(9), @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
 BEGIN TRANSACTION t101
+DECLARE @generatedId int
   BEGIN TRY
-	DECLARE @result int, @generatedId int, @errorNum int
-	EXEC @result=uspCreatePatient @IdNumber=@idNumber, @Pass=@pass, @Name = @name, @LastName1=@lastName1, @LastName2 =@lastName2, @Residence = @residence, @BirthDate =@birthDate
-	IF @result = 2627 
-	BEGIN
-	SELECT @generatedId=UserId FROM SystemUser WHERE IdNumber=@IdNumber	
-	INSERT INTO PatientByDoctor
-	VALUES (@generatedId, @doctorId)
-	END
-	ELSE
 	SELECT @generatedId=UserId FROM SystemUser WHERE IdNumber=@IdNumber	
 	INSERT INTO PatientByDoctor
 	VALUES (@generatedId, @doctorId)
   END TRY
 	BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t101
-		RETURN @errorNum
+		RETURN
      END CATCH
  COMMIT TRANSACTION t101
+ SET @result =1
+ RETURN
 END
 GO
 
