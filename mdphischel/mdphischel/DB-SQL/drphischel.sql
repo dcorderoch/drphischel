@@ -879,25 +879,25 @@ END
 GO
 
 -- Synchronize MedicinesPerBranchOffice stored procedure.
-
-CREATE PROCEDURE uspSynchronizeMedicinesPerBranchOffice @BranchOfficeId uniqueidentifier, @MedicineId uniqueidentifier, @Quantity int, @Sales int
+GO
+CREATE PROCEDURE uspSynchronizeMedicinesPerBranchOffice @BranchOfficeId uniqueidentifier, @MedicineId uniqueidentifier, @Quantity int, @Sales int, @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
  BEGIN TRANSACTION t110
   BEGIN TRY
-  DECLARE @errorNum int
-  BEGIN
 	UPDATE MedicinesPerBranchOffice
 	SET QuantityAvailable = @Quantity, Sales = @Sales
 	WHERE BranchOfficeId = @BranchOfficeId AND MedicineId = @MedicineId;
-  END
   END TRY
   BEGIN CATCH
 		SET @errorNum = Error_Number()
+		SET @result = 0
 		ROLLBACK TRANSACTION t110
-		RETURN @errorNum
-     END CATCH
+		RETURN
+  END CATCH
  COMMIT TRANSACTION t110
+ SET @result = 1
+ RETURN
 END
 GO
