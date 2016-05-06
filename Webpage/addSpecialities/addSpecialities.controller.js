@@ -8,7 +8,7 @@
     AddSpecialityController.$inject = ['SpecialityService', '$rootScope', 'FlashService', '$scope'];
     function AddSpecialityController(SpecialityService,$rootScope, FlashService, $scope) {
         
-        $scope.order={};
+        $scope.speciality={};
         var vm = this;
         
         $scope.addSpeciality= addSpeciality;  //variables locales y para vistas
