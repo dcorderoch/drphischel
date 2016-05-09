@@ -10,10 +10,9 @@
         var vm = this;
  
 
-        $scope.sync= sync;
-
+        $scope.syncMedics= syncMedics;
         
-        function sync() {
+        function syncMedics() {
             MedicineService.Sync()
                 .then(function (patients) {
                  FlashService.Success("Se sincronizaron los medicamentos");                          
@@ -21,7 +20,6 @@
                  FlashService.Error("Error al sincronizar los medicamentos");       
             });
         }
-
 
     }
  

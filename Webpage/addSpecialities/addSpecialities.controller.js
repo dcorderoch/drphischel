@@ -16,14 +16,14 @@
         function addSpeciality(){   //pedido sin prescripcion
             console.log($scope.speciality.specName);
             $scope.dataLoading=true;      //se muestra un data loading mientras se hace el pedido
-            SpecialityService.AddNew()
+            SpecialityService.AddNew($scope.speciality)
             .then(function(response) {
                     
                 $scope.dataLoading= false;
                 FlashService.Success('Especialidad agregada',true);  //si funco se muestra un approve
                 
                 },function(response){ 
-                    FlashService.Error(response.status);
+                    FlashService.Error("No se ha podido agregar la especialidad medica");
                     $scope.dataLoading= false;
             });
         }        
