@@ -18,10 +18,11 @@
         initController();
         
         function initController() {
-            loadAllSpecialities();
+            loadAllSpecialitiesK();
         }
         
-        function loadAllSpecialities() {
+        function loadAllSpecialitiesK() {
+            
             SpecialityService.GetAll()
                 .then(function (specialities) {
                     $scope.medicSpecialities = specialities.data;
@@ -32,12 +33,21 @@
         
         function createDoctor(){
             
-            DoctorService.AddNew($scope.newDoc)
+            DoctorService.Get($scope.newDoc)
                 .then(function() {
                     $scope.newDoc ={};   
                 },function(response){
                     FlashService.Error('Error en la creacion de doctor');      
                 });
+        }
+        
+        function loadPendingDoctors() {
+            DoctorService.GetPending()
+                .then(function (doctors) {
+                    $scope.allDoctors = doctors.data;
+            },function(){
+                 FlashService.Error("Error al cargar doctores pendientes");       
+            });
         }
     }
  

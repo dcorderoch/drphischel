@@ -44,6 +44,17 @@
             });
             return response;    
         }
+        
+        function GetByPatient(UserId){
+            
+            var response=$http({
+                method:"post",
+                url:"api/doctor/getbypatient",
+                data:{UserId:UserId}
+            });
+            return response; 
+        }
+        
 
         function Delete(data) {   //para registrar un cliente
             var request = $http({
