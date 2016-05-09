@@ -108,6 +108,7 @@
     <Compile Include="DAL\DBMedicine.cs" />
     <Compile Include="DAL\DBPatient.cs" />
     <Compile Include="DAL\DBUser.cs" />
+    <Compile Include="DAL\Models\Appointment.cs" />
     <Compile Include="DAL\Models\Medicine.cs" />
     <Compile Include="DAL\Models\User.cs" />
     <Compile Include="Global.asax.cs">

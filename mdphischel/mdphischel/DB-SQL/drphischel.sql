@@ -824,7 +824,7 @@ END
 GO
 
 -- Delete Appointment stored procedure.
-
+select * from Appointment
 GO
 CREATE PROCEDURE uspDeleteAppointment @UserId int, @DoctorId nvarchar(15), @AppointmentDate DATETIME, @result int OUTPUT, @errorNum int OUTPUT
 AS
