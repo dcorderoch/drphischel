@@ -895,8 +895,9 @@ END
 GO
 
 -- Synchronize MedicinesPerBranchOffice stored procedure.
+
 GO
-CREATE PROCEDURE uspSynchronizeMedicinesPerBranchOffice @BranchOfficeId uniqueidentifier, @MedicineId uniqueidentifier, @Quantity int, @Sales int, @result int OUTPUT, @errorNum int OUTPUT
+CREATE PROCEDURE uspSynchronizeMedicinesPerBranchOffice @BranchOfficeId nvarchar(100), @MedicineId nvarchar(100), @Quantity int, @Sales int, @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
@@ -918,7 +919,7 @@ SET NOCOUNT ON
 END
 GO
 
--- Select all medicines.
+-- Obtain all medicines stored procedure.
 
 GO
 CREATE PROCEDURE uspGetAllMedicines
@@ -926,3 +927,13 @@ AS
 BEGIN
 SELECT * FROM Medicine
 END
+
+-- Obtain all medicines per branch office stored procedure.
+
+GO
+CREATE PROCEDURE uspGetMedicinesByBranchOffice @BranchOfficeId
+
+-- *************************************************** Users ****************************************************************************
+
+-- Login 
+GO
