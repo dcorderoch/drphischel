@@ -5,7 +5,6 @@
 --******************************************************************************************************************************************
 
 --Creates table SystemUser. 
-
 GO
 CREATE TABLE SystemUser
 	(
@@ -935,7 +934,10 @@ CREATE PROCEDURE uspGetMedicinesByBranchOffice @BranchOfficeId nvarchar(100)
 AS
 BEGIN
 SET NOCOUNT ON
-SELECT * FROM MedicinesPerBranchOffice
+SELECT BranchOfficeId, Medicine.MedicineId, Name, QuantityAvailable, Sales, Price 
+FROM MedicinesPerBranchOffice
+INNER JOIN Medicine
+ON MedicinesPerBranchOffice.MedicineId = Medicine.MedicineId
 WHERE BranchOfficeId = @BranchOfficeId
 END
 
