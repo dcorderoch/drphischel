@@ -59,17 +59,16 @@
                  <span ng-show="form.prefPhoneNumber.$dirty && form.prefPhoneNumber.$error.required" class="help-block">El teléfono preferido es requerido </span>
             </div>
 
-            <div class="form-group" ng-class="{ 'has-error': form.medicines.$dirty && form.medicines.$error.required }"> 
+            <div class="form-group" > 
                 <label >Medicinas</label>
-                <label ng-repeat="medicine in medicinesBranch">
-                    <input type="checkbox" name="medicines" class="form-control" checklist-model="order.medicineIds" checklist-value="medicine.Id">{{medicine.name}}
+                <label ng-repeat="medicine in medicines">
+                    <input type="checkbox" name="medicinex" class="form-control" checklist-model="order.medicineIds" checklist-value="medicine.Id">{{medicine.name}}
                 </label>
-                <span ng-show="form.medicines.$dirty && form.medicines.$error.required" class="help-block">Las medicinas son requeridas</span>
             </div>
 
             <div class="form-group"ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }" >
-                <label for="input">Fecha de Recojo</label>
-                <input type="text" name="pickUpdDate" id="input" class="form-control" ng-model="order.pickupdDate" required />
+                <label>Fecha de Recojo</label>
+                <input type="text" name="pickUpdDate" class="form-control" ng-model="order.pickupdDate" required />
                  <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">La fecha de recojo es requerido</span>
             </div>
 

@@ -5,8 +5,8 @@
         .module('app')
         .controller('OrderController', OrderController);
 
-    OrderController.$inject = ['OrderService', '$rootScope', 'FlashService', '$scope'];
-    function OrderController(OrderService, $rootScope, FlashService, $scope) {
+    OrderController.$inject = ['OrderService', 'MedicineService', 'SpecialityService', '$rootScope', 'FlashService', '$scope'];
+    function OrderController(OrderService, MedicineService, SpecialityService, $rootScope, FlashService, $scope) {
         
         $scope.order={};
         var vm = this;
@@ -35,6 +35,7 @@
         function createOrder(){   //pedido sin prescripcion
  
             $scope.dataLoading=true;      //se muestra un data loading mientras se hace el pedido
+            $scope.order.branchId = $scope.branchId;
             OrderService.Create($scope.order)
             .then(function(response) {
                  $scope.dataLoading=false; 
@@ -46,14 +47,6 @@
             });
         }
         
-       function loadAllBranches() {
-            SpecialityService.GetAll()
-                .then(function (branches) {
-                    $scope.branches = branches.data;
-            },function(){
-                 FlashService.Error("Error al cargar especialidades");       
-            });
-        }
         function loadAllMedicines(){
             MedicineService.GetAll()
                 .then(function(medicines){
@@ -64,7 +57,14 @@
             });
         }
         
-        
+       function loadAllBranches() {
+            SpecialityService.GetAll()
+                .then(function (branches) {
+                    $scope.branches = branches.data;
+            },function(){
+                 FlashService.Error("Error al cargar especialidades");       
+            });
+        }        
     
     }
 } ) ();  // La funcion se auto llama
