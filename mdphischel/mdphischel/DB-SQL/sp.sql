@@ -76,19 +76,30 @@ GO
  * Doctor's charges per month
  */
 
+<<<<<<< HEAD
 GO
   CREATE PROCEDURE usp_doctorsCharges 
 		@costPerAppointment DECIMAL(10,2), @date DATE, @resultCode int OUTPUT, @errorNum int OUTPUT
+=======
+ GO
+  CREATE PROCEDURE usp_doctorsCharges 
+		@docCode NVARCHAR(15),@date DATE, @resultCode int OUTPUT, @errorNum int OUTPUT
+>>>>>>> c2cffd0db9eb6b02c20d9ddae9cb3bfb17b5f497
 AS
 BEGIN
 	SET NOCOUNT ON
 	BEGIN TRY
+<<<<<<< HEAD
     	SELECT U.Name,U.LastName1,U.LastName2, A.DoctorId, Count(*)*@costPerAppointment AS Charges 
 		FROM  Appointment A  JOIN Doctor D ON A.DoctorId=D.DoctorId JOIN SystemUser U ON D.UserId=U.UserId
 		WHERE  A.AppointmentDate BETWEEN @date AND  DATEADD(month,1,@date) 
 		GROUP BY A.DoctorId, U.Name,U.LastName1,U.LastName2
 
 		
+=======
+    	SELECT A.UserId, A.AppointmentDate FROM  Appointment A  WHERE A.DoctorId =@docCode 
+				                AND A.AppointmentDate >= @date AND A.AppointmentDate < DATEADD(month,1,@date) ORDER BY A.AppointmentDate ASC
+>>>>>>> c2cffd0db9eb6b02c20d9ddae9cb3bfb17b5f497
 	END TRY
 	BEGIN CATCH
 		SET @errorNum = Error_Number()
@@ -101,6 +112,7 @@ END
 GO
 
 
+<<<<<<< HEAD
 ---------Medical Record SPs
 
 
@@ -174,12 +186,15 @@ GO
 
 
 
+=======
+>>>>>>> c2cffd0db9eb6b02c20d9ddae9cb3bfb17b5f497
 INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
 							   (11,'DOC222','20160625'),(3,'ABC005','20160507'),
 							   (9,'DOC048','20160615'),(2,'DOC048','20160708')
 
 
 							   DECLARE @res int, @en int
+<<<<<<< HEAD
 							   EXEC usp_updateMedRecordEntry @medicalRecordId=2, @description='Consulta general y receta',@diagnosis='Resfriado común y nauseas', @appointmentId=9, @prescriptionId='64cf9b74-25b1-45f4-a097-080693ec00ad', @resultCode=@res OUTPUT, @errorNum = @en OUTPUT
 							   Select @res,@en
 
@@ -187,3 +202,15 @@ INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
 
 
 						
+=======
+							   EXEC usp_doctorsCharges @docCode='DOC222',@date='20160601',@resultCode=@res OUTPUT,@errorNum = @en OUTPUT
+							   Select @res,@en
+
+
+
+
+						SELECT A.UserId, A.AppointmentDate FROM  Appointment A  WHERE A.DoctorId ='DOC222' 
+				                AND A.AppointmentDate BETWEEN '20160601' AND DATEADD(month,1,'20160601')   ORDER BY A.AppointmentDate ASC
+
+								SELECT  DATEADD(day,1,'20160601')
+>>>>>>> c2cffd0db9eb6b02c20d9ddae9cb3bfb17b5f497
