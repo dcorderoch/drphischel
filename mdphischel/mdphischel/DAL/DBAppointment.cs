@@ -102,7 +102,7 @@ namespace mdphischel.DAL
                 doctorIdParameter.Value = doctorId;
 
                 SqlParameter oldAppointmentParameter = cmd.Parameters.Add("@OldAppointment", SqlDbType.DateTime);
-                oldAppointmentParameter.Direction =ParameterDirection.Input;
+                oldAppointmentParameter.Direction = ParameterDirection.Input;
                 oldAppointmentParameter.Value = oldAppointment;
 
                 SqlParameter newAppointmentParameter = cmd.Parameters.Add("@NewAppointment", SqlDbType.DateTime);
@@ -202,7 +202,6 @@ namespace mdphischel.DAL
             return resultCodes;
         }
 
-        //uspGetAppointmentsByDoctor @DoctorId
         /// <summary>
         /// Obtains all appointments by doctor.
         /// </summary>
@@ -255,12 +254,5 @@ namespace mdphischel.DAL
             }
             return resultCodes;
         }
-
-
-
-
-
-
-
     }
 }
