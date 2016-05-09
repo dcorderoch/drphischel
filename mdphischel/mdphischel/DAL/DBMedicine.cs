@@ -113,7 +113,7 @@ namespace mdphischel.DAL
                 SqlParameter salesParameter = cmd.Parameters.Add("@Sales", SqlDbType.Int);
                 salesParameter.Direction = ParameterDirection.Input;
                 salesParameter.Value = sales;
-                
+
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 connection.Open();
@@ -144,6 +144,21 @@ namespace mdphischel.DAL
                 connection.Close();
             }
             return resultCodes;
+        }
+
+        /// <summary>
+        /// Gets all existing medicines. 
+        /// </summary>
+        public void GetAllMedicines()
+        {
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("uspGetAllMedicines", connection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 }
