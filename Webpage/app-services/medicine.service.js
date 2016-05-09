@@ -10,7 +10,7 @@
         var service = {};
 
         service.GetAll = GetAll; //las funciones que son expuestas
-       
+       service.Sync = Sync;
 
         return service;
 

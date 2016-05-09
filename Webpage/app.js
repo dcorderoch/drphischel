@@ -17,7 +17,7 @@
                 controlerAs: 'vm'           
             })
             .when('/addSpecialities',{
-                controller: 'AddSpecialities',
+                controller: 'AddSpecialityController',
                 templateUrl: 'addSpecialities/addSpecialities.view.html',
                 controlerAs: 'vm'
             })   
@@ -107,15 +107,15 @@
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }
 
-        $rootScope.$on('$locationChangeStart', function (event, next, current) {
-            // Redirige a la pagina de login cuando se intenta hacer trampa (Watch out evil-doers)
-//            var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
-//            var loggedIn = $rootScope.globals.currentUser;
-//            if (restrictedPage && !loggedIn) {
-//                $location.path('/login');
-//            }//Si intenta meterse en una pagina restringida
-            // redirect to login page if not logged in and trying to access a restrictedPage page
-        });
+//        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+//            // Redirige a la pagina de login cuando se intenta hacer trampa (Watch out evil-doers)
+////            var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
+////            var loggedIn = $rootScope.globals.currentUser;
+////            if (restrictedPage && !loggedIn) {
+////                $location.path('/login');
+////            }//Si intenta meterse en una pagina restringida
+//            // redirect to login page if not logged in and trying to access a restrictedPage page
+//        });
     }
 
 })();
