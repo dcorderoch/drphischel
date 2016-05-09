@@ -714,16 +714,12 @@ api/medicine/getall
 returns:
 [
 {
-"BranchOfficeId":"",
-"Name":"",
-"PhoneNumber":"",
-"BOLocation":""
+"MedicineId":"",
+"Name":""
 },
 {
-"BranchOfficeId":"",
-"Name":"",
-"PhoneNumber":"",
-"BOLocation":""
+"MedicineId":"",
+"Name":""
 }
 ]
 
