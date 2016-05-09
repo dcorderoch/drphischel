@@ -727,6 +727,30 @@ BLL must:
 - return all branchoffice information
 
 ##########################################################################################
+HTTP VERB: POST
+api/medicine/getbybranchoffice
+
+receives:
+{
+"BranchOfficeId":""
+}
+
+returns:
+[
+{
+"MedicineId":"",
+"Name":""
+},
+{
+"MedicineId":"",
+"Name":""
+}
+]
+
+BLL must:
+- return all branchoffice information
+
+##########################################################################################
 HTTP VERB: GET
 api/specialties/getall
 
