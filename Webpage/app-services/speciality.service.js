@@ -29,7 +29,6 @@
             return response;    
         }        
 
-
         // private functions
 
         function handleSuccess(res) {

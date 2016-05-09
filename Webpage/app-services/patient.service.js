@@ -26,11 +26,11 @@
             return response;    
         }
         
-        function GetByMedic(DoctorId) {
+        function GetByMedic(DocId) {
             var response=$http({
                 method:"post",
                 url:"api/doctor/accept",
-                data: DoctorId
+                data: {DoctorId:DocId}
             });
             return response;    
         }
@@ -53,10 +53,11 @@
             return request;
         }
         
-        function CreateByMedic() {   //para registrar un cliente
+        function CreateByMedic(data) {   //para registrar un cliente
             var request = $http({
             method: "post",
-            url: "api/patient/createbymedic"
+            url: "api/patient/createbymedic",
+            data: data
         });
             return request;
         }

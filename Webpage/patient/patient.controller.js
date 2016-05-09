@@ -43,7 +43,7 @@
         }
         
         function loadAllPatients() {
-            PatientService.GetAll()
+            PatientService.GetByMedic($rootScope.doctorId)
                 .then(function (patients) {
                     $scope.allPatients = patients.data;
             },function(){
@@ -81,8 +81,8 @@
         function createPatient(){
             
             $scope.toggle();
-            $scope.newPatient= $rootScope.doctorId;
-            PatientService.Create($scope.newPatient)
+            $scope.newPatient.DoctorID= $rootScope.doctorId;
+            PatientService.CreateByMedic($scope.newPatient)
                 .then(function() {
                     loadAllPatients();
                     FlashService.Success('Creacion de paciente exitosa');      
