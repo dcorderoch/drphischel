@@ -901,3 +901,12 @@ SET NOCOUNT ON
  RETURN
 END
 GO
+
+-- Select all medicines.
+
+GO
+CREATE PROCEDURE uspGetAllMedicines
+AS
+BEGIN
+SELECT * FROM Medicine
+END
