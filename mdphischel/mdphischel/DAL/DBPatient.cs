@@ -23,8 +23,8 @@ namespace mdphischel.DAL
         /// <param name="residence"></param>
         /// <param name="birthDate"></param>
         /// <returns>ResultCodes indicating whether operation was successful or not.</returns>
-        public int[] CreatePatient(String idNumber, String password, String name, String lastName1, String lastName2,
-            String residence, String birthDate)
+        public int[] CreatePatient(string idNumber, string password, string name, string lastName1, string lastName2,
+            string residence, string birthDate)
         {
             // Initializing resultCodes array.
             int[] resultCodes = new int[2];
@@ -96,8 +96,13 @@ namespace mdphischel.DAL
             return resultCodes;
         }
 
-        // uspLinkToDoctor @doctorId nvarchar(15), @idNumber char(9), @result int OUTPUT, @errorNum int OUTPUT
-        public int[] LinkPatientToDoctor(String doctorId, String patientIdNumber)
+        /// <summary>
+        /// Function in charge of associating a patient to a specific doctor. 
+        /// </summary>
+        /// <param name="doctorId"></param>
+        /// <param name="patientIdNumber"></param>
+        /// <returns>ResultCodes indicating whether operation was successful or not.</returns>
+        public int[] LinkPatientToDoctor(string doctorId, string patientIdNumber)
         {
             int[] resultCodes = new int[2];
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
@@ -145,6 +150,86 @@ namespace mdphischel.DAL
         }
 
         //uspUpdatePatient @IdNumber char(9), @Pass nvarchar(30), @Name nvarchar(30),@LastName1 nvarchar(30), @LastName2 nvarchar(30), @Residence nvarchar(30), @BirthDate Date, @result int OUTPUT, @errorNum int OUTPUT
-        public int[] UpdatePatient(String idNumber, String password, String )
+        /// <summary>
+        /// Method in charge of updating patient information.
+        /// </summary>
+        /// <param name="idNumber"></param>
+        /// <param name="password"></param>
+        /// <param name="name"></param>
+        /// <param name="lastName1"></param>
+        /// <param name="lastName2"></param>
+        /// <param name="residence"></param>
+        /// <param name="birthDate"></param>
+        /// <returns>ResultCodes indicating whether operation was successful or not.</returns>
+        public int[] UpdatePatient(string idNumber, string password, string name, string lastName1, string lastName2,
+            string residence, string birthDate)
+        {
+            int[] resultCodes = new int[2];
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("uspUpdatePatient", connection))
+            {
+                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
+                errorCodeParameter.Direction = ParameterDirection.Output;
+
+                SqlParameter resultCodeParameter = cmd.Parameters.Add("@result", SqlDbType.Int);
+                resultCodeParameter.Direction = ParameterDirection.Output;
+
+                SqlParameter idNumberParameter = cmd.Parameters.Add("@IdNumber", SqlDbType.Char);
+                idNumberParameter.Direction = ParameterDirection.Input;
+                idNumberParameter.Value = idNumber;
+
+                SqlParameter passwordParameter = cmd.Parameters.Add("@Pass", SqlDbType.NVarChar);
+                passwordParameter.Direction = ParameterDirection.Input;
+                passwordParameter.Value = password;
+
+                SqlParameter nameParameter = cmd.Parameters.Add("@Name", SqlDbType.NVarChar);
+                nameParameter.Direction = ParameterDirection.Input;
+                nameParameter.Value = name;
+
+                SqlParameter lastName1Parameter = cmd.Parameters.Add("@LastName1", SqlDbType.NVarChar);
+                lastName1Parameter.Direction = ParameterDirection.Input;
+                lastName1Parameter.Value = lastName1;
+
+                SqlParameter lastName2Parameter = cmd.Parameters.Add("@LastName2", SqlDbType.NVarChar);
+                lastName2Parameter.Direction = ParameterDirection.Input;
+                lastName2Parameter.Value = lastName2;
+
+                SqlParameter residenceParameter = cmd.Parameters.Add("@Residence", SqlDbType.NVarChar);
+                residenceParameter.Direction = ParameterDirection.Input;
+                residenceParameter.Value = residence;
+
+                SqlParameter birthDateParameter = cmd.Parameters.Add("@BirthDate", SqlDbType.Date);
+                birthDateParameter.Direction = ParameterDirection.Input;
+                birthDateParameter.Value = birthDate;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                var resultCode = resultCodeParameter.Value;
+                var errorNum = errorCodeParameter.Value;
+                if (resultCode != DBNull.Value)
+                {
+                    resultCodes[0] = int.Parse(resultCode.ToString());
+                    if (errorNum == DBNull.Value)
+                    {
+                        resultCodes[1] = 0;
+                    }
+                    else
+                    {
+                        resultCodes[1] = int.Parse(errorNum.ToString());
+                    }
+                }
+                else
+                {
+                    resultCodes[0] = 0;
+                    resultCodes[1] = 0;
+                }
+
+                connection.Close();
+            }
+            return resultCodes;
+        }
     }
 }
