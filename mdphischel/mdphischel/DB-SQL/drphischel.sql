@@ -941,5 +941,16 @@ END
 
 -- *************************************************** Users ****************************************************************************
 
--- Login 
+-- Log In stored procedure. 
 GO
+CREATE PROCEDURE uspUserLogin @IdNumber char(9), @Pass nvarchar(30), @RoleId int
+AS
+BEGIN
+SET NOCOUNT ON
+SELECT SystemUser.UserId, SystemUser.IdNumber, SystemUser.Name, SystemUser.LastName1, SystemUser.LastName2, SystemUser.BirthDate
+FROM SystemUser
+INNER JOIN RolesPerUser
+ON SystemUser.UserId = RolesPerUser.UserId
+WHERE SystemUser.IdNumber = @IdNumber AND SystemUser.Pass = @Pass AND RoleId = @RoleId
+END
+
