@@ -107,6 +107,7 @@
     <Compile Include="DAL\DBMedicalSpecialty.cs" />
     <Compile Include="DAL\DBMedicine.cs" />
     <Compile Include="DAL\DBPatient.cs" />
+    <Compile Include="DAL\DBUser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
