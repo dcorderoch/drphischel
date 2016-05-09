@@ -59,7 +59,7 @@ namespace mdphischel.DAL
                 lastName2Parameter.Value = lastName2;
 
                 SqlParameter residenceParameter = cmd.Parameters.Add("@Residence", SqlDbType.NVarChar);
-                residenceParameter.Direction =ParameterDirection.Input;
+                residenceParameter.Direction = ParameterDirection.Input;
                 residenceParameter.Value = residence;
 
                 SqlParameter birthDateParameter = cmd.Parameters.Add("@BirthDate", SqlDbType.Date);
@@ -90,10 +90,61 @@ namespace mdphischel.DAL
                     resultCodes[0] = 0;
                     resultCodes[1] = 0;
                 }
-                
+
                 connection.Close();
             }
             return resultCodes;
         }
+
+        // uspLinkToDoctor @doctorId nvarchar(15), @idNumber char(9), @result int OUTPUT, @errorNum int OUTPUT
+        public int[] LinkPatientToDoctor(String doctorId, String patientIdNumber)
+        {
+            int[] resultCodes = new int[2];
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("uspLinkToDoctor", connection))
+            {
+                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
+                errorCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter resultParameter = cmd.Parameters.Add("@result", SqlDbType.Int);
+                resultParameter.Direction = ParameterDirection.Output;
+                SqlParameter doctorIdParameter = cmd.Parameters.Add("@doctorId", SqlDbType.NVarChar);
+                doctorIdParameter.Direction = ParameterDirection.Input;
+                doctorIdParameter.Value = doctorId;
+                SqlParameter patientIdNumberParameter = cmd.Parameters.Add("@idNumber", SqlDbType.Char);
+                patientIdNumberParameter.Direction = ParameterDirection.Input;
+                patientIdNumberParameter.Value = patientIdNumber;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                var resultCode = resultParameter.Value;
+                var errorNum = errorCodeParameter.Value;
+                if (resultCode != DBNull.Value)
+                {
+                    resultCodes[0] = int.Parse(resultCode.ToString());
+                    if (errorNum == DBNull.Value)
+                    {
+                        resultCodes[1] = 0;
+                    }
+                    else
+                    {
+                        resultCodes[1] = int.Parse(errorNum.ToString());
+                    }
+                }
+                else
+                {
+                    resultCodes[0] = 0;
+                    resultCodes[1] = 0;
+                }
+
+                connection.Close();
+            }
+            return resultCodes;
+        }
+
+        //uspUpdatePatient @IdNumber char(9), @Pass nvarchar(30), @Name nvarchar(30),@LastName1 nvarchar(30), @LastName2 nvarchar(30), @Residence nvarchar(30), @BirthDate Date, @result int OUTPUT, @errorNum int OUTPUT
+        public int[] UpdatePatient(String idNumber, String password, String )
     }
 }
