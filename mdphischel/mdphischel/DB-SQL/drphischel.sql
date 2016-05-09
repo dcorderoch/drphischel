@@ -931,7 +931,13 @@ END
 -- Obtain all medicines per branch office stored procedure.
 
 GO
-CREATE PROCEDURE uspGetMedicinesByBranchOffice @BranchOfficeId
+CREATE PROCEDURE uspGetMedicinesByBranchOffice @BranchOfficeId nvarchar(100)
+AS
+BEGIN
+SET NOCOUNT ON
+SELECT * FROM MedicinesPerBranchOffice
+WHERE BranchOfficeId = @BranchOfficeId
+END
 
 -- *************************************************** Users ****************************************************************************
 
