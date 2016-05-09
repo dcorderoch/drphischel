@@ -158,6 +158,8 @@ namespace mdphischel.DAL
 
                 connection.Open();
                 cmd.ExecuteNonQuery();
+
+                connection.Close();
             }
         }
     }

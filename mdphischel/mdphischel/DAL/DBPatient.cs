@@ -279,7 +279,27 @@ namespace mdphischel.DAL
             return resultCodes;
         }
 
+        /// <summary>
+        /// Obtains all doctors from given patient.
+        /// </summary>
+        /// <param name="UserId"></param>
+        public void GetDoctorsByPatient(int UserId)
+        {
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("uspGetDoctorsByPatient", connection))
+            {
+                SqlParameter UserIdParameter = cmd.Parameters.Add("@UserId", SqlDbType.Int);
+                UserIdParameter.Direction = ParameterDirection.Input;
+                UserIdParameter.Value = UserId;
 
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                connection.Close();
+            }
+        }
 
 
 

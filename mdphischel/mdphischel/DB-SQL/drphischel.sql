@@ -720,6 +720,15 @@ SET NOCOUNT ON
 END
 GO
 
+-- Get doctors of given patient.
+GO
+CREATE PROCEDURE uspGetDoctorsByPatient @UserId int
+AS
+BEGIN
+SELECT DoctorId FROM PatientByDoctor
+WHERE PatientId = @UserId
+END
+
 -- *************************************************** MedicalSpecialty ****************************************************************************
 
 -- Add new medical specialty.
@@ -749,7 +758,14 @@ SET NOCOUNT ON
 END
 GO
 
+-- Get all medical specialties.
 
+GO
+CREATE PROCEDURE uspGetAllSpecialties
+AS
+BEGIN
+SELECT * FROM MedicalSpecialty
+END
 -- *************************************************** Appointments ****************************************************************************
 
 -- Create new appointment

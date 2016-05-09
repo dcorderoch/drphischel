@@ -45,7 +45,6 @@ namespace mdphischel.DAL
                     {
                         resultCodes[1] = int.Parse(errorNumCode.ToString());
                     }
-
                 }
                 else
                 {
@@ -56,6 +55,24 @@ namespace mdphischel.DAL
                 connection.Close();
             }
             return resultCodes;
+        }
+
+        /// <summary>
+        /// Gets all medical specialties.
+        /// </summary>
+        public void GetAllSpecialties()
+        {
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("uspGetAllSpecialties", connection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                connection.Close();
+            }
+
         }
     }
 }
