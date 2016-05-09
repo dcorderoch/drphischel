@@ -3,10 +3,10 @@
 
     angular
         .module('app')
-        .factory('MedicamentoService', MedicamentoService);  //servicio de medicamentos
+        .factory('MedicineService', MedicineService);  //servicio de medicamentos
 
-    MedicamentoService.$inject = ['$http'];
-    function MedicamentoService($http) {
+    MedicineService.$inject = ['$http'];
+    function MedicineService($http) {
         var service = {};
 
         service.GetAll = GetAll; //las funciones que son expuestas
@@ -16,8 +16,16 @@
 
         function GetAll() {
             var response=$http({
-                method:"post",
+                method:"get",
                 url:"api/medicine/getall"
+            });
+            return response;    
+        }
+        
+        function Sync() {
+            var response=$http({
+                method:"get",
+                url:"api/admin/sync"
             });
             return response;    
         }
