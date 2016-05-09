@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Web;
 
 
 namespace mdphischel.DAL
@@ -283,6 +278,15 @@ namespace mdphischel.DAL
             }
             return resultCodes;
         }
+
+
+
+
+
+
+
+
+
 
     }
   
