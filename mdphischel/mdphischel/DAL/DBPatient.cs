@@ -231,5 +231,59 @@ namespace mdphischel.DAL
             }
             return resultCodes;
         }
+
+        /// <summary>
+        /// Function whose purpose is to delete a given patient.
+        /// </summary>
+        /// <param name="idNumber"></param>
+        /// <returns>ResultCodes indicating whether operation was successful or not.</returns>
+        public int[] UpdatePatient(string idNumber)
+        {
+            int[] resultCodes = new int[2];
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("uspDeletePatient", connection))
+            {
+                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
+                errorCodeParameter.Direction = ParameterDirection.Output;
+
+                SqlParameter resultCodeParameter = cmd.Parameters.Add("@result", SqlDbType.Int);
+                resultCodeParameter.Direction = ParameterDirection.Output;
+
+                SqlParameter idNumberParameter = cmd.Parameters.Add("@IdNumber", SqlDbType.Char);
+                idNumberParameter.Direction = ParameterDirection.Input;
+                idNumberParameter.Value = idNumber;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                var resultCode = resultCodeParameter.Value;
+                var errorNumCode = errorCodeParameter.Value;
+                if (resultCode != DBNull.Value)
+                {
+                    resultCodes[0] = int.Parse(resultCode.ToString());
+                    if (errorNumCode == DBNull.Value)
+                    {
+                        resultCodes[1] = 0;
+                    }
+                    else
+                    {
+                        resultCodes[1] = int.Parse(errorNumCode.ToString());
+                    }
+
+                }
+                else
+                {
+                    resultCodes[0] = 0;
+                    resultCodes[1] = 0;
+                }
+                //Closing connection
+                connection.Close();
+            }
+            return resultCodes;
+        }
+
     }
+  
 }
