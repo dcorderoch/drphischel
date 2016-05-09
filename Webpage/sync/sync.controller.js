@@ -14,7 +14,7 @@
 
         
         function sync() {
-            MedicineService.GetAll()
+            MedicineService.Sync()
                 .then(function (patients) {
                  FlashService.Success("Se sincronizaron los medicamentos");                          
             },function(){
