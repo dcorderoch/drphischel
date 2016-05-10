@@ -80,12 +80,15 @@ namespace mdphischel.DAL
                         var name = reader[1].ToString();
                         newMedicalSpecialty.Name = name.ToString();
                         medicalSpecialties.Add(newMedicalSpecialty);
-          
+
                     }
                     reader.Close();
-                    connection.Close();
+
+                }
+                connection.Close();
+
             }
-                return medicalSpecialties;
+            return medicalSpecialties;
         }
     }
 }
