@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using mdphischel.DAL.Models;
 
 namespace mdphischel.DAL
 {
@@ -147,20 +149,39 @@ namespace mdphischel.DAL
         }
 
         /// <summary>
-        /// Gets all existing medicines. 
+        /// Gets all existing medicines by given branch office.
         /// </summary>
-        public void GetAllMedicines()
+        /// <param name="branchOffice"></param>
+        /// <returns></returns>
+        public List<Medicine> GetAllMedicines(string branchOffice)
         {
+            List<Medicine> medicines = new List<Medicine>();
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
-            using (SqlCommand cmd = new SqlCommand("uspGetAllMedicines", connection))
+            using (SqlCommand cmd = new SqlCommand("uspGetMedicinesByBranchOffice", connection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 connection.Open();
-                cmd.ExecuteNonQuery();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Medicine newMedicine = new Medicine();
+                        newMedicine.BranchOfficeId = reader[0].ToString();
+                        newMedicine.MedicineId = reader[1].ToString();
+                        newMedicine.MedicineName = reader[2].ToString();
+                        newMedicine.Price = reader[3].ToString();
+                        newMedicine.Quantity = (int)reader[4];
+                        newMedicine.Sales = (int)reader[5];
+                        medicines.Add(newMedicine);
 
+                    }
+                    reader.Close();
+
+                }
                 connection.Close();
             }
+            return medicines;
         }
     }
 }
