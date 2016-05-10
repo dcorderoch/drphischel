@@ -3,10 +3,10 @@
 
     angular
         .module('app')          //servicio para el cliente
-        .factory('ChargeService', ChargeService);
+        .factory('BranchOfficeService', BranchOfficeService);
 
-    ChargeService.$inject = ['$http'];
-    function ChargeService($http) {
+    BranchOfficeService.$inject = ['$http'];
+    function BranchOfficeService($http) {
         var service = {};
 
         service.GetAll = GetAll;
@@ -16,7 +16,7 @@
         function GetAll() {
             var response=$http({
                 method:"get",
-                url:"api/admin/charges"
+                url:"api/branchoffice/getall"
             });
             return response;    
         }

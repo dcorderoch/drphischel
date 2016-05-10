@@ -26,26 +26,21 @@
 
     <div class="col-md-6 col-md-offset-3">
 
-        <br>
-        <h3 align="center">Crea un pedido de medicamentos para Farmatica</h3>
-        <p align="center">Escoge tu sucursal más cercana</p>
-        <br>
-        
-        <select ng-model="selectedBranch" ng-options="x.Name for x in branch"/>
-            
-        <md-button class="btn1" ng-click="setBranch(selectedBranch)"> Seleccionar sucursal</md-button>  
-        <br>
-        
+        <div>
+            <br>
+            <h3 align="center" class="lead">Crea un pedido de medicamentos para Farmatica</h3>
+
+            <label>Escoge tu sucursal más cercana</label>
+            <select ng-model="selectedBranch" ng-options="x.Name for x in branches"/>
+
+            <button class="btn btn-info" > Seleccionar sucursal</button>  
+            <br>
+        </div>   
+
         
     <div ng-show="branchSelected">
-        <form name="form" ng-submit="createOrder()" role="form">
-                <!--Crear un pedido normal -->
+        <form name="form" ng-submit="createOrder()" role="form" novalidate>
 
-            <div class="form-group" ng-class="{ 'has-error': form.pickupOfficeId.$dirty && form.pickupOfficeId.$error.required }">
-                <label >Sucursal de Recojo</label>
-                <input type="text" name="pickupOfficeId"  class="form-control" ng-model="order.pickupOfficeId" required />
-                <span ng-show="form.pickupOfficeId.$dirty && form.pickupOfficeId.$error.required" class="help-block">La Sucursal de Recojo es requerida</span>
-            </div>
 
             <div class="form-group" ng-class="{ 'has-error': form.clientId.$dirty && form.clientId.$error.required }">
                 <label >Cliente (Número de Cédula)</label>
@@ -59,12 +54,16 @@
                  <span ng-show="form.prefPhoneNumber.$dirty && form.prefPhoneNumber.$error.required" class="help-block">El teléfono preferido es requerido </span>
             </div>
 
-            <div class="form-group" > 
-                <label >Medicinas</label>
-                <label ng-repeat="medicine in medicines">
-                    <input type="checkbox" name="medicinex" class="form-control" checklist-model="order.medicineIds" checklist-value="medicine.Id">{{medicine.name}}
-                </label>
+            
+        <div class="form-group" >
+            <label>Medicinas</label>
+            <div class="action-checkbox" ng-repeat="medicine in medicines">
+               <input id="{{medicine.Name}}" type="checkbox" value="{{medicine.Name}}" ng-checked="selection.indexOf(medicine.MedicineId) > -1" ng-click="toggleSelection(medicine.MedicineId)" />
+               <label for="{{medicine.Name}}">           
+                   {{medicine.Name}}
+               </label>                
             </div>
+        </div>
 
             <div class="form-group"ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }" >
                 <label>Fecha de Recojo</label>
@@ -73,8 +72,8 @@
             </div>
 
             <div class="form-actions">
-                <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Crear Pedido</button>
-                <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Crear Pedido</button>
+                <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
                 <a href="#/login" class="btn btn-link">Cancelar</a>
             </div>
         </form>

@@ -5,8 +5,8 @@
         .module('app')
         .controller('OrderController', OrderController);
 
-    OrderController.$inject = ['OrderService', 'MedicineService', 'SpecialityService', '$rootScope', 'FlashService', '$scope'];
-    function OrderController(OrderService, MedicineService, SpecialityService, $rootScope, FlashService, $scope) {
+    OrderController.$inject = ['OrderService', 'MedicineService', 'BranchOfficeService', '$rootScope', 'FlashService', '$scope'];
+    function OrderController(OrderService, MedicineService, BranchOfficeService, $rootScope, FlashService, $scope) {
         
         $scope.order={};
         var vm = this;
@@ -20,14 +20,21 @@
         initController();
         
         function initController() {
-            loadAllBranches();
+      //      loadAllBranches();
+            $scope.branches.push({"Name":"Nicolas", BranchOfficeId:"123"});
+            $scope.branches.push({"Name":"Alfonso",BranchOfficeId:"456"});
+            $scope.branches.push({"Name":"Emmanuel",BranchOfficeId:"789"});
+            
+             $scope.medicines.push({"Name":"Nicolas", MedicineId:"123"});
+            $scope.medicines.push({"Name":"Alfonso",MedicineId:"456"});
+            $scope.medicines.push({"Name":"Emmanuel",MedicineId:"789"});
         };
         
         
         function setBranch(selectedBranch){
             
             $scope.branchSelected = true;
-            $scope.branchId = selectedBranch.BranchId;
+            $scope.branchId = selectedBranch.BranchOfficeId;
             loadAllMedicines();
         }
         
@@ -35,7 +42,7 @@
         function createOrder(){   //pedido sin prescripcion
  
             $scope.dataLoading=true;      //se muestra un data loading mientras se hace el pedido
-            $scope.order.branchId = $scope.branchId;
+            $scope.order.BranchOfficeId = $scope.BranchOfficeId;
             OrderService.Create($scope.order)
             .then(function(response) {
                  $scope.dataLoading=false; 
@@ -58,11 +65,11 @@
         }
         
        function loadAllBranches() {
-            SpecialityService.GetAll()
+            BranchOfficeService.GetAll()
                 .then(function (branches) {
                     $scope.branches = branches.data;
             },function(){
-                 FlashService.Error("Error al cargar especialidades");       
+                 FlashService.Error("Error al cargar las sucursales");       
             });
         }        
     
