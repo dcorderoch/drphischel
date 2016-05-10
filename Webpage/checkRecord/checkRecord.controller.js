@@ -17,7 +17,7 @@
         }
         
         function loadAllRecords() {
-            PatientService.GetAllPatient($rootScope.patientId)
+            RecordService.GetByPatient($rootScope.patientId)
                 .then(function (records) {
                     $scope.allRecords = records.data;
             },function(){

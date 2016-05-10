@@ -92,6 +92,17 @@
                     FlashService.Error('Error en la creacion de paciente');      
                 });
         }
+        function uploadFile(){
+            
+            var file = $scope.myFile;
+               
+           console.log('file is ' );
+           console.dir(file);
+
+           var uploadUrl = "/fileUpload";
+           fileUpload.uploadFileToUrl(file, uploadUrl);
+        }        
+        
     }
  
 })();
