@@ -109,14 +109,13 @@
     <Compile Include="DAL\DBPatient.cs" />
     <Compile Include="DAL\DBUser.cs" />
     <Compile Include="DAL\Models\Appointment.cs" />
+    <Compile Include="DAL\Models\MedicalSpecialty.cs" />
     <Compile Include="DAL\Models\Medicine.cs" />
     <Compile Include="DAL\Models\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test\DAL\DALTest.cs" />
-    <Compile Include="Test\DAL\DoctorDBTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
