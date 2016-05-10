@@ -11,7 +11,7 @@
 
         service.Create = Create;    //de esta forma se pueden utilizar en los controladores
         service.Delete = Delete;
-        service.GetByMedic= GetByMedic;
+        service.GetByDoctor= GetByDoctor;
         service.Update = Update;
 
         return service;
@@ -25,11 +25,11 @@
             return response;    
         }
         
-        function GetByMedic(DoctorId) {
+        function GetByDoctor(DoctorId) {
             var response=$http({
                 method:"post",
                 url:"api/prescription/getbydoctorid",
-                data: DoctorId
+                data: {DoctorId: DoctorId}
             });
             return response;    
         }
@@ -38,7 +38,7 @@
             var response=$http({
                 method:"post",
                 url:"api/prescription/delete",
-                data: PrescriptionId
+                data: {PrescriptionId:PrescriptionId}
             });
             return response;    
         }

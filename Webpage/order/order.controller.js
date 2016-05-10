@@ -16,6 +16,7 @@
         $scope.branchSelected = false;
         $scope.branchId;
         $scope.medicines=[];
+         $scope.selection=[];
         
         initController();
         
@@ -43,6 +44,7 @@
  
             $scope.dataLoading=true;      //se muestra un data loading mientras se hace el pedido
             $scope.order.BranchOfficeId = $scope.BranchOfficeId;
+            $scope.order.medicineIds=  $scope.selection;
             OrderService.Create($scope.order)
             .then(function(response) {
                  $scope.dataLoading=false; 
@@ -71,7 +73,22 @@
             },function(){
                  FlashService.Error("Error al cargar las sucursales");       
             });
-        }        
+        }
+        
+                    // toggle selection for a given spec by name
+        $scope.toggleSelection = function toggleSelection(MedicineId) {
+            var idx = $scope.selection.indexOf(MedicineId);
+ 
+             // is currently selected
+             if (idx > -1) {
+               $scope.selection.splice(idx, 1);
+             }
+
+             // is newly selected
+             else {
+               $scope.selection.push(MedicineId);
+             }
+        };
     
     }
 } ) ();  // La funcion se auto llama

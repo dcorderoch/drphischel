@@ -18,7 +18,8 @@
                 <li><a href="#/appointment"><i class="fa fa-hospital-o"></i> Citas</a></li>
                 <li><a href="#/record"><i class="fa fa-file-text"></i>Historial Médico</a></li>
                 <li><a href="#/order"><i class="fa fa-paper-plane-o"></i></a>Ordenar</li>
-                <li><a href="#/newDoctor"><i class="fa fa-user-md" ></i></a>Nuevo Doctor</li>    
+                <li><a href="#/newDoctor"><i class="fa fa-user-md" ></i></a>Nuevo Doctor</li>  
+                  <li><a href="#/prescription"><i class="fa fa-table"></i></a>Prescripcion</li>  
                 <li><a href="#/login"><i class="fa fa-sign-out"></i>Cerrar Sesión</a></li>  
               </ul>
             </div>
@@ -41,7 +42,7 @@
     <div ng-show="branchSelected">
         <form name="form" ng-submit="createOrder()" role="form" novalidate>
 
-
+            
             <div class="form-group" ng-class="{ 'has-error': form.clientId.$dirty && form.clientId.$error.required }">
                 <label >Cliente (Número de Cédula)</label>
                 <input type="text" name="clientId"  class="form-control" ng-model="order.clientId" required />
