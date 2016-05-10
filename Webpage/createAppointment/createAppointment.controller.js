@@ -40,7 +40,9 @@
         }
         
         function loadDoctors(){
-            $scope.allDoctors.push({"x":"b","y":"c"});
+            $scope.allDoctors.push({"Name":"Nicolas"});
+            $scope.allDoctors.push({"Name":"Alfonso"});
+            $scope.allDoctors.push({"Name":"Emmanuel"});
             DoctorService.GetByPatient($rootScope.userId)
                 .then(function(doctors){
                        $scope.allDoctors = doctors.data;
@@ -48,8 +50,5 @@
                     FlashService.Error("Error al cargar doctores del usuario"); 
                 });
         }
-
-
-    
     }
 } ) ();  // La funcion se auto llama

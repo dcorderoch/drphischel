@@ -40,7 +40,7 @@
                 controlerAs: 'vm'           
             })
             .when('/createAppointment',{
-                controller: 'createAppointmentController',
+                controller: 'CreateAppointmentController',
                 templateUrl: 'createAppointment/createAppointment.view.html',
                 controlerAs: 'vm'           
             })

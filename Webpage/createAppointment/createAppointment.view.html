@@ -16,16 +16,16 @@
         </nav>
 
     <div class="col-md-6 col-md-offset-3">
-
+<br>
         <h3 class ="lead" align="center"> Pedir una cita</h3>
             <br>
         
         <form name="form" ng-submit="createA(selectedDoc.DoctorId)" role="form" novalidate>
 
-            <div class="form-group" ng-class="{ 'has-error': createA.date.$dirty && createA.date.$error.required }">
-                <label >text</label>
+            <div class="form-group" ng-class="{ 'has-error': form.date.$dirty && form.date.$error.required }">
+                <label >Fecha</label>
                 <input type="date" name="text" class="form-control" ng-model="newAppointment.AppointmentDate" required />
-                <span ng-show="createA.date.$dirty && createA.date.$error.required" class="help-block">La fecha es requerida</span>
+                <span ng-show="form.date.$dirty && form.date.$error.required" class="help-block">La fecha es requerida</span>
             </div>
             
             <div class="form-group">

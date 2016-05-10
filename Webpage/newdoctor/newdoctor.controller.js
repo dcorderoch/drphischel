@@ -6,7 +6,7 @@
         .controller('NewDoctorController', NewDoctorController);
  
     NewDoctorController.$inject = ['$location', 'DoctorService', 'SpecialityService','FlashService', '$rootScope','$scope'];
-    function NewDoctorController(location, SpecialityService, DoctorService, FlashService, $rootScope,$scope) {
+    function NewDoctorController(location, DoctorService, SpecialityService, FlashService, $rootScope,$scope) {
         var vm = this;
  
         //Tomar especialidades
