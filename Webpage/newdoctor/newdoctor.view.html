@@ -14,7 +14,7 @@
                 <li><a href="#/record"><i class="fa fa-file-text"></i>Historial Médico</a></li>
                 <li><a href="#/order"><i class="fa fa-paper-plane-o"></i></a>Ordenar</li>
                 <li><a href="#/newDoctor"><i class="fa fa-user-md" ></i></a>Nuevo Doctor</li>    
-                <li><a href="#/login"><i class="fa-sign-out"></i>Cerrar Sesión</a></li>  
+                <li><a href="#/login"><i class="fa fa-sign-out"></i>Cerrar Sesión</a></li>  
               </ul>
             </div>
         </nav>
@@ -26,7 +26,7 @@
     <br>
         
     
-     <form name="form" ng-submit="createDoctor()" role="form" novalidate><!--ng-submit se da cuando se presiona submit abajo-->
+     <form name="form" ng-submit="createDoctor(Specs)" role="form" novalidate><!--ng-submit se da cuando se presiona submit abajo-->
 
         <div class="form-group" ng-class="{ 'has-error': form.Id.$dirty && form.Id.$error.required }">
             <label>Número de doctor</label>
@@ -88,13 +88,14 @@
         <span ng-show="form.creditCardNumber.$dirty && form.creditCardNumber.$error.required" class="help-block">Vuestro número de tarjeta de crédito es requerido</span>
     </div>      
          
-    <div class="form-group" ng-class="{ 'has-error': form.specialities.$dirty && form.specialities.$error.required }">
+    <div class="form-group" >
         <label>Especialidades Médicas</label>
-            <label ng-repeat="speciality in medicSpecialities">
-                <input type="checkbox" name="specialities" class="form-control" checklist-model="newDoc.Specialities" checklist-value="speciality.Name"> {{speciality.name}}
+            <label ng-repeat="speciality in medicSpecialities" class="checkbox-inline">
+                <input type="checkbox" name="specialities" class="form-control" checklist-model="Specs" checklist-value="speciality.Name"> {{speciality.Name}}
             </label>
-        <span ng-show="form.specialities.$dirty && form.specialities.$error.required" class="help-block">Es requerido escoger ciertas especialidades</span>
-    </div>      
+    </div> 
+         <p>Especialidades escogidas</p>
+         <p ng-repeat="x in newDoc.Specialities.Name"></p>
              
 
     <div class="form-actions">
