@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using mdphischel.DAL.Models;
 
 namespace mdphischel.DAL
 {
@@ -60,19 +62,30 @@ namespace mdphischel.DAL
         /// <summary>
         /// Gets all medical specialties.
         /// </summary>
-        public void GetAllSpecialties()
+        public List<MedicalSpecialty> GetAllSpecialties()
         {
+            List<MedicalSpecialty> medicalSpecialties = new List<MedicalSpecialty>();
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
             using (SqlCommand cmd = new SqlCommand("uspGetAllSpecialties", connection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 connection.Open();
-                cmd.ExecuteNonQuery();
-
-                connection.Close();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        MedicalSpecialty newMedicalSpecialty = new MedicalSpecialty();
+                        newMedicalSpecialty.MedicalSpecialtyId = (int)reader[0];
+                        var name = reader[1].ToString();
+                        newMedicalSpecialty.Name = name.ToString();
+                        medicalSpecialties.Add(newMedicalSpecialty);
+          
+                    }
+                    reader.Close();
+                    connection.Close();
             }
-
+                return medicalSpecialties;
         }
     }
 }
