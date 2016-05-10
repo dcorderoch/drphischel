@@ -19,6 +19,9 @@
         
         function initController() {
             loadAllSpecialitiesK();
+            $scope.medicSpecialities.push({"Name":"Nicolas"});
+            $scope.medicSpecialities.push({"Name":"Alfonso"});
+            $scope.medicSpecialities.push({"Name":"Emmanuel"});
         }
         
         function loadAllSpecialitiesK() {
@@ -31,9 +34,11 @@
             });
         }
         
-        function createDoctor(){
-            
-            DoctorService.Get($scope.newDoc)
+        function createDoctor(Specs){
+            console.log(Specs);
+            $scope.newDoc.Approved ="false";
+            console.log($scope.newDoc);
+            DoctorService.Create($scope.newDoc)
                 .then(function() {
                     $scope.newDoc ={};   
                 },function(response){
