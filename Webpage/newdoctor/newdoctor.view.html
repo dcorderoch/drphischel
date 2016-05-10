@@ -26,7 +26,7 @@
     <br>
         
     
-     <form name="form" ng-submit="createDoctor(Specs)" role="form" novalidate><!--ng-submit se da cuando se presiona submit abajo-->
+     <form name="form" ng-submit="createDoctor()" role="form" novalidate><!--ng-submit se da cuando se presiona submit abajo-->
 
         <div class="form-group" ng-class="{ 'has-error': form.Id.$dirty && form.Id.$error.required }">
             <label>Número de doctor</label>
@@ -90,14 +90,16 @@
          
     <div class="form-group" >
         <label>Especialidades Médicas</label>
-            <label ng-repeat="speciality in medicSpecialities" class="checkbox-inline">
-                <input type="checkbox" name="specialities" class="form-control" checklist-model="Specs" checklist-value="speciality.Name"> {{speciality.Name}}
-            </label>
-    </div> 
-         <p>Especialidades escogidas</p>
-         <p ng-repeat="x in newDoc.Specialities.Name"></p>
-             
-
+        <div class="action-checkbox" ng-repeat="speciality in medicSpecialities">
+           <input id="{{speciality.Name}}" type="checkbox" value="{{speciality.Name}}" ng-checked="selection.indexOf(speciality.MedicalSpecialtyId) > -1" ng-click="toggleSelection(speciality.MedicalSpecialtyId)" />
+           <label for="{{speciality.Name}}">           
+               {{speciality.Name}}
+           </label>                
+        </div>
+    </div>
+         
+   
+         
     <div class="form-actions">
         <!--Boton submit-->
         <button type="submit"  ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Crear</button>

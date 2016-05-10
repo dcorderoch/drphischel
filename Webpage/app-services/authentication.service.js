@@ -42,6 +42,10 @@
 
         function ClearCredentials() {   // cuando se deslogea el usuario
             $rootScope.globals = {};
+             $rootScope.userId = "";
+             $rootScope.patientName = "";
+             $rootScope.doctorId = "";
+             $rootScope.doctorName = "";
             $cookieStore.remove('globals');
             $http.defaults.headers.common.Authorization = 'Basic';
         }

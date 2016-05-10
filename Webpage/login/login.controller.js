@@ -19,7 +19,7 @@
 
         initController();
         function initController() { // Se inicializa el servicio de limpiar credenciales en AuthenticationService       
-           // AuthenticationService.ClearCredentials();
+            AuthenticationService.ClearCredentials();
             console.log($scope.roles);
         }//Estos parentesis del final indican que esto se inicia automaticamente
 
