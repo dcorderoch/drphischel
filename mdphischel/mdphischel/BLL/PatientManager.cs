@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using mdphischel.DAL;
+using mdphischel.DAL.Models;
 
 namespace mdphischel.BLL
 {
@@ -30,7 +31,7 @@ namespace mdphischel.BLL
             try
             {
                 DBPatient patientInstance = new DBPatient();
-                var operationResult = patientInstance.CreatePatient(idNumber,password,name,lastName1,lastName2,residence,birthDate);
+                var operationResult = patientInstance.CreatePatient(idNumber, password, name, lastName1, lastName2, residence, birthDate);
                 var operationResult2 = patientInstance.LinkPatientToDoctor(doctorId, idNumber);
                 if (operationResult[0].Equals(Constants.SUCCESS) && operationResult2[0].Equals(Constants.SUCCESS))
                 {
@@ -146,7 +147,35 @@ namespace mdphischel.BLL
             }
             return result;
         }
+        
+        /// <summary>
+        /// Get all doctors associated to given patient.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public List<string> GetDoctorsByPatient(int userId)
+        {
+            List<string> retVal = new List<string>();
 
+            try
+            {
+                DBPatient patientInstance = new DBPatient();
+                var doctorList = patientInstance.GetDoctorsByPatient(userId);
+                retVal.Add(Constants.SUCCESS.ToString());
+                foreach (Doctor t in doctorList)
+                {
+                    retVal.Add(t.UserId.ToString());
+                    retVal.Add(t.DoctorId);
+                    retVal.Add(t.OfficeAddress);
+
+                }
+            }
+            catch (Exception)
+            {
+                retVal.Add(Constants.ERROR.ToString());
+            }
+            return retVal;
+        }
 
     }
 }
