@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using mdphischel.DAL;
+using mdphischel.DAL.Models;
 
 namespace mdphischel.BLL
 {
@@ -74,5 +75,37 @@ namespace mdphischel.BLL
             }
             return result;
         }
+
+        /// <summary>
+        /// Gets all medicines by given branch office Id.
+        /// </summary>
+        /// <param name="branchOffice"></param>
+        /// <returns></returns>
+        public List<string> GetAllMedicines(string branchOffice)
+        {
+            List<string> retVal = new List<string>();
+
+            try
+            {
+                DBMedicine medicineInstance = new DBMedicine();
+                var medicineList = medicineInstance.GetAllMedicines(branchOffice);
+                retVal.Add(Constants.SUCCESS.ToString());
+                foreach (Medicine t in medicineList)
+                {
+                    retVal.Add(t.BranchOfficeId);
+                    retVal.Add(t.MedicineId);
+                    retVal.Add(t.Quantity.ToString());
+                    retVal.Add(t.Sales.ToString());
+                    retVal.Add(t.Price);
+                }
+            }
+            catch (Exception)
+            {
+                retVal.Add(Constants.ERROR.ToString());
+            }
+            return retVal;
+        }
+
+
     }
 }
