@@ -110,6 +110,19 @@ BEGIN
 END
 GO
 
+/*
+ * Get Patients for a doctor
+ */
+  GO
+  CREATE PROCEDURE usp_getPatientsByDoctor
+		@doctorId NVARCHAR(15)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT U.UserId, U.Name, U.LastName1, U.LastName2 FROM SystemUser U JOIN PatientByDoctor PD ON U.UserId=PD.PatientId WHERE PD.DoctorId=@doctorId
+END
+GO
+
 
 ---------Medical Record SPs
 
@@ -303,7 +316,36 @@ END
 GO
 
 
+/*
+ * Get prescriptions by doctor Id
+ */
 
+  GO
+  CREATE PROCEDURE usp_getPrescriptionByDoctor
+			@doctorId NVARCHAR(15)
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT P.PrescriptionId,P.DoctorId,P.PatientId FROM Prescription P WHERE P.DoctorId=@doctorId
+END
+GO
+
+
+/*
+ * Get All BranchOffices
+ */
+
+  GO
+  CREATE PROCEDURE usp_getBranchOffices
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT * FROM BranchOffice 
+	
+END
+GO
+
+exec usp_getBranchOffices
 
 
 INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
