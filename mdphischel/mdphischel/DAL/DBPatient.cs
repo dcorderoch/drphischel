@@ -317,7 +317,43 @@ namespace mdphischel.DAL
             return doctorList;
         }
 
+        /// <summary>
+        /// Obtains doctor code by given userId. 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public Doctor GetDoctor(int userId)
+        {
+            Doctor doctor = new Doctor();
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("uspGetDoctorCodeFromUserId", connection))
+            {
+                SqlParameter userIdParameter = cmd.Parameters.Add("@UserId", SqlDbType.Int);
+                userIdParameter.Direction = ParameterDirection.Input;
+                userIdParameter.Value = userId;
 
+                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
+                errorCodeParameter.Direction = ParameterDirection.Output;
+
+                SqlParameter resultCodeParameter = cmd.Parameters.Add("@result", SqlDbType.Int);
+                resultCodeParameter.Direction = ParameterDirection.Output;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        doctor.DoctorId = reader[0].ToString();
+                    }
+                    reader.Close();
+                }
+                connection.Close();
+            }
+            return doctor;
+        }
 
 
 
