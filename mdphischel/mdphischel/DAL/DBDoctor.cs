@@ -277,6 +277,47 @@ namespace mdphischel.DAL
             }
             return chargesReport;
         }
+
+
+
+
+        /// <summary>
+        /// Retrieves a list of pending doctors for approbation
+        /// </summary>
+        /// <returns>List of doctors</returns>
+        public List<Doctor> GetPendingDoctors()
+        {
+            List<Doctor> docList = new List<Doctor>();
+
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("usp_getPendingDoctors", connection))
+            {
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Doctor newDoc = new Doctor();
+                        newDoc.DoctorId = (string)reader[0];
+                        newDoc.OfficeAddress = (string)reader[1];
+                        newDoc.CreditCardNumber = (string)reader[2];
+                        newDoc.Name = (string)reader[3];
+                        newDoc.LastName1 = (string)reader[4];
+                        newDoc.LastName2 = (string) reader[5];
+                        newDoc.PlaceResidence = (string) reader[6];
+                        newDoc.BirthDate = (string) reader[7];
+                        docList.Add(newDoc);
+                    }
+                    reader.Close();
+                }
+
+                connection.Close();
+            }
+            return docList;
+        }
     }
 
     
