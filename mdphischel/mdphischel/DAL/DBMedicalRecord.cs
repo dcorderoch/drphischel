@@ -26,7 +26,7 @@ namespace mdphischel.DAL
 
                 SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
                 errorCodeParameter.Direction = ParameterDirection.Output;
-                SqlParameter resultCodeParameter = cmd.Parameters.Add("@result", SqlDbType.Int);
+                SqlParameter resultCodeParameter = cmd.Parameters.Add("@resultCode", SqlDbType.Int);
                 resultCodeParameter.Direction = ParameterDirection.Output;
                 SqlParameter userIdParameter = cmd.Parameters.Add("@userId", SqlDbType.Int);
                 userIdParameter.Direction = ParameterDirection.Input;
@@ -90,7 +90,7 @@ namespace mdphischel.DAL
 
                 SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
                 errorCodeParameter.Direction = ParameterDirection.Output;
-                SqlParameter resultCodeParameter = cmd.Parameters.Add("@result", SqlDbType.Int);
+                SqlParameter resultCodeParameter = cmd.Parameters.Add("@resultcode", SqlDbType.Int);
                 resultCodeParameter.Direction = ParameterDirection.Output;
                 SqlParameter medicalRecordIdParameter = cmd.Parameters.Add("@medicalRecordId", SqlDbType.Int);
                 medicalRecordIdParameter.Direction = ParameterDirection.Input;
