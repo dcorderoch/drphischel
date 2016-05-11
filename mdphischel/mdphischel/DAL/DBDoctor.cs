@@ -219,7 +219,7 @@ namespace mdphischel.DAL
         /// <param name="docCode">doctor id</param>
         /// <param name="date"> desired year and month in the format YYYY-MM-01</param>
         /// <returns></returns>
-        public MonthlyDocCharges GetMonthlyCharges(string docCode, string date)
+        public MonthlyDocCharges GetMonthlyCharges(string date)
         {
             MonthlyDocCharges chargesReport = new MonthlyDocCharges();
 
@@ -230,9 +230,6 @@ namespace mdphischel.DAL
                 errorCodeParameter.Direction = ParameterDirection.Output;
                 SqlParameter resultCodeParameter = cmd.Parameters.Add("@resultCode", SqlDbType.Int);
                 resultCodeParameter.Direction = ParameterDirection.Output;
-                SqlParameter docCodeParameter = cmd.Parameters.Add("@docCode", SqlDbType.NVarChar);
-                docCodeParameter.Direction = ParameterDirection.Input;
-                docCodeParameter.Value = docCode;
                 SqlParameter dateParameter = cmd.Parameters.Add("@date", SqlDbType.NVarChar);
                 dateParameter.Direction = ParameterDirection.Input;
                 dateParameter.Value = date;
@@ -245,9 +242,11 @@ namespace mdphischel.DAL
                     while (reader.Read())
                     {
                         DoctorsCharge newcharge = new DoctorsCharge();
-                        newcharge.UserId =  (int) reader[0];
-                        var newDate= reader[1].ToString();
-                        newcharge.AppointmentDate = newDate.ToString();
+                        newcharge.DoctorName =  (string) reader[0];
+                        newcharge.DoctorLastName1 = (string) reader[1];
+                        newcharge.DoctorLastName2 = (string) reader[2];
+                        newcharge.DoctorId = (string) reader[3];
+                        newcharge.Charge = (decimal) reader[4];
                         chargesReport.AddCharge(newcharge);
 
                     }
@@ -279,4 +278,6 @@ namespace mdphischel.DAL
             return chargesReport;
         }
     }
+
+    
 }
