@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using mdphischel.DAL;
+using mdphischel.DAL.Models;
 
 namespace mdphischel.BLL
 {
@@ -102,5 +101,32 @@ namespace mdphischel.BLL
             return result;
         }
 
+        /// <summary>
+        /// Gets all appointments of given doctor.
+        /// </summary>
+        /// <param name="doctorId"></param>
+        /// <returns>All appointments by doctor.</returns>
+        public List<string> GetAppointmentsByDoctor(string doctorId)
+        {
+            List<string> retVal = new List<string>();
+            
+            try
+            {
+                DBAppointment appointmentInstance = new DBAppointment();
+                var appointmentList = appointmentInstance.GetAppointmentsByDoctor(doctorId);
+                retVal.Add(Constants.SUCCESS.ToString());
+                foreach (Appointment t in appointmentList)
+                {
+                    retVal.Add(t.DoctorId);
+                    retVal.Add(t.UserId.ToString());
+                    retVal.Add(t.AppointmentDate);
+                }
+            }
+            catch (Exception)
+            {
+                retVal.Add(Constants.ERROR.ToString());
+            }
+            return retVal;
+        }
     }
 }
