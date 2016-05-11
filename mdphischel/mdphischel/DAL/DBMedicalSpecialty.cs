@@ -78,7 +78,7 @@ namespace mdphischel.DAL
                         MedicalSpecialty newMedicalSpecialty = new MedicalSpecialty();
                         newMedicalSpecialty.MedicalSpecialtyId = (int)reader[0];
                         var name = reader[1].ToString();
-                        newMedicalSpecialty.Name = name.ToString();
+                        newMedicalSpecialty.Name = name;
                         medicalSpecialties.Add(newMedicalSpecialty);
 
                     }

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using mdphischel.DAL;
+using mdphischel.DAL.Models;
 
 namespace mdphischel.BLL
 {
@@ -38,8 +37,33 @@ namespace mdphischel.BLL
             }
             return result;
         }
+
+        /// <summary>
+        /// Gets all existing medical specialties in the database.
+        /// </summary>
+        /// <returns>List of strings with all the specialty information.</returns>
+        public List<string> GetAllSpecialties()
+        {
+            List<string> retVal = new List<string>();
+
+            try
+            {
+                DBMedicalSpecialty specialtyInstance = new DBMedicalSpecialty();
+                var specialtyList = specialtyInstance.GetAllSpecialties();
+                retVal.Add(Constants.SUCCESS.ToString());
+                foreach (MedicalSpecialty t in specialtyList)
+                {
+                    retVal.Add(t.MedicalSpecialtyId.ToString());
+                    retVal.Add(t.Name);
+                }
+            }
+            catch (Exception)
+            {
+                retVal.Add(Constants.ERROR.ToString());
+            }
+            return retVal;
+        }
     }
-
-
-
 }
+
+
