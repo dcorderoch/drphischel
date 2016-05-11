@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using mdphischel.DAL.Models;
 
 namespace mdphischel.DAL
 {
@@ -136,6 +137,43 @@ namespace mdphischel.DAL
                 connection.Close();
             }
             return resultCodes;
+        }
+
+
+        /// <summary>
+        /// Retrieves a list of patients for the given doctorId
+        /// </summary>
+        /// <returns>List of doctors</returns>
+        public List<MedicalRecord> GetMedicalRecords(int patientId)
+        {
+            List<MedicalRecord> patientMedRecords = new List<MedicalRecord>();
+
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("usp_getPatientMedRecord", connection))
+            {
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        MedicalRecord medRecord = new MedicalRecord();
+                        medRecord.MedicalRecordId = (int) reader[0];
+                        medRecord.DoctorId = (string) reader[1];
+                        medRecord.AppointmentDate = (string) reader[2];
+                        medRecord.Description = (string) reader[3];
+                        medRecord.Diagnosis = (string) reader[4];
+                        medRecord.PrescriptionId = (string) reader[5];
+                        patientMedRecords.Add(medRecord);
+                    }
+                    reader.Close();
+                }
+
+                connection.Close();
+            }
+            return patientMedRecords;
         }
 
 
