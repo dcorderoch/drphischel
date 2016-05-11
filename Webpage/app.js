@@ -91,7 +91,7 @@
                 controlerAs: 'vm'
             }) 
             .when('/record',{
-                controller: 'RecordControlloer',
+                controller: 'RecordController',
                 templateUrl: 'record/record.view.html',
                 controlerAs: 'vm'           
             })

@@ -20,16 +20,22 @@
         </nav>
         
     <div class="col-md-6 col-md-offset-3">
-
-        <br>
-        <p class="lead">Aquí podés  agregar  registros médicos a tus pacientes</p>
-        <br>
-
-        <select ng-model="selectedPatient" ng-options="x.Name for x in patients"/>
             
-        <button class="btn btn-info" ng-click="patientChosed(selectedPatient)"> Seleccionar </button>  
-        <br>
+        <form name="patientForm" ng-submit="patientChosedad(selectedPatient)" novalidate>    <br>
+        
+            <div class="form-group">
+                <label>Escoge tu paciente </label>
+                <select ng-model="selectedPatient" ng-options="x.Name for x in patients"/>
+            </div> 
             
+            <div class="form-action">
+                <input type="button"  ng-click="patientChosed(selectedPatient)" class="btn btn-info" value="Seleccionar">  
+<!--                <button type="submit"  class="btn btn-primary">Escoger</button>-->
+            </div>
+
+        </form>                     <br>
+
+        
             
 <div ng-show="showPatient">
     

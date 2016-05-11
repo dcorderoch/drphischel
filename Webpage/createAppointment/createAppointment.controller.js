@@ -26,7 +26,8 @@
         function createA(DoctorId){   //pedido sin prescripcion
  
             $scope.dataLoading=true;      //se muestra un data loading mientras se hace el pedido
-            newAppointment.UserId = $rootScope.userId;
+            $scope.newAppointment.UserId = $rootScope.userId;
+            console.log(DoctorId)
             AppointmentService.Create($scope.newAppointment)
             .then(function(response) {
                             
@@ -40,9 +41,9 @@
         }
         
         function loadDoctors(){
-            $scope.allDoctors.push({"Name":"Nicolas"});
-            $scope.allDoctors.push({"Name":"Alfonso"});
-            $scope.allDoctors.push({"Name":"Emmanuel"});
+            $scope.allDoctors.push({"Name":"Nicolas", "DoctorId":"174" });
+            $scope.allDoctors.push({"Name":"Alfonso", "DoctorId":"340"});
+            $scope.allDoctors.push({"Name":"Emmanuel", "DoctorId":"57467"});
             DoctorService.GetByPatient($rootScope.userId)
                 .then(function(doctors){
                        $scope.allDoctors = doctors.data;

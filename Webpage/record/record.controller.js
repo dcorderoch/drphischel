@@ -9,22 +9,30 @@
     function RecordController(location, RecordService, PatientService, PrescriptionService, FlashService, $rootScope,$scope) {
         var vm = this;
  
+        //variable del nuevo record a agregar
         $scope.newRecord={};
         
+        //funciones que se llaman en la vista 
         $scope.createRecord= createRecord;  //variables locales y para vistas
+        $scope.patientChosed = patientChosed;
+        
+        //Pacientes y prescripciones extraidos del servidor
         $scope.patients=[];
         $scope.prescriptions=[];
-        $scope.patientChosed(selectedPatient) = patientChosed;
+        
+        //Id de paciente obtenido de la vista y variable para esconder y mostrar el form de creare record.
+        $scope.patientId;
         $scope.showPatient = false;
         
         initController();
         
         function initController() {
+            
             loadAllPatients();
 
-             $scope.prescriptions.push({"UserId":"Nicolas", MedicineId:"123"});
-            $scope.prescriptions.push({"UserId":"Nicolas",MedicineId:"456"});
-            $scope.prescriptions.push({"UserId":"Nicolas",MedicineId:"789"});
+             $scope.prescriptions.push({"UserId":"Nicolas", PrescriptionId:"123"});
+            $scope.prescriptions.push({"UserId":"Nicolas",PrescriptionId:"456"});
+            $scope.prescriptions.push({"UserId":"Nicolas",PrescriptionId:"789"});
         };
         
         
@@ -67,7 +75,8 @@
         
         function patientChosed(selectedPatient){
             
-            $scope.showPatient = false;
+            $scope.showPatient = true;
+            $scope.patientId=selectedPatient.UserId;
             loadAllPrescriptions();
           }
         
