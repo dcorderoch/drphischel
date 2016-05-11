@@ -12,7 +12,7 @@ namespace mdphischel.BLL
     public class AppointmentManager
     {
         /// <summary>
-        /// Creates an appointment if business rules are met.
+        /// Creates an appointment if business rules conditions are met.
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="doctorId"></param>
@@ -40,5 +40,37 @@ namespace mdphischel.BLL
             }
             return result;
         }
+
+        /// <summary>
+        /// Updates an appointment if business rules conditions are met.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="doctorId"></param>
+        /// <param name="oldAppointment"></param>
+        /// <param name="newAppointment"></param>
+        /// <returns>Result code indicating whether operation was successful or not.</returns>
+        public int UpdateAppointment(int userId, string doctorId, string oldAppointment, string newAppointment)
+        {
+            int result;
+            try
+            {
+                DBAppointment appointmentInstance = new DBAppointment();
+                var operationResult = appointmentInstance.UpdateAppointment(userId, doctorId, oldAppointment, newAppointment);
+                if (operationResult[0].Equals(Constants.SUCCESS))
+                {
+                    result = Constants.SUCCESS;
+                }
+                else
+                {
+                    result = Constants.ERROR;
+                }
+            }
+            catch (Exception)
+            {
+                result = Constants.ERROR;
+            }
+            return result;
+        }
+
     }
 }
