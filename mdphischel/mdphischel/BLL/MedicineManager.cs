@@ -43,5 +43,36 @@ namespace mdphischel.BLL
             }
             return result;
         }
+
+        /// <summary>
+        /// Method in charge of synchronizing the given medicine information into local medicine table.
+        /// </summary>
+        /// <param name="branchOfficeId"></param>
+        /// <param name="medicineId"></param>
+        /// <param name="quantity"></param>
+        /// <param name="sales"></param>
+        /// <returns>Integer indicating whether operation was successful or not.</returns>
+        public int SynchronizeMedicine(string branchOfficeId, string medicineId, int quantity, int sales)
+        {
+            int result;
+            try
+            {
+                DBMedicine medicineInstance = new DBMedicine();
+                var operationResult = medicineInstance.SynchronizeMedicine(branchOfficeId, medicineId, quantity, sales);
+                if (operationResult[0].Equals(Constants.SUCCESS))
+                {
+                    result = Constants.SUCCESS;
+                }
+                else
+                {
+                    result = Constants.ERROR;
+                }
+            }
+            catch (Exception)
+            {
+                result = Constants.ERROR;
+            }
+            return result;
+        }
     }
 }
