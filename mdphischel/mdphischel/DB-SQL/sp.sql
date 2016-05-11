@@ -9,10 +9,6 @@
 
 
 
- ----CUSTOM ERRORS
-
-
-
 
 
  /*
@@ -114,18 +110,21 @@ GO
 AS
 BEGIN
 	SET NOCOUNT ON
-	BEGIN TRY
-		DECLARE @medicalRecordId INT;
+	BEGIN TRANSACTION t1
+		BEGIN TRY
+			DECLARE @medicalRecordId INT;
 
-		SELECT @medicalRecordId=M.MedicalRecordId FROM MedicalRecord M WHERE M.UserId=@userId
+			SELECT @medicalRecordId=M.MedicalRecordId FROM MedicalRecord M WHERE M.UserId=@userId
 
-		INSERT INTO MedicalRecordData VALUES (@medicalRecordId,@appointmentId,@description,@diagnosis,@prescriptionId)
-    END TRY
-	BEGIN CATCH
-		SET @errorNum = Error_Number()
-		SET @resultCode=0
-		RETURN
-	END CATCH
+			INSERT INTO MedicalRecordData VALUES (@medicalRecordId,@appointmentId,@description,@diagnosis,@prescriptionId)
+		END TRY
+		BEGIN CATCH
+			SET @errorNum = Error_Number()
+			SET @resultCode=0
+			ROLLBACK TRANSACTION t1
+			RETURN
+		END CATCH
+	COMMIT TRANSACTION t1
 	SET @resultCode = 1
 	RETURN
 END
@@ -228,14 +227,68 @@ GO
 
    GO
   CREATE PROCEDURE usp_updatePrescription
-		@prescriptionId UNIQUEIDENTIFIER, @doctorCode nvarchar(15), @patientId INT, @OldmedicineId UNIQUEIDENTIFIER, @NewMedicineId UNIQUEIDENTIFIER
+		@prescriptionId UNIQUEIDENTIFIER, @doctorCode nvarchar(15), @patientId INT, @OldmedicineId UNIQUEIDENTIFIER, @NewMedicineId UNIQUEIDENTIFIER, @resultCode INT OUTPUT, @errorNum INT OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON
-		UPDATE Prescription SET PatientId=@patientId, DoctorId=@doctorCode WHERE PrescriptionId = @prescriptionId
-		UPDATE MedicinesPerPrescription SET MedicineId=@newMedicineId WHERE PrescriptionId=@prescriptionId AND MedicineId=@OldmedicineId
+	BEGIN TRANSACTION t1
+		BEGIN TRY
+			UPDATE Prescription SET PatientId=@patientId, DoctorId=@doctorCode WHERE PrescriptionId = @prescriptionId
+			UPDATE MedicinesPerPrescription SET MedicineId=@newMedicineId WHERE PrescriptionId=@prescriptionId AND MedicineId=@OldmedicineId
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION t1
+			SET @errorNum = Error_Number()
+			SET @resultCode=0
+			RETURN
+		END CATCH
+		COMMIT TRANSACTION t1
+		SET @resultCode=1
 END
 GO
+
+/*
+ * Delete an existing prescription by id
+ */
+
+GO
+  CREATE PROCEDURE usp_deletePrescription
+		@prescriptionId UNIQUEIDENTIFIER, @resultCode INT OUTPUT, @errorNum INT OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	BEGIN TRANSACTION t1
+		BEGIN TRY
+			DELETE FROM MedicinesPerPrescription WHERE PrescriptionId=@prescriptionId
+			DELETE FROM Prescription WHERE PrescriptionId=@prescriptionId
+		END TRY
+		BEGIN CATCH
+			ROLLBACK TRANSACTION t1
+			SET @errorNum = Error_Number()
+			SET @resultCode=0
+		END CATCH
+		COMMIT TRANSACTION t1
+		SET @resultCode=1
+END
+GO
+
+
+/*
+ * Get medicines from prescription by prescription id
+ */
+
+ 
+GO
+  CREATE PROCEDURE usp_getPrescriptionMedicines
+		@prescriptionId UNIQUEIDENTIFIER
+AS
+BEGIN
+	SET NOCOUNT ON
+		SELECT M.MedicineId, M.Name FROM Medicine M JOIN MedicinesPerPrescription MP ON M.MedicineId=MP.MedicineId WHERE MP.PrescriptionId=@prescriptionId
+END
+GO
+
+
 
 
 INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
@@ -247,7 +300,7 @@ INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
 							   EXEC usp_updatePrescription @prescriptionId='64cf9b74-25b1-45f4-a097-080693ec00ad',@doctorCode='DOC222',@patientId=11,@OldMedicineId='c3f002df-4e5e-41ff-97d6-933b50936ee6',@NewMedicineId='4296c5ad-f84e-431a-87c0-ebc25566bec4'
 							   Select @res,@en
 
-							  exec usp_getPatientMedRecord @userId=1
+							  exec usp_deletePrescription @prescriptionId='0315197b-ef78-4093-905b-ff3fa46514c5'
 
 
 						
