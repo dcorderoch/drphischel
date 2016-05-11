@@ -29,6 +29,16 @@
             });
             return response;    
         }
+        function GetByBranch(branchID){
+            
+            var response=$http({
+                method:"post",
+                url:"api/medicine/getbybranchoffice",
+                data: {BranchOfficeId: branchID}
+            })
+            return response;
+        }
+        
         
 
         // private functions

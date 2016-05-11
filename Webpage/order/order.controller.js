@@ -11,17 +11,26 @@
         $scope.order={};
         var vm = this;
         
+        //funciones
         $scope.createOrder= createOrder;  //variables locales y para vistas
+        $scope.load =load;
+        
+        //Arrays de datos obtenidos del servidor
         $scope.branches=[];
+        $scope.medicines=[];
+        
+        //COntrol de la sucursal obtenida y si mostrar el form de crear pedido
         $scope.branchSelected = false;
         $scope.branchId;
-        $scope.medicines=[];
-         $scope.selection=[];
         
+        //Array intermedio de seleccion del checkbox.
+        $scope.selection=[];
+
         initController();
         
         function initController() {
-      //      loadAllBranches();
+            
+            loadAllBranches();
             $scope.branches.push({"Name":"Nicolas", BranchOfficeId:"123"});
             $scope.branches.push({"Name":"Alfonso",BranchOfficeId:"456"});
             $scope.branches.push({"Name":"Emmanuel",BranchOfficeId:"789"});
@@ -31,19 +40,17 @@
             $scope.medicines.push({"Name":"Emmanuel",MedicineId:"789"});
         };
         
-        
-        function setBranch(selectedBranch){
+        function load(branchSelected){
             
-            $scope.branchSelected = true;
-            $scope.branchId = selectedBranch.BranchOfficeId;
-            loadAllMedicines();
+              $scope.branchSelected=true;
+              $scope.branchId = branchSelected.BranchOfficeId;
+              loadAllMedicines();
         }
-        
         
         function createOrder(){   //pedido sin prescripcion
  
             $scope.dataLoading=true;      //se muestra un data loading mientras se hace el pedido
-            $scope.order.BranchOfficeId = $scope.BranchOfficeId;
+            $scope.order.BranchOfficeId = $scope.branchId;
             $scope.order.medicineIds=  $scope.selection;
             OrderService.Create($scope.order)
             .then(function(response) {
@@ -56,8 +63,8 @@
             });
         }
         
-        function loadAllMedicines(){
-            MedicineService.GetAll()
+        function loadMedicines(){
+            MedicineService.GetByBranch()
                 .then(function(medicines){
                     $scope.medicines = medicines;
                     
