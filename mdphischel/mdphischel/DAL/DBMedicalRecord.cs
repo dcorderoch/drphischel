@@ -75,6 +75,70 @@ namespace mdphischel.DAL
         }
 
 
+        /// <summary>
+        /// This method updates and entry in user's medical record
+        /// </summary>
+        /// <param name="docCode"></param>
+        /// <returns></returns>
+        public int[] UpdateMedicalRecordEntry(int medicalRecordId, int appointmentId, string description, string diagnosis, string prescriptionId)
+        {
+            int[] resultCodes = new int[2];
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("usp_updateMedRecordEntry", connection))
+            {
+
+                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
+                errorCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter resultCodeParameter = cmd.Parameters.Add("@result", SqlDbType.Int);
+                resultCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter medicalRecordIdParameter = cmd.Parameters.Add("@medicalRecordId", SqlDbType.Int);
+                medicalRecordIdParameter.Direction = ParameterDirection.Input;
+                medicalRecordIdParameter.Value = medicalRecordId;
+                SqlParameter appointmentIdParameter = cmd.Parameters.Add("@appointmentId", SqlDbType.Int);
+                appointmentIdParameter.Direction = ParameterDirection.Input;
+                appointmentIdParameter.Value = appointmentId;
+                SqlParameter descriptionParameter = cmd.Parameters.Add("@description", SqlDbType.VarChar);
+                descriptionParameter.Direction = ParameterDirection.Input;
+                descriptionParameter.Value = description;
+                SqlParameter diagnosisParameter = cmd.Parameters.Add("@diagnosis", SqlDbType.VarChar);
+                diagnosisParameter.Direction = ParameterDirection.Input;
+                diagnosisParameter.Value = diagnosis;
+                SqlParameter prescriptionIdParameter = cmd.Parameters.Add("@prescriptionId", SqlDbType.UniqueIdentifier);
+                prescriptionIdParameter.Direction = ParameterDirection.Input;
+                prescriptionIdParameter.Value = prescriptionId;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                var resultCode = resultCodeParameter.Value;
+                var errorNumCode = errorCodeParameter.Value;
+                if (resultCode != DBNull.Value)
+                {
+                    resultCodes[0] = int.Parse(resultCode.ToString());
+                    if (errorNumCode == DBNull.Value)
+                    {
+                        resultCodes[1] = 0;
+                    }
+                    else
+                    {
+                        resultCodes[1] = int.Parse(errorNumCode.ToString());
+                    }
+
+                }
+                else
+                {
+                    resultCodes[0] = 0;
+                    resultCodes[1] = 0;
+                }
+
+                connection.Close();
+            }
+            return resultCodes;
+        }
+
+
 
 
 
