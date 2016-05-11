@@ -318,6 +318,45 @@ namespace mdphischel.DAL
             }
             return docList;
         }
+
+        /// <summary>
+        /// Retrieves a list of patients for the given doctorId
+        /// </summary>
+        /// <returns>List of doctors</returns>
+        public List<User> GetPatientsByDoctorId(string doctorId)
+        {
+            List<User> patientList = new List<User>();
+
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("usp_getPatientsByDoctor", connection))
+            {
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        User newUser = new User();
+                        newUser.UserId = (int) reader[0];
+                        newUser.Name = (string) reader[1];
+                        newUser.LastName1 = (string) reader[2];
+                        newUser.LastName2 = (string) reader[3];
+                        newUser.IdNumber = (string) reader[4];
+                        newUser.PlaceResidence = (string) reader[5];
+                        newUser.BirthDate = (string) reader[6];
+                        patientList.Add(newUser);
+                    }
+                    reader.Close();
+                }
+
+                connection.Close();
+            }
+            return patientList;
+        }
+
+
     }
 
     
