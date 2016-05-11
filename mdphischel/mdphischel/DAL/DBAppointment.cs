@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using mdphischel.DAL.Models;
 
 namespace mdphischel.DAL
 {
@@ -207,52 +209,34 @@ namespace mdphischel.DAL
         /// </summary>
         /// <param name="doctorId"></param>
         /// <returns>Result codes indicating whether the operation was successful or not.</returns>
-        public int[] GetAppointmentsByDoctor(string doctorId)
+        public List<Appointment> GetAppointmentsByDoctor(string doctorId)
         {
-            int[] resultCodes = new int[2];
+            List<Appointment> appointmentList = new List<Appointment>();
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
             using (SqlCommand cmd = new SqlCommand("uspGetAppointmentsByDoctor", connection))
             {
-                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
-                errorCodeParameter.Direction = ParameterDirection.Output;
-
-                SqlParameter resultCodeParameter = cmd.Parameters.Add("@result", SqlDbType.Int);
-                resultCodeParameter.Direction = ParameterDirection.Output;
-
                 SqlParameter doctorIdParameter = cmd.Parameters.Add("DoctorId", SqlDbType.NVarChar);
                 doctorIdParameter.Direction = ParameterDirection.Input;
                 doctorIdParameter.Value = doctorId;
 
                 cmd.CommandType = CommandType.StoredProcedure;
-
                 connection.Open();
-                cmd.ExecuteNonQuery();
 
-                var resultCode = resultCodeParameter.Value;
-                var errorNumCode = errorCodeParameter.Value;
-                if (resultCode != DBNull.Value)
+                using (var reader = cmd.ExecuteReader())
                 {
-                    resultCodes[0] = int.Parse(resultCode.ToString());
-                    if (errorNumCode == DBNull.Value)
+                    while (reader.Read())
                     {
-                        resultCodes[1] = 0;
+                        Appointment newAppointment = new Appointment();
+                        newAppointment.DoctorId = reader[0].ToString();
+                        newAppointment.UserId = (int)reader[1];
+                        newAppointment.AppointmentDate = reader[2].ToString();
+                        appointmentList.Add(newAppointment);
                     }
-                    else
-                    {
-                        resultCodes[1] = int.Parse(errorNumCode.ToString());
-                    }
-
+                    reader.Close();
                 }
-                else
-                {
-                    resultCodes[0] = 0;
-                    resultCodes[1] = 0;
-                }
-
-                //Closing connection
                 connection.Close();
             }
-            return resultCodes;
+            return appointmentList;
         }
     }
 }
