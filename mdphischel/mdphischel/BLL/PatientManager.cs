@@ -119,9 +119,32 @@ namespace mdphischel.BLL
             return result;
         }
 
-        public int DeletePatient()
+        /// <summary>
+        /// Deletes the given patient. (Logically)
+        /// </summary>
+        /// <param name="idNumber"></param>
+        /// <returns>1 or 0 whether operation was successful or not.</returns>
+        public int DeletePatient(string idNumber)
         {
-            
+            int result;
+            try
+            {
+                DBPatient patientInstance = new DBPatient();
+                var operationResult = patientInstance.DeletePatient(idNumber);
+                if (operationResult[0].Equals(Constants.SUCCESS))
+                {
+                    result = Constants.SUCCESS;
+                }
+                else
+                {
+                    result = Constants.ERROR;
+                }
+            }
+            catch (Exception)
+            {
+                result = Constants.ERROR;
+            }
+            return result;
         }
 
 
