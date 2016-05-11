@@ -97,12 +97,12 @@ GO
 
 GO
   CREATE PROCEDURE usp_doctorsCharges 
-		@costPerAppointment DECIMAL(10,2), @date DATE, @resultCode int OUTPUT, @errorNum int OUTPUT
+		@date DATE, @resultCode int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON
 	BEGIN TRY
-    	SELECT U.Name,U.LastName1,U.LastName2, A.DoctorId, Count(*)*@costPerAppointment AS Charges 
+    	SELECT U.Name,U.LastName1,U.LastName2, A.DoctorId, Count(*)*100 AS Charges 
 		FROM  Appointment A  JOIN Doctor D ON A.DoctorId=D.DoctorId JOIN SystemUser U ON D.UserId=U.UserId
 		WHERE  A.AppointmentDate BETWEEN @date AND  DATEADD(month,1,@date) 
 		GROUP BY A.DoctorId, U.Name,U.LastName1,U.LastName2
@@ -377,7 +377,7 @@ INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
 
 
 							   DECLARE @res int, @en int
-							   EXEC usp_updatePrescription @prescriptionId='64cf9b74-25b1-45f4-a097-080693ec00ad',@doctorCode='DOC222',@patientId=11,@OldMedicineId='c3f002df-4e5e-41ff-97d6-933b50936ee6',@NewMedicineId='4296c5ad-f84e-431a-87c0-ebc25566bec4'
+							   EXEC usp_doctorsCharges @date='20160601',@resultcode=@res OUTPUT, @errorNum=@en OUTPUT
 							   Select @res,@en
 
 							  exec usp_deletePrescription @prescriptionId='0315197b-ef78-4093-905b-ff3fa46514c5'
