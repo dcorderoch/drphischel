@@ -97,6 +97,20 @@ END
 GO
 
 
+/*
+ * Get pending doctors
+ */
+ 
+ GO
+  CREATE PROCEDURE usp_getPendingDoctors
+AS
+BEGIN
+	SET NOCOUNT ON
+	SELECT D.DoctorId, D.OfficeAddress,D.CreditCardNumber,U.Name,U.LastName1, U.LastName2, U.ResidencePlace, U.BirthDate FROM Doctor D JOIN SystemUser U ON D.UserId=U.UserId WHERE D.IsActive=0
+END
+GO
+
+
 ---------Medical Record SPs
 
 
@@ -287,6 +301,7 @@ BEGIN
 		SELECT M.MedicineId, M.Name FROM Medicine M JOIN MedicinesPerPrescription MP ON M.MedicineId=MP.MedicineId WHERE MP.PrescriptionId=@prescriptionId
 END
 GO
+
 
 
 
