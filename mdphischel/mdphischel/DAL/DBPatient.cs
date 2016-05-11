@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using mdphischel.DAL.Models;
 
 
 namespace mdphischel.DAL
@@ -283,8 +285,9 @@ namespace mdphischel.DAL
         /// Obtains all doctors from given patient.
         /// </summary>
         /// <param name="UserId"></param>
-        public void GetDoctorsByPatient(int UserId)
+        public List<Doctor> GetDoctorsByPatient(int UserId)
         {
+            List<Doctor> doctorList = new List<Doctor>();
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
             using (SqlCommand cmd = new SqlCommand("uspGetDoctorsByPatient", connection))
             {
@@ -295,10 +298,23 @@ namespace mdphischel.DAL
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 connection.Open();
-                cmd.ExecuteNonQuery();
-
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Doctor newDoctor = new Doctor();
+                        newDoctor.DoctorId = reader[0].ToString();
+                        newDoctor.UserId = (int) reader[1];
+                        newDoctor.OfficeAddress = reader[2].ToString();
+                        newDoctor.IsActive = (bool) reader[3];
+                        newDoctor.CreditCardNumber = reader[4].ToString();
+                        doctorList.Add(newDoctor);
+                    }
+                    reader.Close();
+                }
                 connection.Close();
             }
+            return doctorList;
         }
 
 

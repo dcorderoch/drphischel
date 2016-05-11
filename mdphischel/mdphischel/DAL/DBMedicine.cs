@@ -79,7 +79,6 @@ namespace mdphischel.DAL
             return resultCodes;
         }
 
-        //uspSynchronizeMedicinesPerBranchOffice @BranchOfficeId uniqueidentifier, @MedicineId uniqueidentifier, @Quantity int, @Sales int
         /// <summary>
         /// Synchronizes quantity and sales information from a medicine located in a specific branch office.
         /// </summary>
@@ -166,13 +165,15 @@ namespace mdphischel.DAL
                 {
                     while (reader.Read())
                     {
-                        Medicine newMedicine = new Medicine();
-                        newMedicine.BranchOfficeId = reader[0].ToString();
-                        newMedicine.MedicineId = reader[1].ToString();
-                        newMedicine.MedicineName = reader[2].ToString();
-                        newMedicine.Price = reader[3].ToString();
-                        newMedicine.Quantity = (int)reader[4];
-                        newMedicine.Sales = (int)reader[5];
+                        Medicine newMedicine = new Medicine
+                        {
+                            BranchOfficeId = reader[0].ToString(),
+                            MedicineId = reader[1].ToString(),
+                            MedicineName = reader[2].ToString(),
+                            Price = reader[3].ToString(),
+                            Quantity = (int) reader[4],
+                            Sales = (int) reader[5]
+                        };
                         medicines.Add(newMedicine);
 
                     }
