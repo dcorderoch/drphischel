@@ -728,6 +728,31 @@ SELECT DoctorId FROM PatientByDoctor
 WHERE PatientId = @UserId
 END
 
+--Get doctor code from user id.
+GO
+CREATE PROCEDURE uspGetDoctorCodeFromUserId @UserId int, @result int OUTPUT, @errorNum int OUTPUT
+AS
+BEGIN
+SET NOCOUNT ON
+BEGIN TRANSACTION t111
+	BEGIN TRY
+	SELECT Doctor.DoctorId
+	FROM SystemUser INNER JOIN Doctor
+	ON SystemUser.UserId = Doctor.UserId
+	WHERE Doctor.UserId = @UserId
+	END TRY
+	BEGIN CATCH
+		SET @errorNum = Error_Number()
+		SET @result = 0
+		ROLLBACK TRANSACTION t111
+		RETURN
+    END CATCH
+ COMMIT TRANSACTION t111
+ SET @result = 1
+ RETURN
+END
+GO
+
 -- *************************************************** MedicalSpecialty ****************************************************************************
 
 -- Add new medical specialty.
