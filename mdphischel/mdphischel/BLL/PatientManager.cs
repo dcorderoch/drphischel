@@ -177,5 +177,28 @@ namespace mdphischel.BLL
             return retVal;
         }
 
+        /// <summary>
+        /// Get doctor code from given userId.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public List<string> GetDoctor(int userId)
+        {
+            List<string> retVal = new List<string>();
+
+            try
+            {
+                DBPatient patientInstance = new DBPatient();
+                var doctor = patientInstance.GetDoctor(userId);
+                retVal.Add(Constants.SUCCESS.ToString());
+                retVal.Add(doctor.DoctorId);
+                
+            }
+            catch (Exception)
+            {
+                retVal.Add(Constants.ERROR.ToString());
+            }
+            return retVal;
+        }
     }
 }
