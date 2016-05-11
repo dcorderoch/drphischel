@@ -68,6 +68,29 @@ BEGIN
 END
 GO
 
+ /*
+  *  Rejection of doctors by doctorCode
+  */ 
+
+  GO
+  CREATE PROCEDURE usp_rejectDoc 
+		@docCode NVARCHAR(15), @result int OUTPUT, @errorNum int OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	BEGIN TRY
+    	DELETE FROM Doctor WHERE DoctorId =@docCode
+	END TRY
+	BEGIN CATCH
+		SET @errorNum = Error_Number()
+		SET @result=0
+		RETURN
+	END CATCH
+	SET @result = 1
+	RETURN
+END
+GO
+
 /*
  * Doctor's charges per month
  */
