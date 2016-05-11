@@ -2,8 +2,10 @@
 using Android.Widget;
 using Android.OS;
 using Android.Content;
+using Android.Locations;
 using drphischel_mobile_android.Models;
 using Newtonsoft.Json;
+using System;
 
 namespace drphischel
 {
@@ -11,13 +13,14 @@ namespace drphischel
     public class MainActivity : Activity
     {
         public static LoggedUserData User = null;
+        public static int UserRole = 1;
 
         Button _loginButton;
         RadioButton _patientRadioButton;
         RadioButton _medicRadioButton;
 
         EditText _userIdText;
-        EditText _PassText;
+        EditText _passText;
 
         /// <summary>
         /// this method creates the elements described in the axml file, and binds them to functionality defined here
@@ -29,29 +32,65 @@ namespace drphischel
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+
             _userIdText = FindViewById<EditText>(Resource.Id.userIdInput);
-            _PassText = FindViewById<EditText>(Resource.Id.userPassInput);
+            _passText = FindViewById<EditText>(Resource.Id.userPassInput);
 
             _patientRadioButton = FindViewById<RadioButton>(Resource.Id.patient_login);
             _medicRadioButton = FindViewById<RadioButton>(Resource.Id.medic_login);
+
+            _patientRadioButton.Click += RoleSelection;
+            _medicRadioButton.Click += RoleSelection;
 
             _loginButton = FindViewById<Button>(Resource.Id.loginButton);
 
             _loginButton.Click += async (sender, e) =>
             {
-                string loginResult = await ApiClient.ApiLogin(_userIdText.Text, _PassText.Text);
-                DealwithLogin(loginResult);
+                string loginResult = await ApiClient.ApiLogin(_userIdText.Text, _passText.Text, UserRole.ToString());
+
+                UserLogin(loginResult,(UserRole == 1));
             };
         }
-
-        void DealwithLogin(string loggedInUserData)
+        /// <summary>
+        /// this method logs the user in and starts the corresponding 'Activity'
+        /// </summary>
+        /// <param name="pLoggedInUserData"></param>
+        /// <param name="pPatient"></param>
+        void UserLogin(string pLoggedInUserData, bool pPatient)
         {
-            User = JsonConvert.DeserializeObject<LoggedUserData>(loggedInUserData);
+            User = JsonConvert.DeserializeObject<LoggedUserData>(pLoggedInUserData);
             _loginButton = FindViewById<Button>(Resource.Id.loginButton);
+            Intent intent;
 
-            var intent = new Intent(this, typeof (PatientActivity));
-            intent.PutExtra("UserId", User.UserId);//.Extras.PutString("CurrentUserId", User.CurrentUserId);
+            if (pPatient)
+            {
+                intent = new Intent(this, typeof(MedicActivity));
+            }
+            else
+            {
+                intent = new Intent(this, typeof(PatientActivity));
+            }
+            intent.PutExtra("UserId", User.UserId);
             StartActivity(intent);
+        }
+        /// <summary>
+        /// this method receives a signal when the radiobuttons are selected,
+        /// and changes the variable UserRole correspondingly
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RoleSelection(object sender, EventArgs e)
+        {
+            RadioButton rb = (RadioButton) sender;
+            if(rb.Text.Equals("medic"))
+            {
+                UserRole = 2;
+            }
+
+            if (rb.Text.Equals("patient"))
+            {
+                UserRole = 1;
+            }
         }
     }
 }

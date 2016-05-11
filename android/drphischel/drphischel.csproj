@@ -56,6 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API-Client.cs" />
+    <Compile Include="MedicActivity.cs" />
+    <Compile Include="MedicalRecordsActivity.cs" />
     <Compile Include="MedicListActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Models\LoggedUserData.cs" />
@@ -76,6 +78,9 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Appointment.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Medic.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>

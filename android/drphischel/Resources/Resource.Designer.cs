@@ -60,8 +60,23 @@ namespace drphischel
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f05000f
+			public const int AppointmentBtn = 2131034127;
+			
+			// aapt resource value: 0x7f050010
+			public const int LogOutBtn = 2131034128;
+			
+			// aapt resource value: 0x7f05000a
+			public const int MedicAddPatientBtn = 2131034122;
+			
+			// aapt resource value: 0x7f05000c
+			public const int MedicLogOutBtn = 2131034124;
+			
+			// aapt resource value: 0x7f050009
+			public const int MedicViewCalendarBtn = 2131034121;
+			
 			// aapt resource value: 0x7f05000b
-			public const int AppointmentBtn = 2131034123;
+			public const int MedicViewPatientsBtn = 2131034123;
 			
 			// aapt resource value: 0x7f050002
 			public const int PasswordText = 2131034114;
@@ -69,8 +84,8 @@ namespace drphischel
 			// aapt resource value: 0x7f050000
 			public const int UserNameText = 2131034112;
 			
-			// aapt resource value: 0x7f050009
-			public const int listView1 = 2131034121;
+			// aapt resource value: 0x7f05000d
+			public const int listView1 = 2131034125;
 			
 			// aapt resource value: 0x7f050008
 			public const int loginButton = 2131034120;
@@ -81,8 +96,8 @@ namespace drphischel
 			// aapt resource value: 0x7f050005
 			public const int login_choice = 2131034117;
 			
-			// aapt resource value: 0x7f05000a
-			public const int medRecordsBtn = 2131034122;
+			// aapt resource value: 0x7f05000e
+			public const int medRecordsBtn = 2131034126;
 			
 			// aapt resource value: 0x7f050007
 			public const int medic_login = 2131034119;
@@ -116,10 +131,13 @@ namespace drphischel
 			public const int Main = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int MedicList = 2130903042;
+			public const int Medic = 2130903042;
 			
 			// aapt resource value: 0x7f030003
-			public const int Patient = 2130903043;
+			public const int MedicList = 2130903043;
+			
+			// aapt resource value: 0x7f030004
+			public const int Patient = 2130903044;
 			
 			static Layout()
 			{

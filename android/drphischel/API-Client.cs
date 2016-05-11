@@ -22,14 +22,15 @@ namespace drphischel
 
             return await APiPostCalls(url, data);
         }
-
-        public static async Task<string> ApiLogin(string pIdNumber, string pPassword)
+        //GOTTA CHANGE THIS TO INCLUDE A ROLE
+        public static async Task<string> ApiLogin(string pIdNumber, string pPassword, string pRole)
         {
             string url = _baseUrl + _apiLogin;
             var item = new LoginData
             {
                 IdNumber = pIdNumber,
-                Pass = pPassword
+                Pass = pPassword,
+                Role = pRole
             };
             var data = JsonConvert.SerializeObject(item);
 

@@ -4,21 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <Button
-        android:text="Ver Historial"
+        android:text="Ver Citas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/medRecordsBtn"
-        android:gravity="center" />
+        android:id="@+id/MedicViewCalendarBtn" />
     <Button
-        android:text="Solicitar Cita"
+        android:text="Agregar Paciente"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/AppointmentBtn"
-        android:gravity="center" />
+        android:id="@+id/MedicAddPatientBtn" />
+    <Button
+        android:text="Ver Pacientes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/MedicViewPatientsBtn" />
     <Button
         android:text="Salir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/LogOutBtn"
-        android:gravity="center" />
+        android:id="@+id/MedicLogOutBtn" />
 </LinearLayout>

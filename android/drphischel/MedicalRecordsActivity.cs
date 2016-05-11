@@ -10,10 +10,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace drphischel_mobile_android
+namespace drphischel
 {
-    [Activity(Label = "MedRecsActivity")]
-    public class MedRecsActivity : Activity
+    [Activity(Label = "MedicalRecordsActivity")]
+    public class MedicalRecordsActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {

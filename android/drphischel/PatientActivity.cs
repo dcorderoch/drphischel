@@ -11,38 +11,45 @@ namespace drphischel
     [Activity(Label = "Patient")]
     public class PatientActivity : Activity
     {
-        public static List<MedicListItem> Medics = new List<MedicListItem>();
-        public static string CurrentUserId = "";
+        public static string CurrentUserId = null;
+        /// <summary>
+        /// this method creates the elements described in the axml file, and binds them to functionality defined here
+        /// </summary>
+        /// <param name="savedInstanceState"></param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            CurrentUserId = base.Intent.GetStringExtra("UserId");//.Extras.GetString("CurrentUserId");
+            CurrentUserId = base.Intent.GetStringExtra("UserId");
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Patient);
 
             var medRecsButton = FindViewById<Button>(Resource.Id.medRecordsBtn);
             var appointmentsButton = FindViewById<Button>(Resource.Id.AppointmentBtn);
+            var logOutButton = FindViewById<Button>(Resource.Id.LogOutBtn);
 
-            appointmentsButton.Click += Getthething;
+            appointmentsButton.Click += MakeAppointMent;
+            medRecsButton.Click += ViewMedicalRecords;
+            logOutButton.Click += LogOut;
         }
 
-        void MakeAppointMent()
+        private void LogOut(object sender, EventArgs e)
         {
-            var intent = new Intent(this, typeof(MedicListActivity));
-            intent.PutExtra("CurrentUserId", CurrentUserId);//.Extras.PutString("CurrentUserId", User.CurrentUserId);
+            Intent intent = new Intent(this, typeof(MainActivity) );
+            intent.SetFlags(ActivityFlags.ClearTop);
             StartActivity(intent);
         }
 
-        private void Getthething(object sender, EventArgs e)
+        void MakeAppointMent(object sender, EventArgs e)
         {
-            try
-            {
-                var appointmentsButton = FindViewById<Button>(Resource.Id.AppointmentBtn);
-                appointmentsButton.Text = CurrentUserId;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex.Message);
-            }
+            var intent = new Intent(this, typeof(MedicListActivity));
+            intent.PutExtra("CurrentUserId", CurrentUserId);
+            StartActivity(intent);
+        }
+
+        void ViewMedicalRecords(object sender, EventArgs e)
+        {
+            var intent = new Intent(this, typeof (MedicalRecordsActivity));
+            intent.PutExtra("CurrentUserId", CurrentUserId);
+            StartActivity(intent);
         }
     }
 }
