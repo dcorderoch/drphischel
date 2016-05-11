@@ -27,15 +27,15 @@ namespace mdphischel.BLL
             try
             {
                 var user = dbUserInstance.AcceptLogin(userId, password, role);
-                {
-                    retVal.Add(Constants.SUCCESS.ToString());
-                    retVal.Add(user.UserId.ToString());
-                    retVal.Add(user.IdNumber);
-                    retVal.Add(user.Name);
-                    retVal.Add(user.LastName1);
-                    retVal.Add(user.LastName2);
-                    retVal.Add(user.BirthDate);
-                }
+
+                retVal.Add(Constants.SUCCESS.ToString());
+                retVal.Add(user.UserId.ToString());
+                retVal.Add(user.IdNumber);
+                retVal.Add(user.Name);
+                retVal.Add(user.LastName1);
+                retVal.Add(user.LastName2);
+                retVal.Add(user.BirthDate);
+
             }
             catch (Exception)
             {
