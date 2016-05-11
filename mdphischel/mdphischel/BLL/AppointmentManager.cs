@@ -72,5 +72,35 @@ namespace mdphischel.BLL
             return result;
         }
 
+        /// <summary>
+        /// Deletes an appointment if business rules conditions are met.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="doctorId"></param>
+        /// <param name="appointmentDate"></param>
+        /// <returns>Result code indicating whether operation was successful or not.</returns>
+        public int DeleteAppointment(int userId, string doctorId, string appointmentDate)
+        {
+            int result;
+            try
+            {
+                DBAppointment appointmentInstance = new DBAppointment();
+                var operationResult = appointmentInstance.DeleteAppointment(userId, doctorId, appointmentDate);
+                if (operationResult[0].Equals(Constants.SUCCESS))
+                {
+                    result = Constants.SUCCESS;
+                }
+                else
+                {
+                    result = Constants.ERROR;
+                }
+            }
+            catch (Exception)
+            {
+                result = Constants.ERROR;
+            }
+            return result;
+        }
+
     }
 }
