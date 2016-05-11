@@ -84,6 +84,46 @@ namespace mdphischel.BLL
             return result;
         }
 
+        /// <summary>
+        /// Updates patient information.
+        /// </summary>
+        /// <param name="idNumber"></param>
+        /// <param name="password"></param>
+        /// <param name="name"></param>
+        /// <param name="lastName1"></param>
+        /// <param name="lastName2"></param>
+        /// <param name="residence"></param>
+        /// <param name="birthDate"></param>
+        /// <returns>1 or 0 whether operation was successful or not.</returns>
+        public int UpdatePatient(string idNumber, string password, string name, string lastName1, string lastName2,
+            string residence, string birthDate)
+        {
+            int result;
+            try
+            {
+                DBPatient patientInstance = new DBPatient();
+                var operationResult = patientInstance.UpdatePatient(idNumber, password, name, lastName1, lastName2, residence, birthDate);
+                if (operationResult[0].Equals(Constants.SUCCESS))
+                {
+                    result = Constants.SUCCESS;
+                }
+                else
+                {
+                    result = Constants.ERROR;
+                }
+            }
+            catch (Exception)
+            {
+                result = Constants.ERROR;
+            }
+            return result;
+        }
+
+        public int DeletePatient()
+        {
+            
+        }
+
 
     }
 }

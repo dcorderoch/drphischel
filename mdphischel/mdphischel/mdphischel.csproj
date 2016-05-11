@@ -99,10 +99,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BLL\AccountManager.cs" />
     <Compile Include="BLL\AppointmentManager.cs" />
-    <Compile Include="BLL\DoctorManager.cs" />
-    <Compile Include="BLL\MedicalRecordManager.cs" />
+    <Compile Include="BLL\Constants.cs" />
+    <Compile Include="BLL\MedicalSpecialtyManager.cs" />
+    <Compile Include="BLL\MedicineManager.cs" />
     <Compile Include="BLL\PatientManager.cs" />
-    <Compile Include="BLL\PrescriptionManager.cs" />
     <Compile Include="DAL\DBAppointment.cs" />
     <Compile Include="DAL\DbConfigurator.cs" />
     <Compile Include="DAL\DBMedicalSpecialty.cs" />

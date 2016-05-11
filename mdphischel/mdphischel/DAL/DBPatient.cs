@@ -234,7 +234,7 @@ namespace mdphischel.DAL
         /// </summary>
         /// <param name="idNumber"></param>
         /// <returns>ResultCodes indicating whether operation was successful or not.</returns>
-        public int[] UpdatePatient(string idNumber)
+        public int[] DeletePatient(string idNumber)
         {
             int[] resultCodes = new int[2];
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
