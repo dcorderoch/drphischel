@@ -142,7 +142,7 @@ GO
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT U.UserId, U.Name, U.LastName1, U.LastName2 FROM SystemUser U JOIN PatientByDoctor PD ON U.UserId=PD.PatientId WHERE PD.DoctorId=@doctorId
+	SELECT U.UserId, U.Name, U.LastName1, U.LastName2, U.IdNumber, U.ResidencePlace, U.BirthDate FROM SystemUser U JOIN PatientByDoctor PD ON U.UserId=PD.PatientId WHERE PD.DoctorId=@doctorId
 END
 GO
 
