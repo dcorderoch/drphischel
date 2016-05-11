@@ -186,7 +186,7 @@ GO
 
  GO
   CREATE PROCEDURE usp_updateMedRecordEntry
-		@medicalRecordId INT, @appointmentId INT, @description VARCHAR(MAX), @diagnosis VARCHAR(MAX), @prescriptionId UNIQUEIDENTIFIER, @resultCode int OUTPUT, @errorNum int OUTPUT
+		 @medicalRecordId INT, @appointmentId INT, @description VARCHAR(MAX), @diagnosis VARCHAR(MAX), @prescriptionId UNIQUEIDENTIFIER, @resultCode int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON
@@ -214,7 +214,7 @@ GO
 AS
 BEGIN
 	SET NOCOUNT ON
-	SELECT D.DoctorId, A.AppointmentDate, MRD.MRDescription, MRD.MRDiagnosis, MRD.PrescriptionId 
+	SELECT MRD.MedicalRecordId, D.DoctorId, A.AppointmentDate, MRD.MRDescription, MRD.MRDiagnosis, MRD.PrescriptionId 
 	FROM MedicalRecordData MRD JOIN MedicalRecord MR ON MRD.MedicalRecordId=MR.MedicalRecordId JOIN Appointment A ON A.AppointmentId=MRD.AppointmentId JOIN Doctor D ON D.DoctorId=A.DoctorId
 	WHERE  MR.UserId=@userId
 END
