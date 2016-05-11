@@ -971,7 +971,7 @@ END
 GO
 CREATE PROCEDURE uspUserLogin @IdNumber char(9), @Pass nvarchar(30), @RoleId int
 AS
-BEGINc
+BEGIN
 SET NOCOUNT ON
 SELECT SystemUser.UserId, SystemUser.IdNumber, SystemUser.Name, SystemUser.LastName1, SystemUser.LastName2, SystemUser.BirthDate
 FROM SystemUser
