@@ -173,6 +173,32 @@ GO
 
 
 
+-----PRESCRIPTION SPs
+
+/*
+ * Create new prescription 
+ */
+
+  GO
+  CREATE PROCEDURE usp_createPrescription
+		@doctorCode nvarchar(15), @patientId INT, @resultCode int OUTPUT, @errorNum int OUTPUT
+AS
+BEGIN
+	SET NOCOUNT ON
+	BEGIN TRY
+		INSERT INTO Prescription VALUES (NEWID(),@doctorCode, @patientId)
+    END TRY
+	BEGIN CATCH
+		SET @errorNum = Error_Number()
+		SET @resultCode=0
+		RETURN
+	END CATCH
+	SET @resultCode = 1
+	RETURN
+END
+GO
+
+
 
 INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
 							   (11,'DOC222','20160625'),(3,'ABC005','20160507'),
@@ -180,10 +206,10 @@ INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
 
 
 							   DECLARE @res int, @en int
-							   EXEC usp_updateMedRecordEntry @medicalRecordId=2, @description='Consulta general y receta',@diagnosis='Resfriado común y nauseas', @appointmentId=9, @prescriptionId='64cf9b74-25b1-45f4-a097-080693ec00ad', @resultCode=@res OUTPUT, @errorNum = @en OUTPUT
+							   EXEC usp_createPrescription @doctorCode='DOC222',@patientId=11,@resultCode=@res OUTPUT,@errorNum=@en OUTPUT
 							   Select @res,@en
 
-							  
+							  exec usp_getPatientMedRecord @userId=1
 
 
 						
