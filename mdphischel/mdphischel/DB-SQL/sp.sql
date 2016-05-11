@@ -222,7 +222,20 @@ END
 GO
 
 
+/*
+ * Update an existing prescription by id
+ */
 
+   GO
+  CREATE PROCEDURE usp_updatePrescription
+		@prescriptionId UNIQUEIDENTIFIER, @doctorCode nvarchar(15), @patientId INT, @OldmedicineId UNIQUEIDENTIFIER, @NewMedicineId UNIQUEIDENTIFIER
+AS
+BEGIN
+	SET NOCOUNT ON
+		UPDATE Prescription SET PatientId=@patientId, DoctorId=@doctorCode WHERE PrescriptionId = @prescriptionId
+		UPDATE MedicinesPerPrescription SET MedicineId=@newMedicineId WHERE PrescriptionId=@prescriptionId AND MedicineId=@OldmedicineId
+END
+GO
 
 
 INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
@@ -231,7 +244,7 @@ INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
 
 
 							   DECLARE @res int, @en int
-							   EXEC usp_AddMedicineIntoPrescription @prescriptionId='64cf9b74-25b1-45f4-a097-080693ec00ad', @medicineId='c3f002df-4e5e-41ff-97d6-933b50936ee6', @resultCode=@res OUTPUT,@errorNum=@en OUTPUT
+							   EXEC usp_updatePrescription @prescriptionId='64cf9b74-25b1-45f4-a097-080693ec00ad',@doctorCode='DOC222',@patientId=11,@OldMedicineId='c3f002df-4e5e-41ff-97d6-933b50936ee6',@NewMedicineId='4296c5ad-f84e-431a-87c0-ebc25566bec4'
 							   Select @res,@en
 
 							  exec usp_getPatientMedRecord @userId=1
