@@ -5,7 +5,6 @@
 --******************************************************************************************************************************************
 
 --Creates table SystemUser. 
-
 GO
 CREATE TABLE SystemUser
 	(
@@ -720,6 +719,40 @@ SET NOCOUNT ON
 END
 GO
 
+-- Get doctors of given patient.
+GO
+CREATE PROCEDURE uspGetDoctorsByPatient @UserId int
+AS
+BEGIN
+SELECT DoctorId FROM PatientByDoctor
+WHERE PatientId = @UserId
+END
+
+--Get doctor code from user id.
+GO
+CREATE PROCEDURE uspGetDoctorCodeFromUserId @UserId int, @result int OUTPUT, @errorNum int OUTPUT
+AS
+BEGIN
+SET NOCOUNT ON
+BEGIN TRANSACTION t111
+	BEGIN TRY
+	SELECT Doctor.DoctorId
+	FROM SystemUser INNER JOIN Doctor
+	ON SystemUser.UserId = Doctor.UserId
+	WHERE Doctor.UserId = @UserId
+	END TRY
+	BEGIN CATCH
+		SET @errorNum = Error_Number()
+		SET @result = 0
+		ROLLBACK TRANSACTION t111
+		RETURN
+    END CATCH
+ COMMIT TRANSACTION t111
+ SET @result = 1
+ RETURN
+END
+GO
+
 -- *************************************************** MedicalSpecialty ****************************************************************************
 
 -- Add new medical specialty.
@@ -749,7 +782,14 @@ SET NOCOUNT ON
 END
 GO
 
+-- Get all medical specialties.
 
+GO
+CREATE PROCEDURE uspGetAllSpecialties
+AS
+BEGIN
+SELECT * FROM MedicalSpecialty
+END
 -- *************************************************** Appointments ****************************************************************************
 
 -- Create new appointment
@@ -879,8 +919,9 @@ END
 GO
 
 -- Synchronize MedicinesPerBranchOffice stored procedure.
+
 GO
-CREATE PROCEDURE uspSynchronizeMedicinesPerBranchOffice @BranchOfficeId uniqueidentifier, @MedicineId uniqueidentifier, @Quantity int, @Sales int, @result int OUTPUT, @errorNum int OUTPUT
+CREATE PROCEDURE uspSynchronizeMedicinesPerBranchOffice @BranchOfficeId nvarchar(100), @MedicineId nvarchar(100), @Quantity int, @Sales int, @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
@@ -901,3 +942,41 @@ SET NOCOUNT ON
  RETURN
 END
 GO
+
+-- Obtain all medicines stored procedure.
+
+GO
+CREATE PROCEDURE uspGetAllMedicines
+AS
+BEGIN
+SELECT * FROM Medicine
+END
+
+-- Obtain all medicines per branch office stored procedure.
+
+GO
+CREATE PROCEDURE uspGetMedicinesByBranchOffice @BranchOfficeId nvarchar(100)
+AS
+BEGIN
+SET NOCOUNT ON
+SELECT BranchOfficeId, Medicine.MedicineId, Name, QuantityAvailable, Sales, Price 
+FROM MedicinesPerBranchOffice
+INNER JOIN Medicine
+ON MedicinesPerBranchOffice.MedicineId = Medicine.MedicineId
+WHERE BranchOfficeId = @BranchOfficeId
+END
+-- *************************************************** Users ****************************************************************************
+
+-- Log In stored procedure. 
+GO
+CREATE PROCEDURE uspUserLogin @IdNumber char(9), @Pass nvarchar(30), @RoleId int
+AS
+BEGIN
+SET NOCOUNT ON
+SELECT SystemUser.UserId, SystemUser.IdNumber, SystemUser.Name, SystemUser.LastName1, SystemUser.LastName2, SystemUser.BirthDate
+FROM SystemUser
+INNER JOIN RolesPerUser
+ON SystemUser.UserId = RolesPerUser.UserId
+WHERE SystemUser.IdNumber = @IdNumber AND SystemUser.Pass = @Pass AND RoleId = @RoleId
+END
+
