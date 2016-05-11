@@ -16,6 +16,7 @@ namespace mdphischel.DAL.Models
         public string LastName1 { get; set; }
         public string LastName2 { get; set; }
         public string BirthDate { get; set; }
+        public string PlaceResidence { get; set; }
 
         public User()
         {
