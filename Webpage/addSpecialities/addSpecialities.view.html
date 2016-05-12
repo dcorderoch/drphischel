@@ -1,0 +1,44 @@
+
+<div id="main">
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/homeP">Dr Phischel</a>
+                </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#/homeA"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#/acceptDoctor"><i class="fa-user-plus"></i> Revisar Doctores</a></li>
+                <li><a href="#/addSpecialities"><i class="fa fa-stethoscope"></i>Agregar especialidades médicas</a></li>
+                <li><a href="#/sync"><i class="fa fa-ambulance"></i></a>Sincronizar medicamentos</li>
+                <li><a href="#/createPatient"><i class="fa fa-user-md" ></i></a>Agregar paciente</li>    
+                <li><a href="#/charge"><i class="fa fa-credit-card" ></i></a>Cobrar a los doctores</li>    
+                <li><a href="#/login"><i class="fa fa-sign-out"></i>Cerrar Sesión</a></li>  
+              </ul>
+            </div>
+        </nav>
+
+    <div class="col-md-6 col-md-offset-3">
+
+        <br>
+        <h3 align="center">Agregar Especialidad médica</h3>
+        <br>
+
+        <form name="form" ng-submit="addSpeciality()" role="form" novalidate><!--ng-submit se da cuando se presiona submit abajo-->
+
+        <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+            <label>Nombre de la especialidad</label>
+            <input type="text" name="name" class="form-control" ng-model="speciality.specName" required />
+            <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">El nombre de la especialidad es requerido</span>
+        </div>      
+
+        <div class="form-actions">
+        <!--Boton submit-->
+        <button type="submit"  ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Agregar</button>
+        <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+
+        </form>    
+        
+    </div>
+</div>

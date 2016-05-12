@@ -1,0 +1,113 @@
+
+<div id="main">
+      
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/">Dr Phischel</a>
+                </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#/"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#/patient"><i class="fa-user-plus"></i> Pacientes</a></li>
+                <li><a href="#/appointment"><i class="fa fa-hospital-o"></i> Citas</a></li>
+                <li><a href="#/record"><i class="fa fa-file-text"></i>Historial Médico</a></li>
+                <li><a href="#/order"><i class="fa fa-paper-plane-o"></i></a>Ordenar</li>
+                <li><a href="#/newDoctor"><i class="fa fa-user-md" ></i></a>Nuevo Doctor</li>  
+                  <li><a href="#/prescription"><i class="fa fa-table"></i></a>Prescripcion</li>  
+                <li><a href="#/login"><i class="fa fa-sign-out"></i>Cerrar Sesión</a></li>  
+              </ul>
+            </div>
+        </nav>
+    <div class="col-md-6 col-md-offset-3">
+    
+    <br>
+        <p class="lead">Aquí podés dar solicitar la entrada de un nuevo doctor</p>
+        <p>Recordá que es necesario la aprobación posterior del nuevo doctor por parte de un administrador</p>
+    <br>
+        
+    
+     <form name="form" ng-submit="createDoctor()" role="form" novalidate><!--ng-submit se da cuando se presiona submit abajo-->
+
+        <div class="form-group" ng-class="{ 'has-error': form.Id.$dirty && form.Id.$error.required }">
+            <label>Número de doctor</label>
+            <input type="text" name="Id"  class="form-control" ng-model="newDoc.DoctorId" required />
+            <span ng-show="form.Id.$dirty && form.Id.$error.required" class="help-block">El número de usuario  es requerido</span>
+        </div>
+         
+       <div class="form-group" ng-class="{ 'has-error': form.userId.$dirty && form.userId.$error.required }">
+            <label>Número de usuario</label>
+            <input type="text" name="userId"  class="form-control" ng-model="newDoc.UserId" required />
+            <span ng-show="form.userId.$dirty && form.userId.$error.required" class="help-block">El número de usuario  es requerido</span>
+        </div>
+         
+        <div class="form-group" ng-class="{ 'has-error': form.pass.$dirty && form.pass.$error.required }">
+            <label>Contraseña</label>
+            <input type="password" name="pass"  class="form-control" ng-model="newDoc.Pass" required />
+            <span ng-show="form.pass.$dirty && form.pass.$error.required" class="help-block">La contraseña  es requerida</span>
+        </div>
+     
+     <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+        <label>Nombre</label>
+        <input type="text" name="name"  class="form-control" ng-model="newDoc.Name" required />
+        <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">El nombre es requerido</span>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error': form.lastname1.$dirty && form.lastname1.$error.required }">
+        <label>Primer Apellido 1</label>
+        <input type="text" name="lastname1"  class="form-control" ng-model="newDoc.LastName1" required />
+        <span ng-show="form.lastname1.$dirty && form.lastname1.$error.required" class="help-block">El primer apellido es requerido</span>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error': form.lastname2.$dirty && form.lastname2.$error.required }">
+        <label>Segundo Apellido</label>
+        <input type="text" name="lastname2" class="form-control" ng-model="newDoc.LastName2" required />
+        <span ng-show="form.lastname2.$dirty && form.lastname2.$error.required" class="help-block">El segundo apellido es requerido</span>
+    </div>
+       
+    <div class="form-group" ng-class="{ 'has-error': form.residence.$dirty && form.residence.$error.required }">
+        <label>Lugar de Residencia</label>
+        <input type="text" name="residence" class="form-control" ng-model="newDoc.PlaceResidence" required />
+        <span ng-show="form.residence.$dirty && form.residence.$error.required" class="help-block">El lugar de residencia es requerido</span>
+    </div> 
+       
+    <div class="form-group" ng-class="{ 'has-error': form.officeAddress.$dirty && form.officeAddress.$error.required }">
+        <label>Dirección de oficina</label>
+        <input type="text" name="officeAddress" class="form-control" ng-model="newDoc.OfficeAddress" required />
+        <span ng-show="form.officeAddress.$dirty && form.officeAddress.$error.required" class="help-block">La dirección  de la oficina   es requerida</span>
+    </div>         
+         
+    <div class="form-group" ng-class="{ 'has-error': form.bdate.$dirty && form.bdate.$error.required }">
+        <label>Fecha de Nacimiento</label>
+        <input type="date" name="bdate" class="form-control" ng-model="newDoc.BirthDate" required />
+        <span ng-show="form.bdate.$dirty && form.bdate.$error.required" class="help-block">La fecha de nacimiento es requerida</span>
+    </div> 
+         
+    <div class="form-group" ng-class="{ 'has-error': form.creditCardNumber.$dirty && form.creditCardNumber.$error.required }">
+        <label>Tarjeta de Crédito</label>
+        <input type="text" name="creditCardNumber" class="form-control" ng-model="newDoc.CreditCardNumber" required />
+        <span ng-show="form.creditCardNumber.$dirty && form.creditCardNumber.$error.required" class="help-block">Vuestro número de tarjeta de crédito es requerido</span>
+    </div>      
+         
+    <div class="form-group" >
+        <label>Especialidades Médicas</label>
+        <div class="action-checkbox" ng-repeat="speciality in medicSpecialities">
+           <input id="{{speciality.Name}}" type="checkbox" value="{{speciality.Name}}" ng-checked="selection.indexOf(speciality.MedicalSpecialtyId) > -1" ng-click="toggleSelection(speciality.MedicalSpecialtyId)" />
+           <label for="{{speciality.Name}}">           
+               {{speciality.Name}}
+           </label>                
+        </div>
+    </div>
+         
+   
+         
+    <div class="form-actions">
+        <!--Boton submit-->
+        <button type="submit"  ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Crear</button>
+        <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+     </div>
+     
+    </form>    
+        
+    </div>    
+</div>

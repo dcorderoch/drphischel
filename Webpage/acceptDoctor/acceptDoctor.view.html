@@ -1,0 +1,57 @@
+
+<div id="main">
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/homeA">Dr Phischel</a>
+                </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#/homeA"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#/acceptDoctor"><i class="fa-user-plus"></i> Revisar Doctores</a></li>
+                <li><a href="#/addSpecialities"><i class="fa fa-stethoscope"></i>Agregar especialidades médicas</a></li>
+                <li><a href="#/sync"><i class="fa fa-ambulance"></i></a>Sincronizar medicamentos</li>
+                <li><a href="#/createPatient"><i class="fa fa-user-md" ></i></a>Agregar paciente</li>    
+                <li><a href="#/charge"><i class="fa fa-credit-card" ></i></a>Cobrar a los doctores</li>    
+                <li><a href="#/login"><i class="fa fa-sign-out"></i>Cerrar Sesión</a></li>  
+              </ul>
+            </div>
+        </nav>
+    <div class="col-md-6 col-md-offset-3">
+
+            <br>
+        <h3 align="center">Acepta o rechaza solicitudes de nuevos doctores</h3>
+            <br>
+
+
+        <div class="row">       <!-- Formato bonito para tablas-->
+            <div class="col-md-12" >
+            <nav class= "navbar navbar-default" role= "navigation" >
+                <h4 style="color:blue; font-family:Helvetica">Doctores pendientes a aprobación</h4>  <!-- titulo de tabla-->
+            <div class= "navbar-header" ></div>
+            </nav>
+
+                <table class="table table-striped table-bordered">
+                <thead>
+                <th>Nombre&nbsp;</th>        <!-- tiene 2 encabezados-->
+                <th>Primer Apellido&nbsp;</th>
+                <th>Segundo Apellido&nbsp;</th>
+
+                </thead>
+                <tbody>             <!-- el vm. algo debe exisitir en el controlador o en un servicio inyectado-->
+                    <tr ng-repeat="medic in allDoctors track by $index">   <!--el ng-repeat es importantisimo -->
+                                                        <!--es como un for, itera en una lista -->
+                        <td>{{medic.Name}}</td>
+                        <td>{{medic.LastName1}}</td>
+                        <td>{{medic.LastName2}}</td>
+                        <td><button ng-click="aceptDoctor(medic.DoctorId)" type="button" class="btn btn-default" >Aceptar Doctor</button></td>
+                        <td><button ng-click="rejectDoctor(medic.DoctorId)" type="button" class="btn btn-default" >Rechazar Doctor</button> </td>
+                    </tr>           <!-- estos son los valores de la tabla-->
+                  </tbody>    
+                </table>
+            </div>
+        </div>
+        
+    </div>
+        
+</div>

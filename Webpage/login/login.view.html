@@ -1,0 +1,46 @@
+
+<div id="main">
+    <div class="col-md-6 col-md-offset-3">
+
+        <br>
+<div class="page-header">
+    <h1>Login</h1>      
+  </div>
+        <br>
+
+<!-- Este es un form, lo de input type = es el tipo de valor que se agarra, el name y el id lo puede ignorarlo -->
+<!-- El ng-model es el tipo de dato con el que se esta relacionando del modelo, esto es lo mas importante de esta parte-->
+<!-- es importante que ng.model tenga el mismo nombre que se espera en el rest api -->
+<!-- El span se muestra si se omite una entrada del formulario --> 
+
+        <form name="form" ng-submit="login(selectedRol)" role="form" novalidate>
+
+            <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                <label >Nombre de usuario</label>
+                <input type="text" name="id"  class="form-control" ng-model="loginData.IdNumber" required />
+                <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">El nombre de usuario es requerido</span>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': form.password.$dirty && form.password.$error.required }">
+                <label >Contraseña</label>
+                <input type="password" name="password" class="form-control" ng-model="loginData.Pass" required />
+                <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">La contraseña es requerida</span>
+            </div> 
+            
+            <div class="form-group" >
+            
+                <label> Rol </label>
+                <br>
+                <select ng-model="selectedRol" ng-options="x.Name for x in roles"></select>
+
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-primary">Ingresar</button>
+                <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </div>
+        </form>
+        
+
+    </div>
+</div>

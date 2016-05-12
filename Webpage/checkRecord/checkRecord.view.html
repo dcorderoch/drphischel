@@ -1,0 +1,50 @@
+
+<div id="main">
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/homeP">Dr Phischel</a>
+                </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#/homeP"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#/createAppointment"><i class="fa fa-hospital-o"></i> Solicitar una cita</a></li>
+                <li><a href="#/checkRecord"><i class="fa fa-file-text"></i>Historial Médico</a></li>  
+                <li><a href="#/login"><i class="fa fa-sign-out"></i>Cerrar Sesión</a></li>  
+              </ul>
+            </div>
+        </nav>
+
+<br>
+    <div class="col-md-6 col-md-offset-3">
+
+        <h3 class ="lead" align="center">Revisá todo tu historial de citas</h3>
+            <br>
+
+        <div class="row">       <!-- Formato bonito para tablas-->
+            <div class="col-md-12" >
+            <nav class= "navbar navbar-default" role= "navigation" >
+                <h4 style="color:blue; font-family:Helvetica">  Registros Medicos</h4>  <!-- titulo de tabla-->
+            <div class= "navbar-header" ></div>
+            </nav>
+
+                <table class="table table-striped table-bordered">
+                <thead>
+                <th>Fecha de la cita&nbsp;</th>        <!-- tiene 2 encabezados-->
+                <th>Description&nbsp;</th>
+                <th>Diagnosis&nbsp;</th>
+                </thead>
+                <tbody>             <!-- el vm. algo debe exisitir en el controlador o en un servicio inyectado-->
+                    <tr ng-repeat="record in allRecords track by $index">   <!--el ng-repeat es importantisimo -->
+                                                        <!--es como un for, itera en una lista -->
+                        <td>{{record.AppointmentDate}}</td>
+                        <td>{{record.MRDescription}}</td>
+                        <td>{{record.MRDiagnosis}}</td>
+                    </tr>           <!-- estos son los valores de la tabla-->
+                  </tbody>    
+                </table>
+            </div>
+        </div>
+    </div> 
+        
+</div>

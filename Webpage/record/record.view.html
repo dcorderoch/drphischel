@@ -1,0 +1,149 @@
+<div id="main">
+
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/">Dr Phischel</a>
+                </div>
+
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#/"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#/patient"><i class="fa-user-plus"></i> Pacientes</a></li>
+                <li><a href="#/appointment"><i class="fa fa-hospital-o"></i> Citas</a></li>
+                <li><a href="#/record"><i class="fa fa-file-text"></i>Historial Médico</a></li>
+                <li><a href="#/order"><i class="fa fa-paper-plane-o"></i></a>Orden</li>
+                <li><a href="#/newDoctor"><i class="fa fa-user-md" ></i></a>Doctor Nuevo</li>    
+                  <li><a href="#/prescription"><i class="fa fa-table"></i></a>Prescripcion</li>  
+                <li><a href="#/login"><i class="fa fa-sign-out"></i>Cerrar Sesión</a></li>  
+              </ul>
+            </div>
+        </nav>
+        
+    <div class="col-md-6 col-md-offset-3">
+            
+        <form name="patientForm" ng-submit="patientChosedad(selectedPatient)" novalidate>    <br>
+        
+            <div class="form-group">
+                <label>Escoge tu paciente </label>
+                <select ng-model="selectedPatient" ng-options="x.Name for x in patients"/>
+            </div> 
+            
+            <div class="form-action">
+                <input type="button"  ng-click="patientChosed(selectedPatient)" class="btn btn-info" value="Seleccionar">  
+<!--                <button type="submit"  class="btn btn-primary">Escoger</button>-->
+            </div>
+
+        </form>                     <br>
+
+        
+            
+<div ng-show="showPatient">
+    
+<!--
+        <div class="row">       
+            <div class="col-md-12" >
+            <nav class= "navbar navbar-default" role= "navigation" >
+                <h4 style="color:blue; font-family:Helvetica">  Registros del paciente {{patientName}}</h4> 
+            <div class= "navbar-header" ></div>
+            </nav>
+
+                <table class="table table-striped table-bordered">
+                <thead>
+                <th>Fecha de la cita&nbsp;</th>        
+                <th>Description&nbsp;</th>
+                <th>Diagnosis&nbsp;</th>
+                </thead>
+                <tbody>            
+                    <tr ng-repeat="record in allRecords track by $index">  
+                                                       
+                        <td>{{record.AppointmentDate}}</td>
+                        <td>{{record.MRDescription}}</td>
+                        <td>{{record.MRDiagnosis}}</td>
+                        <td><button ng-click="toggle2(user.Id)" type="button" class="btn btn-default" >Actualizar</button> </td>
+                    </tr>           ]
+                  </tbody>    
+                </table>
+            </div>
+        </div>
+-->
+
+<!--<button type="button" class="btn btn-primary"  ng-click="toggle()">Ingresar nuevo registro</button> -->
+
+<!--<div ng-show="showCreate">-->
+ <form name="createForm" ng-submit="createRecord(selectedPrescription)" role="form" novalidate><!--ng-submit se da cuando se presiona submit abajo-->
+
+        <div class="form-group" ng-class="{ 'has-error': createForm.date.$dirty && createForm.date.$error.required }">
+            <label>Fecha</label>
+            <input type="text" name="date"  class="form-control" ng-model="newRecord.Date" required />
+            <span ng-show="createForm.date.$dirty && createForm.date.$error.required" class="help-block">La Fecha es requerida</span>
+        </div>
+     
+     <div class="form-group" ng-class="{ 'has-error': createForm.description.$dirty && createForm.description.$error.required }">
+        <label>Descripción</label>
+        <input type="text" name="description"  class="form-control" ng-model="newRecord.Description" required />
+        <span ng-show="createForm.description.$dirty && createForm.description.$error.required" class="help-block">La descripción es requerida</span>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error': createForm.diagnosis.$dirty && createForm.diagnosis.$error.required }">
+        <label>Diagnosis</label>
+        <input type="text" name="diagnosis"  class="form-control" ng-model="newRecord.Diagnosis" required />
+        <span ng-show="createForm.diagnosis.$dirty && createForm.diagnosis.$error.required" class="help-block">El diagnosis  es requerido</span>
+    </div>
+
+    <div class="form-group" >
+        <label> Prescripcion </label>
+        <br>
+        <select ng-model="selectedPrescription" ng-options="x.PrescriptionId for x in prescriptions"></select>
+    </div>
+     
+
+    <div class="form-actions">
+        <!--Boton submit-->
+        <button type="submit"  ng-disabled="createForm.$invalid || dataLoading" class="btn btn-primary">Crear</button>
+        <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+     </div>
+     
+    </form>
+</div>
+
+    
+    
+<!--
+        <div ng-show="showEdit">
+
+              <form name="editForm" ng-submit="editRecord()" role="form" novalidate> ng-submit se da cuando se presiona submit abajo
+-->
+<!--
+
+    <div class="form-group" ng-class="{ 'has-error': editForm.date.$dirty && editForm.date.$error.required }">
+        <label>Fecha</label>
+        <input type="text" name="date"  class="form-control" ng-model="newRecord.Date" required />
+        <span ng-show="editForm.date.$dirty && editForm.date.$error.required" class="help-block">La Fecha es requerida</span>
+    </div>
+
+     <div class="form-group" ng-class="{ 'has-error': editForm.description.$dirty && editForm.description.$error.required }">
+        <label>Descripción</label>
+        <input type="text" name="description"  class="form-control" ng-model="newRecord.Description" required />
+        <span ng-show="editForm.description.$dirty && editForm.description.$error.required" class="help-block">La descripción es requerida</span>
+    </div>
+
+    <div class="form-group" ng-class="{ 'has-error': editForm.diagnosis.$dirty && editForm.diagnosis.$error.required }">
+        <label>Diagnosis</label>
+        <input type="text" name="diagnosis"  class="form-control" ng-model="newRecord.Diagnosis" required />
+        <span ng-show="editForm.diagnosis.$dirty && editForm.diagnosis.$error.required" class="help-block">El diagnosis  es requerido</span>
+    </div>
+-->
+
+<!--
+    <div class="form-actions">
+        
+        <button type="submit"  ng-disabled="editForm.$invalid || vm.dataLoading" class="btn btn-primary">Crear</button>
+        <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+
+                    </div>
+                </form> 
+            </div>
+-->
+<!--        </div>-->
+    </div>
+</div>
