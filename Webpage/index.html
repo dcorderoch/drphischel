@@ -15,11 +15,14 @@
     }            
 </style>
     
-  <!-- STYLES -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.1/fullcalendar.min.css" /> 
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.1/fullcalendar.print.css"/>
+  <!-- STYLES Boostrap-->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+  <!--Font Awesome for icons -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.css" />
+  
+    <!--Calendar  -->
+    <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.min.css">
+    
     <title>Dr Phischel</title>
 
 </head>
@@ -28,17 +31,13 @@
 <body>
       <!-- angular templating -->
 		<!-- this is where content will be injected -->
-    
-  
-
-    
-    
+        
         <div class="jumbotron">
         <div class="container">
-            <div class="col-sm-8 col-sm-offset-2">
+            
                 <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
                 <div ng-view></div>
-            </div>
+            
         </div>
     </div>
      <div class="credits text-center">
@@ -48,13 +47,20 @@
     </div>
   
       <!-- SCRIPTS -->
+    <!--Angular and angular modules -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-
-    <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.7.1/fullcalendar.min.js"></script>
     <script src="//code.angularjs.org/1.4.0/angular-cookies.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     
+    <!--Jquery, various purposes  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    
+    <!--Calendar modules -->
+    <script src="bower_components/moment/moment.min.js"></script>
+    <script src="bower_components/fullcalendar/fullcalendar.min.js"></script>
+    <script src="bower_components/angular-ui-calendar/calendar.js"></script>
+
     
     <!--SCRIPTS DE LA APP-->
     <!--Servicios-->
