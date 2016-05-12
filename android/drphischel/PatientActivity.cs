@@ -4,7 +4,6 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Widget;
-using drphischel_mobile_android.Models;
 
 namespace drphischel
 {

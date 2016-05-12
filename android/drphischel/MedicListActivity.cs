@@ -5,7 +5,7 @@ using Android.Content;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using drphischel_mobile_android.Models;
+using drphischel.Models;
 using Newtonsoft.Json;
 
 namespace drphischel
