@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using mdphischel.DAL.Models;
 
 namespace mdphischel.DAL
 {
@@ -130,6 +131,102 @@ namespace mdphischel.DAL
             return resultCodes;
         }
 
+
+        /// <summary>
+        /// This method calls a stored procedure to delete an existing prescription
+        /// </summary>
+        /// <param name="docCode"></param>
+        /// <returns></returns>
+        public int[] DeletePrescription(string prescriptionId)
+        {
+            int[] resultCodes = new int[2];
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("usp_deletePrescription", connection))
+            {
+
+                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
+                errorCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter resultCodeParameter = cmd.Parameters.Add("@resultcode", SqlDbType.Int);
+                resultCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter prescriptionIdParam = cmd.Parameters.Add("@prescriptionId", SqlDbType.UniqueIdentifier);
+                prescriptionIdParam.Direction = ParameterDirection.Input;
+                prescriptionIdParam.Value = prescriptionId;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                var resultCode = resultCodeParameter.Value;
+                var errorNumCode = errorCodeParameter.Value;
+                if (resultCode != DBNull.Value)
+                {
+                    resultCodes[0] = int.Parse(resultCode.ToString());
+                    if (errorNumCode == DBNull.Value)
+                    {
+                        resultCodes[1] = 0;
+                    }
+                    else
+                    {
+                        resultCodes[1] = int.Parse(errorNumCode.ToString());
+                    }
+
+                }
+                else
+                {
+                    resultCodes[0] = 0;
+                    resultCodes[1] = 0;
+                }
+
+                connection.Close();
+            }
+            return resultCodes;
+        }
+
+
+
+        /// <summary>
+        /// This method calls a stored procedure to get medicines from prescription
+        /// </summary>
+        /// <param name="docCode"></param>
+        /// <returns></returns>
+        public List<Medicine> GetPrescriptionMedicines(string prescriptionId)
+        {
+            List<Medicine> medicines = new List<Medicine>();
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("usp_getPrescriptionMedicines", connection))
+            {
+
+                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
+                errorCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter resultCodeParameter = cmd.Parameters.Add("@resultcode", SqlDbType.Int);
+                resultCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter prescriptionIdParam = cmd.Parameters.Add("@prescriptionId", SqlDbType.UniqueIdentifier);
+                prescriptionIdParam.Direction = ParameterDirection.Input;
+                prescriptionIdParam.Value = prescriptionId;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Medicine newMed =new Medicine();
+                        newMed.MedicineId = (string) reader[0];
+                        newMed.MedicineName = (string) reader[1];
+                        medicines.Add(newMed);
+                    }
+                    reader.Close();
+
+                var resultCode = resultCodeParameter.Value;
+                var errorNumCode = errorCodeParameter.Value;
+                
+
+                connection.Close();
+            }
+            return medicines;
+        }
 
 
     }
