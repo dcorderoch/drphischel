@@ -368,8 +368,9 @@ BEGIN
 END
 GO
 
-exec usp_getBranchOffices
 
+
+/*
 
 INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
 							   (11,'DOC222','20160625'),(3,'ABC005','20160507'),
@@ -382,5 +383,5 @@ INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
 
 							  exec usp_deletePrescription @prescriptionId='0315197b-ef78-4093-905b-ff3fa46514c5'
 
-
+*/
 						
