@@ -197,10 +197,6 @@ namespace mdphischel.DAL
             using (SqlCommand cmd = new SqlCommand("usp_getPrescriptionMedicines", connection))
             {
 
-                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
-                errorCodeParameter.Direction = ParameterDirection.Output;
-                SqlParameter resultCodeParameter = cmd.Parameters.Add("@resultcode", SqlDbType.Int);
-                resultCodeParameter.Direction = ParameterDirection.Output;
                 SqlParameter prescriptionIdParam = cmd.Parameters.Add("@prescriptionId", SqlDbType.UniqueIdentifier);
                 prescriptionIdParam.Direction = ParameterDirection.Input;
                 prescriptionIdParam.Value = prescriptionId;
@@ -219,16 +215,47 @@ namespace mdphischel.DAL
                     }
                     reader.Close();
                 }
-
-                var resultCode = resultCodeParameter.Value;
-                var errorNumCode = errorCodeParameter.Value;
-                
-
                 connection.Close();
             }
             return medicines;
         }
 
+
+        /// This method calls a stored procedure to get prescriptions by doctorId
+        /// </summary>
+        /// <param name="docCode"></param>
+        /// <returns></returns>
+        public List<Prescription> GetPrescriptionByDoctor(string doctorId)
+        {
+            List<Prescription> prescriptionList = new List<Prescription>();
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("usp_getPrescriptionByDoctor", connection))
+            {
+                SqlParameter prescriptionIdParam = cmd.Parameters.Add("@doctorId", SqlDbType.NVarChar);
+                prescriptionIdParam.Direction = ParameterDirection.Input;
+                prescriptionIdParam.Value = doctorId;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Prescription presc = new Prescription();
+                        presc.PrescriptionId = (string)reader[0];
+                        presc.DoctorId = (string)reader[1];
+                        presc.UserId = (int) reader[2];
+                        prescriptionList.Add(presc);
+                    }
+                    reader.Close();
+                }
+
+
+                connection.Close();
+            }
+            return prescriptionList;
+        }
 
     }
 }
