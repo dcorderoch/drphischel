@@ -59,6 +59,8 @@ namespace drphischel
 		
 		public partial class Id
 		{
+			
+			// aapt resource value: 0x7f05000e
 			public const int AddPatientBtn = 2131034126;
 			
 			// aapt resource value: 0x7f050024
@@ -171,7 +173,7 @@ namespace drphischel
 			
 			// aapt resource value: 0x7f050017
 			public const int userPassInput = 2131034135;
-
+			
 			static Id()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -184,6 +186,8 @@ namespace drphischel
 		
 		public partial class Layout
 		{
+			
+			// aapt resource value: 0x7f030000
 			public const int AddPatient = 2130903040;
 			
 			// aapt resource value: 0x7f030001
@@ -209,7 +213,7 @@ namespace drphischel
 			
 			// aapt resource value: 0x7f030008
 			public const int ViewPatients = 2130903048;
-
+			
 			static Layout()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
