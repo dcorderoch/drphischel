@@ -12,16 +12,15 @@ using Android.Widget;
 
 namespace drphischel
 {
-    [Activity(Label = "MedicalRecordsActivity")]
-    public class MedicalRecordsActivity : Activity
+    [Activity(Label = "ViewPatientsActivity")]
+    public class ViewPatientsActivity : Activity
     {
-        private ListView _medicalrecords;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.MedicalRecords);
+            SetContentView(Resource.Layout.ViewPatients);
 
-            _medicalrecords = FindViewById<ListView>(Resource.Id.MedRecordsList);
+            // Create your application here
         }
     }
 }

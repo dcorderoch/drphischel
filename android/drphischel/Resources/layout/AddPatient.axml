@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+	<TextView
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientIdNumberText"
+		android:gravity="center_horizontal"
+		android:text="Id Number" />
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientIdNumberInput" />
+	<TextView
+		android:text="Patient's Password"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientPasswordText"
+		android:gravity="center_horizontal" />
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientPassInput" />
+	<TextView
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientNameText"
+		android:gravity="center_horizontal"
+		android:text="Name" />
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientNameInput" />
+	<TextView
+		android:text="First Surname"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientLName1Text"
+		android:gravity="center_horizontal" />
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientLName1Input" />
+	<TextView
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientLName2Text"
+		android:gravity="center_horizontal"
+		android:text="Second Surname" />
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientLName2Input" />
+	<TextView
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientResidenceText"
+		android:gravity="center_horizontal"
+		android:text="Place of Residence" />
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientResidenceInput" />
+	<TextView
+		android:text="Birth Date in yyyy-mm-dd format"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientBdateText"
+		android:gravity="center_horizontal" />
+	<EditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/NewPatientBdateInput" />
+	<Button
+		android:id="@+id/AddPatientBtn"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="Add Patient" />
+</LinearLayout>

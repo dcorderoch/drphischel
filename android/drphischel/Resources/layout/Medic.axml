@@ -4,22 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <Button
-        android:text="Ver Citas"
+        android:text="View Appointments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/MedicViewCalendarBtn" />
     <Button
-        android:text="Agregar Paciente"
+        android:text="Add Patient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/MedicAddPatientBtn" />
     <Button
-        android:text="Ver Pacientes"
+        android:text="View Patients"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/MedicViewPatientsBtn" />
     <Button
-        android:text="Salir"
+        android:text="Log Out"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/MedicLogOutBtn" />
