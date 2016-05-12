@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	xmlns:android        ="http://schemas.android.com/apk/res/android"
-	android:orientation  ="vertical"
-	android:layout_width ="fill_parent"
-	android:layout_height="fill_parent">
-  <EditText
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/UserNameText"
+        android:gravity="center_horizontal"
+        android:text="Username" />
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/userIdInput" />
+    <TextView
+        android:text="Password"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/PasswordText"
+        android:gravity="center_horizontal" />
     <EditText
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/userPassInput" />
-  <TextView
+    <TextView
         android:text="Login as a: "
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_width="match_parent"
@@ -21,7 +34,7 @@
         android:id="@+id/loginChoiceText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp" />
-  <RadioGroup
+    <RadioGroup
         android:minWidth="25px"
         android:minHeight="25px"
         android:layout_width="match_parent"
@@ -39,10 +52,9 @@
             android:text="medic"
             android:id="@+id/medic_login" />
     </RadioGroup>
-  <Button
-		android:id           ="@+id/loginButton"
-		android:layout_width ="match_parent"
-		android:layout_height="wrap_content"
-		android:text         ="Log In" />
-    
+    <Button
+        android:id="@+id/loginButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log In" />
 </LinearLayout>

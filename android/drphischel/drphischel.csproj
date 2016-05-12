@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7F983D8F-1277-4721-9681-4D3188A6775B}</ProjectGuid>
+    <ProjectGuid>{7CEB0FA3-2DD9-4C9D-9D38-11E7512271F5}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>drphischel_mobile_android</RootNamespace>
-    <AssemblyName>drphischel-mobile-android</AssemblyName>
+    <RootNamespace>drphischel</RootNamespace>
+    <AssemblyName>drphischel</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
@@ -55,32 +55,56 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddPatientActivity.cs" />
+    <Compile Include="ApiClient.cs" />
+    <Compile Include="AppointmentActivity.cs" />
+    <Compile Include="DatePickerFragment.cs" />
+    <Compile Include="MedicActivity.cs" />
+    <Compile Include="MedicalRecordsActivity.cs" />
+    <Compile Include="MedicListActivity.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="Models\MedicListItem.cs" />
-    <Compile Include="PatientsMedicsActivity.cs" />
-    <Compile Include="MedRecsActivity.cs" />
+    <Compile Include="Models\AppointmentData.cs" />
     <Compile Include="Models\LoggedUserData.cs" />
     <Compile Include="Models\LoginData.cs" />
+    <Compile Include="Models\MedicListItem.cs" />
+    <Compile Include="Models\ReturnStatus.cs" />
+    <Compile Include="Models\UserInfo.cs" />
     <Compile Include="PatientActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimePickerFragment.cs" />
+    <Compile Include="ViewCalendarActivity.cs" />
+    <Compile Include="ViewPatientsActivity.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
-    <AndroidResource Include="Resources\layout\Patient.axml">
+    <AndroidResource Include="Resources\layout\Patient.axml" />
+    <AndroidResource Include="Resources\layout\MedicList.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\PatientsMedics.axml">
+    <AndroidResource Include="Resources\layout\Appointment.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Medic.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\AddPatient.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\MedicalRecords.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ViewCalendar.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ViewPatients.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Main.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -89,13 +113,9 @@
     <AndroidResource Include="Resources\drawable\Icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\AndroidManifest.xml">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\is_it_worth_the_time.png" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
      Other similar extension points exist, see Microsoft.Common.targets.

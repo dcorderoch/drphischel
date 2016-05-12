@@ -4,13 +4,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <Button
-        android:text="Button"
+        android:text="Ver Historial"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/medRecordsBtn" />
+        android:id="@+id/medRecordsBtn"
+        android:gravity="center" />
     <Button
-        android:text="Button"
+        android:text="Solicitar Cita"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/AppointmentBtn" />
+        android:id="@+id/AppointmentBtn"
+        android:gravity="center" />
+    <Button
+        android:text="Salir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LogOutBtn"
+        android:gravity="center" />
 </LinearLayout>
