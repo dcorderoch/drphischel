@@ -10,14 +10,12 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace drphischel_mobile_android.Models
+namespace drphischel.Models
 {
-    public class MedicListItem
+    class AppointmentData
     {
+        public string UserId { get; set; }
         public string DoctorId { get; set; }
-        public string OfficeAddress { get; set; }
-        public string Name { get; set; }
-        public string LastName1 { get; set; }
-        public string LastName2 { get; set; }
+        public string AppointmentDate { get; set; }
     }
 }

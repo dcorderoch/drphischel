@@ -4,4 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minWidth="25px"
-    android:minHeight="25px" />
+    android:minHeight="25px">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dateDisplay"
+        android:gravity="center" />
+    <Button
+        android:text="Fecha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/picDate"
+        android:gravity="center" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/timeDisplay"
+        android:gravity="center" />
+    <Button
+        android:text="Hora"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pickTime"
+        android:gravity="center" />
+    <Button
+        android:text="Solicitar Cita"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/makeAppointmentBtn" />
+</LinearLayout>

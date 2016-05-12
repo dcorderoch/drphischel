@@ -10,15 +10,15 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace drphischel_mobile_android
+namespace drphischel
 {
-    [Activity(Label = "MedRecsActivity")]
-    public class MedRecsActivity : Activity
+    [Activity(Label = "AddPatientActivity")]
+    public class AddPatientActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            SetContentView(Resource.Layout.AddPatient);
             // Create your application here
         }
     }

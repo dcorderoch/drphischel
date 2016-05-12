@@ -18,7 +18,7 @@ namespace drphischel
         /// <param name="savedInstanceState"></param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            CurrentUserId = base.Intent.GetStringExtra("UserId");
+            CurrentUserId = base.Intent.GetStringExtra("CurrentUserId");
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Patient);
 

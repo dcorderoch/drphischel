@@ -42,11 +42,10 @@ namespace drphischel
 
         protected override void OnListItemClick(ListView l, View v, int position, long id)
         {
-            var medicID = _medics.ToArray()[position].DoctorId;
-            //CHANGE ACTIVITY TYPE HERE TO AppointmentActivity
-            var intent = new Intent(this, typeof(PatientActivity));
-            intent.PutExtra("CurrentUserId", _currentUserId);//.Extras.PutString("CurrentUserId", User.CurrentUserId);
-            intent.PutExtra("MedicIdForAppointment", medicID);//.Extras.PutString("CurrentUserId", User.CurrentUserId);
+            var medicId = _medics.ToArray()[position].DoctorId;
+            var intent = new Intent(this, typeof(AppointmentActivity));
+            intent.PutExtra("CurrentUserId", _currentUserId);
+            intent.PutExtra("MedicIdForAppointment", medicId);
             StartActivity(intent);
         }
     }

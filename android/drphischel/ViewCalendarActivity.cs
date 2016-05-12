@@ -12,13 +12,14 @@ using Android.Widget;
 
 namespace drphischel
 {
-    [Activity(Label = "MedicalRecordsActivity")]
-    public class MedicalRecordsActivity : Activity
+    [Activity(Label = "ViewCalendarActivity")]
+    public class ViewCalendarActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            SetContentView(Resource.Layout.MedicalRecords);
+            SetContentView(Resource.Layout.ViewCalendar);
+            // Create your application here
         }
     }
 }

@@ -10,12 +10,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace drphischel_mobile_android.Models
+namespace drphischel.Models
 {
-    class LoginData
+    public class ReturnStatus
     {
-        public string IdNumber { get; set; }
-        public string Pass { get; set; }
-        public string Role { get; set; }
+        public int StatusCode { get; set; }
     }
 }
