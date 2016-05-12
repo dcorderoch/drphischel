@@ -212,12 +212,13 @@ namespace mdphischel.DAL
                 {
                     while (reader.Read())
                     {
-                        Medicine newMed =new Medicine();
+                        Medicine newMed = new Medicine();
                         newMed.MedicineId = (string) reader[0];
                         newMed.MedicineName = (string) reader[1];
                         medicines.Add(newMed);
                     }
                     reader.Close();
+                }
 
                 var resultCode = resultCodeParameter.Value;
                 var errorNumCode = errorCodeParameter.Value;
