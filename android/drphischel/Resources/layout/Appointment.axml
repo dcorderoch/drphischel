@@ -11,7 +11,7 @@
         android:id="@+id/dateDisplay"
         android:gravity="center" />
     <Button
-        android:text="Fecha"
+        android:text="Date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/picDate"
@@ -22,13 +22,13 @@
         android:id="@+id/timeDisplay"
         android:gravity="center" />
     <Button
-        android:text="Hora"
+        android:text="Time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/pickTime"
         android:gravity="center" />
     <Button
-        android:text="Solicitar Cita"
+        android:text="make Appointment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/makeAppointmentBtn" />

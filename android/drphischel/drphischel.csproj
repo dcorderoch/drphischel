@@ -66,7 +66,9 @@
     <Compile Include="Models\AppointmentData.cs" />
     <Compile Include="Models\LoggedUserData.cs" />
     <Compile Include="Models\LoginData.cs" />
+    <Compile Include="Models\Medicine.cs" />
     <Compile Include="Models\MedicListItem.cs" />
+    <Compile Include="Models\MedRecord.cs" />
     <Compile Include="Models\ReturnStatus.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="PatientActivity.cs" />

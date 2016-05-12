@@ -15,11 +15,13 @@ namespace drphischel
     [Activity(Label = "MedicalRecordsActivity")]
     public class MedicalRecordsActivity : Activity
     {
+        private ListView _medicalrecords;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.MedicalRecords);
-            // Create your application here
+
+            _medicalrecords = FindViewById<ListView>(Resource.Id.MedRecordsList);
         }
     }
 }
