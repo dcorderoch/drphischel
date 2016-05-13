@@ -148,7 +148,10 @@ namespace mdphischel.BLL
             {
                 DBPatient patientInstance = new DBPatient();
                 var operationResult = patientInstance.UpdatePatient(idNumber, password, name, lastName1, lastName2, residence, birthDate);
-                if (operationResult[0].Equals(Constants.SUCCESS))
+
+                return operationResult[0];
+                /*
+                if (operationResult[0] == Constants.SUCCESS)
                 {
                     result = Constants.SUCCESS;
                 }
@@ -156,6 +159,7 @@ namespace mdphischel.BLL
                 {
                     result = Constants.ERROR;
                 }
+                */
             }
             catch (Exception)
             {
