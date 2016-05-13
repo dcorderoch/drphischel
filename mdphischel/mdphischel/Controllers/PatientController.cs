@@ -14,7 +14,7 @@ namespace mdphischel.Controllers
         {
             var retVal = new ReturnStatus();
             var patmanager = new PatientManager();
-            retVal.StatusCode = patmanager.CreatePatientByDoctor(pNewPatient.UserId, pNewPatient.Pass,
+            retVal.StatusCode = patmanager.CreatePatientByDoctor(pNewPatient.IdNumber, pNewPatient.Pass,
                 pNewPatient.Name, pNewPatient.LastName1, pNewPatient.LastName2, pNewPatient.ResidencePlace,
                 pNewPatient.BirthDate, pNewPatient.DoctorID);
 
@@ -26,7 +26,7 @@ namespace mdphischel.Controllers
         {
             var retVal = new ReturnStatus();
             var patmanager = new PatientManager();
-            retVal.StatusCode = patmanager.CreatePatientByAdmin(pNewPatient.UserId, pNewPatient.Pass,
+            retVal.StatusCode = patmanager.CreatePatientByAdmin(pNewPatient.IdNumber, pNewPatient.Pass,
                 pNewPatient.Name, pNewPatient.LastName1, pNewPatient.LastName2, pNewPatient.ResidencePlace,
                 pNewPatient.BirthDate);
 
@@ -38,7 +38,7 @@ namespace mdphischel.Controllers
         {
             var retVal = new ReturnStatus();
             var patmanager = new PatientManager();
-            retVal.StatusCode = patmanager.UpdatePatient(pNewPatient.UserId, pNewPatient.Pass,
+            retVal.StatusCode = patmanager.UpdatePatient(pNewPatient.IdNumber, pNewPatient.Pass,
                 pNewPatient.Name, pNewPatient.LastName1, pNewPatient.LastName2, pNewPatient.ResidencePlace,
                 pNewPatient.BirthDate);
 
