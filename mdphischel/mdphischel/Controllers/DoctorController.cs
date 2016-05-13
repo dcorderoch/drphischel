@@ -48,12 +48,23 @@ namespace mdphischel.Controllers
 
             return Json(medics);
         }
+
         [HttpPost]
-        public JsonResult<UnapprovedMedic> GetMyDocId(PatientIdData pUser)
+        public JsonResult<UnapprovedMedic> GetMedicIdentifier(PatientIdData pUser)
         {
-            var patManager = new PatientManager();
             var retVal = new UnapprovedMedic();
-            retVal.DoctorId = patManager.GetDoctor(Int32.Parse(pUser.UserId)).ToArray()[1];
+            var patManager = new PatientManager();
+
+            var result = patManager.GetDoctor(Int32.Parse(pUser.UserId));
+
+            if (Int32.Parse(result.ToArray()[0]) == 1)
+            {
+                retVal.DoctorId = result.ToArray()[1];
+            }
+            else
+            {
+                retVal.DoctorId = "-1";
+            }
 
             return Json(retVal);
         }
