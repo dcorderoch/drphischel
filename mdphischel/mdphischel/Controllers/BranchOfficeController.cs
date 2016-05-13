@@ -9,7 +9,7 @@ namespace mdphischel.Controllers
     public class BranchOfficeController : ApiController
     {
         [HttpGet]
-        public JsonResult<List<BranchOffice>> GetAllBranchOffices()
+        public JsonResult<List<BranchOffice>> GetAll()
         {
             var bomng = new BranchOfficeManager();
             return Json(bomng.GetAllBranchOffices());

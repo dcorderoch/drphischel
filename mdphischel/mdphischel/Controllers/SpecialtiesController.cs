@@ -16,13 +16,20 @@ namespace mdphischel.Controllers
 
             var bllresult = specmanager.GetAllSpecialties();
 
-            for (int i = 0; i < bllresult.Count / 2; i++)
+            if (bllresult.Count > 1)
             {
-                retVal.Add(new Specialty() {MedicalSpecialtyId = bllresult.ToArray()[0],Name = bllresult.ToArray()[1]});
                 bllresult.RemoveAt(0);
-                bllresult.RemoveAt(0);
+                for (int i = 0; i < bllresult.Count/2; i++)
+                {
+                    retVal.Add(new Specialty()
+                    {
+                        MedicalSpecialtyId = bllresult.ToArray()[0],
+                        Name = bllresult.ToArray()[1]
+                    });
+                    bllresult.RemoveAt(0);
+                    bllresult.RemoveAt(0);
+                }
             }
-
             return Json(retVal);
         }
     }

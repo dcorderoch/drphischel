@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Web.Util;
 using Excel;
 using mdphischel.DAL;
 using mdphischel.DAL.Models;
@@ -51,7 +50,6 @@ namespace mdphischel.BLL
             return result;
         }
 
-
         /// <summary>
         /// insert new patients from excel spreadsheet
         /// </summary>
@@ -65,12 +63,12 @@ namespace mdphischel.BLL
             IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
             excelReader.IsFirstRowAsColumnNames = true;
             DataSet dataResult = excelReader.AsDataSet();
-            int result=0;
+            int result = 0;
             foreach (DataTable table in dataResult.Tables)
             {
                 foreach (DataRow row in table.Rows)
                 {
-                    
+
                     try
                     {
                         DBPatient patientInstance = new DBPatient();
@@ -145,7 +143,7 @@ namespace mdphischel.BLL
         public int UpdatePatient(string idNumber, string password, string name, string lastName1, string lastName2,
             string residence, string birthDate)
         {
-            int result;
+            int result = 0;
             try
             {
                 DBPatient patientInstance = new DBPatient();
@@ -199,23 +197,21 @@ namespace mdphischel.BLL
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public List<Doctor> GetDoctorsByPatient(int userId)
+        public List<string> GetDoctorsByPatient(int userId)
         {
-            //List<string> retVal = new List<string>();
+            List<string> retVal = new List<string>();
+            //List<Doctor> retVal = new List<Doctor>();
 
             try
             {
                 DBPatient patientInstance = new DBPatient();
-                //var doctorList = 
-                return patientInstance.GetDoctorsByPatient(userId);
-                /*
+                var doctorList = patientInstance.GetDoctorsByPatient(userId);
                 retVal.Add(Constants.SUCCESS.ToString());
                 foreach (Doctor t in doctorList)
                 {
-                    retVal.Add(t.UserId.ToString());
                     retVal.Add(t.DoctorId);
-                    retVal.Add(t.OfficeAddress);
-
+                    retVal.Add(t.Name);
+                    //retVal.Add(t.OfficeAddress);
                 }
             }
             catch (Exception)
@@ -223,13 +219,6 @@ namespace mdphischel.BLL
                 retVal.Add(Constants.ERROR.ToString());
             }
             return retVal;
-            */
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-            return null;
         }
 
         /// <summary>

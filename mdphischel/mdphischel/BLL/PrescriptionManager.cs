@@ -14,11 +14,11 @@ namespace mdphischel.BLL
         /// <param name="medicineId"></param>
         /// <param name="prescriptionId"></param>
         /// <returns></returns>
-        public int CreatePrescription(string doctorId, int patientId)
+        public int[] CreatePrescription(string doctorId, int patientId)
         {
             DBPrescription prescriptionDAL = new DBPrescription();
             int[] result = prescriptionDAL.CreatePrescription(doctorId, patientId);
-            return result[2];
+            return result;
         }
 
         /// <summary>
