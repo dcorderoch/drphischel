@@ -10,6 +10,20 @@ namespace mdphischel.BLL
     public class PrescriptionManager
     {
 
+
+        /// <summary>
+        /// This method calls DAL to create a prescription
+        /// </summary>
+        /// <param name="medicineId"></param>
+        /// <param name="prescriptionId"></param>
+        /// <returns></returns>
+        public int CreatePrescription(string doctorId, int patientId)
+        {
+            DBPrescription prescriptionDAL = new DBPrescription();
+            int[] result = prescriptionDAL.CreatePrescription(doctorId, patientId);
+            return result[0];
+        }
+
         /// <summary>
         /// This method calls DAL to add a medicine into prescription
         /// </summary>
