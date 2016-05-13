@@ -6,11 +6,22 @@ using drphischel.Models;
 using mdphischel.BLL;
 using mdphischel.DAL.Models;
 using mdphischel.Models;
+using Newtonsoft.Json;
 
 namespace mdphischel.Controllers
 {
     public class DoctorController : ApiController
     {
+        [HttpPost]
+        public JsonResult<ReturnStatus> LoadPatients()
+        {
+            //var
+            var retVal = new ReturnStatus();
+
+            //retVal.StatusCode
+
+            return Json(retVal);
+        }
         [HttpPost]
         public JsonResult<ReturnStatus> Create(MedicCreateData pMedic)
         {
