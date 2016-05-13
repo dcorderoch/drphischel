@@ -6,7 +6,6 @@ using drphischel.Models;
 using mdphischel.BLL;
 using mdphischel.DAL.Models;
 using mdphischel.Models;
-using Newtonsoft.Json;
 
 namespace mdphischel.Controllers
 {
@@ -38,7 +37,6 @@ namespace mdphischel.Controllers
         public JsonResult<List<MedicByPatient>> GetByPatient(PatientIdData pPatient)
         {
             var patmanager = new PatientManager();
-            //return Json(patmanager.GetDoctorsByPatient(Int32.Parse(pPatient.UserId)));
 
             var medics = new List<MedicByPatient>();
 
@@ -47,15 +45,18 @@ namespace mdphischel.Controllers
             if (bllresult.Count > 1)
             {
                 bllresult.RemoveAt(0);
-                int upperlimit = bllresult.Count;
-                for (int i = 0; i < upperlimit / 2; i++)
+
+                while (bllresult.Count > 0)
                 {
-                    medics.Add(new MedicByPatient() {DoctorId = bllresult.ToArray()[0],Name = bllresult.ToArray()[1]});
-                    bllresult.RemoveAt(0);
-                    bllresult.RemoveAt(0);
+                    medics.Add(new MedicByPatient()
+                    {
+                        DoctorId = bllresult.ToArray()[0],
+                        Name = bllresult.ToArray()[1]
+                    });
                 }
+                bllresult.RemoveAt(0);
+                bllresult.RemoveAt(0);
             }
-            //medics.AddRange(patmanager.GetDoctorsByPatient());
 
             return Json(medics);
         }

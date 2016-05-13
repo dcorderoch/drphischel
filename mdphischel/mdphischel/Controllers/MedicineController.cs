@@ -9,10 +9,11 @@ namespace mdphischel.Controllers
 {
     public class MedicineController : ApiController
     {
-        [HttpGet]
+        [HttpPost]
         public JsonResult<List<Medicine>> GetAllByBranchOffice(BranchOfficeIdInfo pBOffice)
         {
-            return Json(new MedicineManager().GetAllMedicines(pBOffice.BranchOfficeId));
+            var medManager = new MedicineManager();
+            return Json(medManager.GetAllMedicines(pBOffice.BranchOfficeId));
         }
     }
 }

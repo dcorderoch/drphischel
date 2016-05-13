@@ -19,7 +19,8 @@ namespace mdphischel.Controllers
             if (bllresult.Count > 1)
             {
                 bllresult.RemoveAt(0);
-                for (int i = 0; i < bllresult.Count/2; i++)
+
+                while (bllresult.Count > 0)
                 {
                     retVal.Add(new Specialty()
                     {
