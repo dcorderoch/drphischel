@@ -215,7 +215,7 @@ namespace mdphischel.DAL
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
             using (SqlCommand cmd = new SqlCommand("uspGetAppointmentsByDoctor", connection))
             {
-                SqlParameter doctorIdParameter = cmd.Parameters.Add("DoctorId", SqlDbType.NVarChar);
+                SqlParameter doctorIdParameter = cmd.Parameters.Add("@DoctorId", SqlDbType.NVarChar);
                 doctorIdParameter.Direction = ParameterDirection.Input;
                 doctorIdParameter.Value = doctorId;
 
@@ -228,7 +228,7 @@ namespace mdphischel.DAL
                     {
                         Appointment newAppointment = new Appointment();
                         newAppointment.DoctorId = reader[0].ToString();
-                        newAppointment.UserId = (int)reader[1];
+                        newAppointment.UserId = Int32.Parse(reader[1].ToString());
                         newAppointment.AppointmentDate = reader[2].ToString();
                         appointmentList.Add(newAppointment);
                     }
