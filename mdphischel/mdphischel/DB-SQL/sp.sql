@@ -107,7 +107,6 @@ BEGIN
 END
 GO
 
-DROP proc usp_doctorsCharges
 
 /*
  * Get pending doctors

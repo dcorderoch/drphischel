@@ -215,21 +215,13 @@ namespace mdphischel.DAL
         /// <param name="docCode">doctor id</param>
         /// <param name="date"> desired year and month in the format YYYY-MM-01</param>
         /// <returns></returns>
-        public MonthlyDocCharges GetMonthlyCharges(string date)
+        public MonthlyDocCharges GetMonthlyCharges()
         {
             MonthlyDocCharges chargesReport = new MonthlyDocCharges();
 
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
             using (SqlCommand cmd = new SqlCommand("usp_doctorsCharges", connection))
             {
-                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
-                errorCodeParameter.Direction = ParameterDirection.Output;
-                SqlParameter resultCodeParameter = cmd.Parameters.Add("@resultCode", SqlDbType.Int);
-                resultCodeParameter.Direction = ParameterDirection.Output;
-                SqlParameter dateParameter = cmd.Parameters.Add("@date", SqlDbType.NVarChar);
-                dateParameter.Direction = ParameterDirection.Input;
-                dateParameter.Value = date;
-
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 connection.Open();
@@ -241,33 +233,12 @@ namespace mdphischel.DAL
                         newcharge.DoctorName =  (string) reader[0].ToString();
                         newcharge.DoctorLastName1 = (string) reader[1].ToString();
                         newcharge.DoctorLastName2 = (string) reader[2].ToString();
-                        newcharge.DoctorId = (string) reader[3].ToString();
-                        newcharge.Charge = decimal.Parse(reader[4].ToString());
+                        newcharge.Value = (string) reader[3].ToString();
                         chargesReport.AddCharge(newcharge);
 
                     }
                     reader.Close();
-                    var resultCode=resultCodeParameter.Value;
-                    var errorNumCode = errorCodeParameter.Value;
-
-                    if (resultCode != DBNull.Value)
-                    {
-                        chargesReport.ResultCodes[0] = int.Parse(resultCode.ToString());
-                        if (errorNumCode == DBNull.Value)
-                        {
-                            chargesReport.ResultCodes[1] = 0;
-                        }
-                        else
-                        {
-                            chargesReport.ResultCodes[1] = int.Parse(errorNumCode.ToString());
-                        }
-                    }
-                    else
-                    {
-                        chargesReport.ResultCodes[0] = 0;
-                        chargesReport.ResultCodes[1] = 0;
-                    }
-                }
+                 }
 
                 connection.Close();
             }
