@@ -12,6 +12,60 @@ namespace mdphischel.DAL
     {
 
 
+        /// <summary>
+        /// This method calls a stored procedure to  create prescription
+        /// </summary>
+        /// <param name="docCode"></param>
+        /// <returns></returns>
+        public int[] CreatePrescription(string doctorCode, int patientId)
+        {
+            int[] resultCodes = new int[2];
+            using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
+            using (SqlCommand cmd = new SqlCommand("usp_createPrescription", connection))
+            {
+
+                SqlParameter errorCodeParameter = cmd.Parameters.Add("@errorNum", SqlDbType.Int);
+                errorCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter resultCodeParameter = cmd.Parameters.Add("@resultcode", SqlDbType.Int);
+                resultCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter patientIdParameter = cmd.Parameters.Add("@patientId", SqlDbType.Int);
+                patientIdParameter.Direction = ParameterDirection.Input;
+                patientIdParameter.Value = patientId;
+                SqlParameter doctorCodeParameter = cmd.Parameters.Add("@doctorCode", SqlDbType.NVarChar);
+                doctorCodeParameter.Direction = ParameterDirection.Input;
+                doctorCodeParameter.Value = doctorCode;
+
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                var resultCode = resultCodeParameter.Value;
+                var errorNumCode = errorCodeParameter.Value;
+                if (resultCode != DBNull.Value)
+                {
+                    resultCodes[0] = int.Parse(resultCode.ToString());
+                    if (errorNumCode == DBNull.Value)
+                    {
+                        resultCodes[1] = 0;
+                    }
+                    else
+                    {
+                        resultCodes[1] = int.Parse(errorNumCode.ToString());
+                    }
+
+                }
+                else
+                {
+                    resultCodes[0] = 0;
+                    resultCodes[1] = 0;
+                }
+
+                connection.Close();
+            }
+            return resultCodes;
+        }
+
 
         /// <summary>
         /// This method calls a stored procedure to add a medicine into prescription
