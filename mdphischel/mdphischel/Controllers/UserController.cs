@@ -14,13 +14,14 @@ namespace mdphischel.Controllers
             var accmanager = new AccountManager();
             var loginSession = new LoginSession();
             var resultfrombll = accmanager.AuthorizeLogin(Int32.Parse(pUserInfo.IdNumber), pUserInfo.Pass, Int32.Parse(pUserInfo.Role));
-            if (resultfrombll.Count < 7)
+
+            if (resultfrombll.Count == 0) // 0 means fail
             {
-                loginSession.UserId = "";
-                loginSession.Name = "";
-                loginSession.LastName1 = "";
-                loginSession.LastName2 = "";
-                loginSession.BirthDate = "";
+                loginSession.UserId = "-1";
+                loginSession.Name = "-1";
+                loginSession.LastName1 = "-1";
+                loginSession.LastName2 = "-1";
+                loginSession.BirthDate = "MERDA";
             }
             else
             {

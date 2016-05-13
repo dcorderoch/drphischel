@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Results;
 using mdphischel.BLL;
@@ -19,6 +20,13 @@ namespace mdphischel.Controllers
                 pMedic.Pass, pMedic.UserId,pMedic.Name, pMedic.LastName1,
                 pMedic.LastName2,pMedic.PlaceResidence, pMedic.BirthDate, pMedic.OfficeAddress, pMedic.CreditCardNumber)
             });
+        }
+
+        [HttpPost]
+        public JsonResult<List<Doctor>> GetByPatient(PatientIdData pPatient)
+        {
+            var patmanager = new PatientManager();
+            return Json(patmanager.GetDoctorsByPatient(Int32.Parse(pPatient.UserId)));
         }
 
         [HttpPost]

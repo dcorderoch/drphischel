@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Runtime.Remoting.Messaging;
-using System.Web;
 using mdphischel.DAL;
 
 namespace mdphischel.BLL
@@ -30,7 +26,7 @@ namespace mdphischel.BLL
 
                 retVal.Add(Constants.SUCCESS.ToString());
                 retVal.Add(user.UserId.ToString());
-                retVal.Add(user.IdNumber);
+                //retVal.Add(user.IdNumber);
                 retVal.Add(user.Name);
                 retVal.Add(user.LastName1);
                 retVal.Add(user.LastName2);
@@ -39,6 +35,7 @@ namespace mdphischel.BLL
             }
             catch (Exception)
             {
+                retVal = new List<string>();
                 retVal.Add(Constants.ERROR.ToString());
             }
             return retVal;

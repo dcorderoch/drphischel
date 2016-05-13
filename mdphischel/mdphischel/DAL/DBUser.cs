@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
 using mdphischel.DAL.Models;
 
@@ -26,11 +25,11 @@ namespace mdphischel.DAL
                 userIdParameter.Direction = ParameterDirection.Input;
                 userIdParameter.Value = userId;
 
-                SqlParameter passwordParameter = cmd.Parameters.Add("Pass", SqlDbType.NVarChar);
+                SqlParameter passwordParameter = cmd.Parameters.Add("@Pass", SqlDbType.NVarChar);
                 passwordParameter.Direction = ParameterDirection.Input;
                 passwordParameter.Value = password;
 
-                SqlParameter roleParameter = cmd.Parameters.Add("@RoleId", SqlDbType.Int);
+                SqlParameter roleParameter = cmd.Parameters.Add("@RoleId", SqlDbType.NVarChar);
                 roleParameter.Direction = ParameterDirection.Input;
                 roleParameter.Value = role;
 
