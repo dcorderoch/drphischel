@@ -131,32 +131,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Site.css" />
     <Content Include="DB-SQL\drphischel.sql" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BLL\AccountManager.cs" />
     <Compile Include="BLL\AppointmentManager.cs" />
+    <Compile Include="BLL\BranchOfficeManager.cs" />
     <Compile Include="BLL\Constants.cs" />
+    <Compile Include="BLL\DoctorManager.cs" />
+    <Compile Include="BLL\MedicalRecordManager.cs" />
     <Compile Include="BLL\MedicalSpecialtyManager.cs" />
     <Compile Include="BLL\MedicineManager.cs" />
     <Compile Include="BLL\PatientManager.cs" />
+    <Compile Include="BLL\PrescriptionManager.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AppointmentController.cs" />
     <Compile Include="Controllers\BranchOfficeController.cs" />
@@ -166,26 +155,44 @@
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\PrescriptionController.cs" />
     <Compile Include="Controllers\SpecialtiesController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\DBAppointment.cs" />
+    <Compile Include="DAL\DBBranchOffice.cs" />
     <Compile Include="DAL\DbConfigurator.cs" />
+    <Compile Include="DAL\DBDoctor.cs" />
+    <Compile Include="DAL\DBMedicalRecord.cs" />
     <Compile Include="DAL\DBMedicalSpecialty.cs" />
     <Compile Include="DAL\DBMedicine.cs" />
     <Compile Include="DAL\DBPatient.cs" />
+    <Compile Include="DAL\DBPrescription.cs" />
     <Compile Include="DAL\DBUser.cs" />
     <Compile Include="DAL\Models\Appointment.cs" />
+    <Compile Include="DAL\Models\BranchOffice.cs" />
     <Compile Include="DAL\Models\Doctor.cs" />
+    <Compile Include="DAL\Models\DoctorsCharge.cs" />
+    <Compile Include="DAL\Models\MedicalRecord.cs" />
     <Compile Include="DAL\Models\MedicalSpecialty.cs" />
     <Compile Include="DAL\Models\Medicine.cs" />
+    <Compile Include="DAL\Models\MonthlyDocCharges.cs" />
+    <Compile Include="DAL\Models\Prescription.cs" />
     <Compile Include="DAL\Models\User.cs" />
+    <Compile Include="Models\Appointment.cs" />
+    <Compile Include="Models\AppointmentCreateData.cs" />
+    <Compile Include="Models\LoginInfo.cs" />
+    <Compile Include="Models\LoginSession.cs" />
+    <Compile Include="Models\MedicCreateData.cs" />
+    <Compile Include="Models\MedicIdData.cs" />
+    <Compile Include="Models\MedRecCreateData.cs" />
+    <Compile Include="Models\NewSpecialty.cs" />
+    <Compile Include="Models\PatientIdData.cs" />
+    <Compile Include="Models\ReturnStatus.cs" />
+    <Compile Include="Models\UnapprovedMedic.cs" />
+    <Compile Include="Models\UpdateAppointmentData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -195,7 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
