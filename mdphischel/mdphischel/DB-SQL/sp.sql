@@ -370,6 +370,21 @@ BEGIN
 END
 GO
 
+/*
+ * Trigger to pa
+ */
+
+ GO
+ CREATE TRIGGER chargeDoctor ON Appointment
+ AFTER INSERT 
+ AS
+ BEGIN
+	DECLARE @appointmentId int
+	DECLARE @doctorId VARCHAR(15)
+	SELECT @appointmentId=inserted.AppointmentId, @doctorId=DoctorId
+	FROM inserted
+	INSERT INTO Charges VALUES (@doctorId,@appointmentId)
+ END
 
 
 /*
