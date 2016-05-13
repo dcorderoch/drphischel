@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using mdphischel.DAL;
 using mdphischel.DAL.Models;
 
@@ -153,14 +151,16 @@ namespace mdphischel.BLL
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public List<string> GetDoctorsByPatient(int userId)
+        public List<Doctor> GetDoctorsByPatient(int userId)
         {
-            List<string> retVal = new List<string>();
+            //List<string> retVal = new List<string>();
 
             try
             {
                 DBPatient patientInstance = new DBPatient();
-                var doctorList = patientInstance.GetDoctorsByPatient(userId);
+                //var doctorList = 
+                return patientInstance.GetDoctorsByPatient(userId);
+                /*
                 retVal.Add(Constants.SUCCESS.ToString());
                 foreach (Doctor t in doctorList)
                 {
@@ -175,6 +175,13 @@ namespace mdphischel.BLL
                 retVal.Add(Constants.ERROR.ToString());
             }
             return retVal;
+            */
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            return null;
         }
 
         /// <summary>

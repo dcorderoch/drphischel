@@ -76,7 +76,7 @@ namespace mdphischel.DAL
                     while (reader.Read())
                     {
                         MedicalSpecialty newMedicalSpecialty = new MedicalSpecialty();
-                        newMedicalSpecialty.MedicalSpecialtyId = (int)reader[0];
+                        newMedicalSpecialty.MedicalSpecialtyId = (int) Int32.Parse(reader[0].ToString());
                         var name = reader[1].ToString();
                         newMedicalSpecialty.Name = name;
                         medicalSpecialties.Add(newMedicalSpecialty);

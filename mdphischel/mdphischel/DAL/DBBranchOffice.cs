@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using mdphischel.DAL.Models;
 
 namespace mdphischel.DAL
@@ -29,16 +26,14 @@ namespace mdphischel.DAL
                     while (reader.Read())
                     {
                         BranchOffice BO = new BranchOffice();
-                        BO.BranchOfficeId = (string) reader[0];
-                        BO.Name = (string) reader[1];
-                        BO.PhoneNum = (string) reader[2];
-                        BO.BOLocation = (string) reader[3];
+                        BO.BranchOfficeId = (string) reader[0].ToString();
+                        BO.Name = (string) reader[1].ToString();
+                        BO.PhoneNum = (string) reader[2].ToString();
+                        BO.BOLocation = (string) reader[3].ToString();
                         branchOfficeList.Add(BO);
                     }
                     reader.Close();
                 }
-
-
                 connection.Close();
             }
             return branchOfficeList;

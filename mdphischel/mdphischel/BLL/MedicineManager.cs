@@ -79,29 +79,31 @@ namespace mdphischel.BLL
         /// </summary>
         /// <param name="branchOffice"></param>
         /// <returns></returns>
-        public List<string> GetAllMedicines(string branchOffice)
+        public List<Medicine> GetAllMedicines(string branchOffice)
         {
-            List<string> retVal = new List<string>();
+            //List<string> retVal = new List<string>();
 
             try
             {
                 DBMedicine medicineInstance = new DBMedicine();
-                var medicineList = medicineInstance.GetAllMedicines(branchOffice);
-                retVal.Add(Constants.SUCCESS.ToString());
-                foreach (Medicine t in medicineList)
+                return medicineInstance.GetAllMedicines(branchOffice);
+                //retVal.Add(Constants.SUCCESS.ToString());
+                /*foreach (Medicine t in medicineList)
                 {
                     retVal.Add(t.BranchOfficeId);
                     retVal.Add(t.MedicineId);
                     retVal.Add(t.Quantity.ToString());
                     retVal.Add(t.Sales.ToString());
                     retVal.Add(t.Price);
-                }
+                }*/
             }
             catch (Exception)
             {
-                retVal.Add(Constants.ERROR.ToString());
+                //return null;
+                //retVal.Add(Constants.ERROR.ToString());
             }
-            return retVal;
+            return null;
+            //return retVal;
         }
     }
 }

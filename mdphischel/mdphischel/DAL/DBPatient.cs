@@ -4,7 +4,6 @@ using System.Data;
 using System.Data.SqlClient;
 using mdphischel.DAL.Models;
 
-
 namespace mdphischel.DAL
 {
     public class DBPatient

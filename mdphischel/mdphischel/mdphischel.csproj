@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DB-SQL\drphischel.sql" />
+    <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -177,16 +178,24 @@
     <Compile Include="DAL\Models\MonthlyDocCharges.cs" />
     <Compile Include="DAL\Models\Prescription.cs" />
     <Compile Include="DAL\Models\User.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\AppointmentCreateData.cs" />
+    <Compile Include="Models\BranchOfficeIdInfo.cs" />
     <Compile Include="Models\LoginInfo.cs" />
     <Compile Include="Models\LoginSession.cs" />
     <Compile Include="Models\MedicCreateData.cs" />
     <Compile Include="Models\MedicIdData.cs" />
     <Compile Include="Models\MedRecCreateData.cs" />
+    <Compile Include="Models\NewMedInPrescription.cs" />
+    <Compile Include="Models\NewPatientByAdmin.cs" />
+    <Compile Include="Models\NewPatientByMedic.cs" />
     <Compile Include="Models\NewSpecialty.cs" />
     <Compile Include="Models\PatientIdData.cs" />
     <Compile Include="Models\ReturnStatus.cs" />
+    <Compile Include="Models\Specialty.cs" />
     <Compile Include="Models\UnapprovedMedic.cs" />
     <Compile Include="Models\UpdateAppointmentData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
