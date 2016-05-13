@@ -720,11 +720,12 @@ END
 GO
 
 -- Get doctors of given patient.
+
 GO
 CREATE PROCEDURE uspGetDoctorsByPatient @UserId int
 AS
 BEGIN
-SELECT DoctorId FROM PatientByDoctor
+SELECT * FROM PatientByDoctor
 WHERE PatientId = @UserId
 END
 

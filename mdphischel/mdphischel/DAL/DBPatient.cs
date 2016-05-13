@@ -303,9 +303,9 @@ namespace mdphischel.DAL
                     {
                         Doctor newDoctor = new Doctor();
                         newDoctor.DoctorId = reader[0].ToString();
-                        newDoctor.UserId = (int) reader[1];
+                        newDoctor.UserId = Int32.Parse(reader[1].ToString()); 
                         newDoctor.OfficeAddress = reader[2].ToString();
-                        newDoctor.IsActive = (bool) reader[3];
+                        newDoctor.IsActive = Convert.ToBoolean(reader[3]);
                         newDoctor.CreditCardNumber = reader[4].ToString();
                         doctorList.Add(newDoctor);
                     }
