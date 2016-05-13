@@ -230,12 +230,14 @@ GO
 
   GO
   CREATE PROCEDURE usp_createPrescription
-		@doctorCode nvarchar(15), @patientId INT, @resultCode int OUTPUT, @errorNum int OUTPUT
+		@doctorCode nvarchar(15), @patientId INT,@generatedId UNIQUEIDENTIFIER OUTPUT, @resultCode int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 	SET NOCOUNT ON
 	BEGIN TRY
-		INSERT INTO Prescription VALUES (NEWID(),@doctorCode, @patientId)
+		DECLARE @id UNIQUEIDENTIFIER=NEWID()
+		INSERT INTO Prescription VALUES (@id,@doctorCode, @patientId)
+		SET @generatedId=@id
     END TRY
 	BEGIN CATCH
 		SET @errorNum = Error_Number()
@@ -380,8 +382,8 @@ INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
 							   DECLARE @res int, @en int
 							   EXEC usp_doctorsCharges @date='20160601',@resultcode=@res OUTPUT, @errorNum=@en OUTPUT
 							   Select @res,@en
-
-							  exec usp_deletePrescription @prescriptionId='0315197b-ef78-4093-905b-ff3fa46514c5'
-
 */
+							
+
+
 						
