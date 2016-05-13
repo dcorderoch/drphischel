@@ -47,5 +47,22 @@ namespace mdphischel.Controllers
 
             return Json(retVal);
         }
+
+        public JsonResult<List<ShowPrescription>> getbydoctorid(MedicIdData pMedic)
+        {
+            var prescmanager = new PrescriptionManager();
+            var retVal = new List<ShowPrescription>();
+            var tmp = new List<Prescription>();
+
+            tmp.AddRange(prescmanager.GetPrescriptionByDoctor(pMedic.DoctorId));
+
+            //var retVal = tmp.Select(presc => new ShowPrescription() {PrescriptionId = presc.PrescriptionId}).ToList();
+            foreach (var presc in tmp)
+            {
+                retVal.Add(new ShowPrescription() {PrescriptionId = presc.PrescriptionId});
+            }
+
+            return Json(retVal);
+        }
     }
 }

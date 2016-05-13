@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Web.Util;
-using Excel;
 using mdphischel.DAL;
 using mdphischel.DAL.Models;
 
@@ -47,50 +43,6 @@ namespace mdphischel.BLL
             catch (Exception)
             {
                 result = Constants.ERROR;
-            }
-            return result;
-        }
-
-
-        /// <summary>
-        /// insert new patients from excel spreadsheet
-        /// </summary>
-        /// <param name="base64SpreadSheet"></param>
-        /// <param name="doctorId"></param>
-        /// <returns></returns>
-        public int ProcessSpreadSheet(string base64SpreadSheet, string doctorId)
-        {
-            var spreadSheet = Convert.FromBase64String(base64SpreadSheet);
-            Stream stream = new MemoryStream(spreadSheet);
-            IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-            excelReader.IsFirstRowAsColumnNames = true;
-            DataSet dataResult = excelReader.AsDataSet();
-            int result=0;
-            foreach (DataTable table in dataResult.Tables)
-            {
-                foreach (DataRow row in table.Rows)
-                {
-                    
-                    try
-                    {
-                        DBPatient patientInstance = new DBPatient();
-                        var operationResult = patientInstance.CreatePatient(row[0].ToString(), row[1].ToString(), row[2].ToString(), row[3].ToString(), row[4].ToString(), row[5].ToString(), row[6].ToString());
-                        var operationResult2 = patientInstance.LinkPatientToDoctor(doctorId, row[0].ToString());
-                        if (operationResult[0].Equals(Constants.SUCCESS) && operationResult2[0].Equals(Constants.SUCCESS))
-                        {
-                            result = Constants.SUCCESS;
-                        }
-                        else
-                        {
-                            result = Constants.ERROR;
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        result = Constants.ERROR;
-                    }
-
-                }
             }
             return result;
         }
@@ -145,7 +97,7 @@ namespace mdphischel.BLL
         public int UpdatePatient(string idNumber, string password, string name, string lastName1, string lastName2,
             string residence, string birthDate)
         {
-            int result;
+            int result = 0;
             try
             {
                 DBPatient patientInstance = new DBPatient();
