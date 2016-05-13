@@ -48,8 +48,7 @@ namespace mdphischel.Controllers
             if (resultfrombll.Count > 2)
             {
                 resultfrombll.RemoveAt(0);
-                int upperLimit = resultfrombll.Count;
-                for (int i = 0; i < upperLimit / 3 ; i++)
+                while (resultfrombll.Count > 0)
                 {
                     Appointment tmp = new Appointment();
                     tmp.DoctorId = resultfrombll.ToArray()[0];

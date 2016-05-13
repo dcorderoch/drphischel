@@ -81,12 +81,13 @@ namespace mdphischel.BLL
         /// <returns></returns>
         public List<Medicine> GetAllMedicines(string branchOffice)
         {
-            //List<string> retVal = new List<string>();
+            List<Medicine> retVal = new List<Medicine>();
 
             try
             {
                 DBMedicine medicineInstance = new DBMedicine();
-                return medicineInstance.GetAllMedicines(branchOffice);
+                retVal.AddRange(medicineInstance.GetAllMedicines(branchOffice));
+                //return retVal;
                 //retVal.Add(Constants.SUCCESS.ToString());
                 /*foreach (Medicine t in medicineList)
                 {
@@ -97,13 +98,11 @@ namespace mdphischel.BLL
                     retVal.Add(t.Price);
                 }*/
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                //return null;
-                //retVal.Add(Constants.ERROR.ToString());
+                retVal.Add(new Medicine() {BranchOfficeId = e.Message,MedicineId = e.Source,MedicineName = e.StackTrace,Price = "", Quantity = 0,Sales = 0});
             }
-            return null;
-            //return retVal;
+            return retVal;
         }
     }
 }
