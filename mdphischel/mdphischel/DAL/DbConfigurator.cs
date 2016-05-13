@@ -15,9 +15,9 @@ namespace mdphischel.DAL
 
             {
                 var mySetting = WebConfigurationManager.ConnectionStrings;
-                if (mySetting == null || string.IsNullOrEmpty(mySetting["DrPhischel"].ConnectionString))
+                if (mySetting == null || string.IsNullOrEmpty(mySetting["DrPhishelCloud"].ConnectionString))
                     throw new Exception("Fatal error: missing connecting string in web.config file");
-                var conString = mySetting["DrPhischel"].ConnectionString;
+                var conString = mySetting["DrPhishelCloud"].ConnectionString;
                 return conString;
             }
 
