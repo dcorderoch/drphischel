@@ -97,28 +97,17 @@ GO
 
 GO
   CREATE PROCEDURE usp_doctorsCharges 
-		@date DATE, @resultCode int OUTPUT, @errorNum int OUTPUT
+		
 AS
 BEGIN
 	SET NOCOUNT ON
-	BEGIN TRY
-    	SELECT U.Name,U.LastName1,U.LastName2, A.DoctorId, Count(*)*100 AS Charges 
+    	SELECT U.Name,U.LastName1,U.LastName2, Count(*) AS Charges 
 		FROM  Appointment A  JOIN Doctor D ON A.DoctorId=D.DoctorId JOIN SystemUser U ON D.UserId=U.UserId
-		WHERE  A.AppointmentDate BETWEEN @date AND  DATEADD(month,1,@date) 
 		GROUP BY A.DoctorId, U.Name,U.LastName1,U.LastName2
-
-		
-	END TRY
-	BEGIN CATCH
-		SET @errorNum = Error_Number()
-		SET @resultCode=0
-		RETURN
-	END CATCH
-	SET @resultCode = 1
-	RETURN
 END
 GO
 
+DROP proc usp_doctorsCharges
 
 /*
  * Get pending doctors
@@ -387,7 +376,7 @@ GO
  END
 
 
-/*
+ /*
 
 INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
 							   (11,'DOC222','20160625'),(3,'ABC005','20160507'),
@@ -395,10 +384,10 @@ INSERT INTO Appointment VALUES (11,'DOC222','20160605'),(6,'DOC222','20160603'),
 
 
 							   DECLARE @res int, @en int
-							   EXEC usp_doctorsCharges @date='20160601',@resultcode=@res OUTPUT, @errorNum=@en OUTPUT
+							   EXEC usp_doctorsCharges 
 							   Select @res,@en
-*/
-							
+
+			*/				
 
 
 						
