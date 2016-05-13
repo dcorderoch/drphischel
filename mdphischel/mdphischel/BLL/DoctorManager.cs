@@ -63,11 +63,10 @@ namespace mdphischel.BLL
         /// <param name="year">Must be a string in YYYY format</param>
         /// <param name="month">Must be a string in MM format</param>
         /// <returns></returns>
-        public List<DoctorsCharge> GetMonthlyCharges(string year, string month)
+        public List<DoctorsCharge> GetMonthlyCharges()
         {
-            string date = year + month + "01";
             DBDoctor doctorDAL = new DBDoctor();
-            MonthlyDocCharges docCharges = doctorDAL.GetMonthlyCharges(date);
+            MonthlyDocCharges docCharges = doctorDAL.GetMonthlyCharges();
             return docCharges.ChargesList;
         }
 

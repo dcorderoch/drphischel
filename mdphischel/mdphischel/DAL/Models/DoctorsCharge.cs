@@ -8,7 +8,6 @@
         public string DoctorName{ get; set; }
         public string DoctorLastName1 { get; set; }
         public string DoctorLastName2 { get; set; }
-        public string DoctorId { get; set; }
-        public decimal Charge { get; set; }
+        public string Value { get; set; }
     }
 }
