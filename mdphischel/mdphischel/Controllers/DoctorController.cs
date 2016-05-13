@@ -31,9 +31,31 @@ namespace mdphischel.Controllers
 
             var medics = new List<MedicByPatient>();
 
+            var bllresult = patmanager.GetDoctorsByPatient(Int32.Parse(pPatient.UserId));
 
+            if (bllresult.Count > 1)
+            {
+                bllresult.RemoveAt(0);
+                int upperlimit = bllresult.Count;
+                for (int i = 0; i < upperlimit / 2; i++)
+                {
+                    medics.Add(new MedicByPatient() {DoctorId = bllresult.ToArray()[0],Name = bllresult.ToArray()[1]});
+                    bllresult.RemoveAt(0);
+                    bllresult.RemoveAt(0);
+                }
+            }
+            //medics.AddRange(patmanager.GetDoctorsByPatient());
 
             return Json(medics);
+        }
+        [HttpPost]
+        public JsonResult<UnapprovedMedic> GetMyDocId(PatientIdData pUser)
+        {
+            var patManager = new PatientManager();
+            var retVal = new UnapprovedMedic();
+            retVal.DoctorId = patManager.GetDoctor(Int32.Parse(pUser.UserId)).ToArray()[1];
+
+            return Json(retVal);
         }
 
         [HttpPost]

@@ -24,7 +24,7 @@ namespace mdphischel.DAL
                 errorCodeParameter.Direction = ParameterDirection.Output;
                 SqlParameter resultCodeParameter = cmd.Parameters.Add("@resultcode", SqlDbType.Int);
                 resultCodeParameter.Direction = ParameterDirection.Output;
-                SqlParameter generatedIdParameter = cmd.Parameters.Add("@generatedId", SqlDbType.Uniqueidentifier);
+                SqlParameter generatedIdParameter = cmd.Parameters.Add("@generatedId", SqlDbType.UniqueIdentifier);
                 generatedIdParameter.Direction = ParameterDirection.Output;
                 SqlParameter patientIdParameter = cmd.Parameters.Add("@patientId", SqlDbType.Int);
                 patientIdParameter.Direction = ParameterDirection.Input;
@@ -47,7 +47,7 @@ namespace mdphischel.DAL
                     if (errorNumCode == DBNull.Value)
                     {
                         resultCodes[1] = 0;
-                        resultCodes[2] = generatedId.ToString();
+                        resultCodes[2] = Int32.Parse(generatedId.ToString());
                     }
                     else
                     {
@@ -59,7 +59,6 @@ namespace mdphischel.DAL
                 {
                     resultCodes[0] = 0;
                     resultCodes[1] = 0;
-                    resultCodes[2] = 0;
                 }
 
                 connection.Close();

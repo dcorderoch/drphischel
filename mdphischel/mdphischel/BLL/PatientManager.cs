@@ -211,9 +211,9 @@ namespace mdphischel.BLL
                 retVal.Add(Constants.SUCCESS.ToString());
                 foreach (Doctor t in doctorList)
                 {
-                    retVal.Add(t.UserId.ToString());
                     retVal.Add(t.DoctorId);
-                    retVal.Add(t.OfficeAddress);
+                    retVal.Add(t.Name);
+                    //retVal.Add(t.OfficeAddress);
                 }
             }
             catch (Exception)

@@ -8,7 +8,7 @@ namespace mdphischel.Controllers
         [HttpGet]
         public JsonResult<string> Nalga()
         {
-            string retVal = "nalga, haha wahaha";
+            string retVal = "querías ver una nalga?";
             return Json(retVal);
         }
     }

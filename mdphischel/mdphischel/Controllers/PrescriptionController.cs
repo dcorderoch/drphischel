@@ -25,9 +25,13 @@ namespace mdphischel.Controllers
             var prescmanager = new PrescriptionManager();
             var retVal = new ReturnStatus();
 
+            var bllresult = prescmanager.CreatePrescription(pPresc.DoctorId, Int32.Parse(pPresc.UserId));
+
             //int prelim = prescManager.AddMedicineIntoPrescription(pPresc., pNewMed.PrescriptionId);
 
-            retVal.StatusCode = prescmanager.CreatePrescription(pPresc.DoctorId, Int32.Parse(pPresc.UserId));
+            retVal.StatusCode = bllresult[1];
+
+            int prescriptionId = bllresult[2];
 
             List<PrescriptionMedicine> medicines = new List<PrescriptionMedicine>();
             medicines.AddRange(pPresc.Medicines);
@@ -35,12 +39,11 @@ namespace mdphischel.Controllers
             // get prescriptionID
             var presc = new Prescription();
 
-            /*
             foreach (var med in medicines)
             {
-                prescmanager.AddMedicineIntoPrescription(med.MedicineId,pPresc.)
+                prescmanager.AddMedicineIntoPrescription(med.MedicineId, prescriptionId.ToString());
             }
-            */
+            
 
             return Json(retVal);
         }
