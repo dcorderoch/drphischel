@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Results;
+using drphischel.Models;
 using mdphischel.BLL;
 using mdphischel.DAL.Models;
 using mdphischel.Models;
@@ -23,10 +24,16 @@ namespace mdphischel.Controllers
         }
 
         [HttpPost]
-        public JsonResult<List<Doctor>> GetByPatient(PatientIdData pPatient)
+        public JsonResult<List<MedicByPatient>> GetByPatient(PatientIdData pPatient)
         {
             var patmanager = new PatientManager();
-            return Json(patmanager.GetDoctorsByPatient(Int32.Parse(pPatient.UserId)));
+            //return Json(patmanager.GetDoctorsByPatient(Int32.Parse(pPatient.UserId)));
+
+            var medics = new List<MedicByPatient>();
+
+
+
+            return Json(medics);
         }
 
         [HttpPost]
@@ -34,6 +41,13 @@ namespace mdphischel.Controllers
         {
             var medicmanager = new DoctorManager();
             return Json(new ReturnStatus() {StatusCode = medicmanager.AcceptDoctor(pMedic.DoctorId)});
+        }
+
+        [HttpPost]
+        public JsonResult<ReturnStatus> Reject(UnapprovedMedic pMedic)
+        {
+            var medicmanager = new DoctorManager();
+            return Json(new ReturnStatus() { StatusCode = medicmanager.RejectDoctor(pMedic.DoctorId) });
         }
 
         [HttpGet]

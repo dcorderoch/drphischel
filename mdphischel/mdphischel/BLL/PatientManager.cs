@@ -199,23 +199,21 @@ namespace mdphischel.BLL
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public List<Doctor> GetDoctorsByPatient(int userId)
+        public List<string> GetDoctorsByPatient(int userId)
         {
-            //List<string> retVal = new List<string>();
+            List<string> retVal = new List<string>();
+            //List<Doctor> retVal = new List<Doctor>();
 
             try
             {
                 DBPatient patientInstance = new DBPatient();
-                //var doctorList = 
-                return patientInstance.GetDoctorsByPatient(userId);
-                /*
+                var doctorList = patientInstance.GetDoctorsByPatient(userId);
                 retVal.Add(Constants.SUCCESS.ToString());
                 foreach (Doctor t in doctorList)
                 {
                     retVal.Add(t.UserId.ToString());
                     retVal.Add(t.DoctorId);
                     retVal.Add(t.OfficeAddress);
-
                 }
             }
             catch (Exception)
@@ -223,13 +221,6 @@ namespace mdphischel.BLL
                 retVal.Add(Constants.ERROR.ToString());
             }
             return retVal;
-            */
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-            return null;
         }
 
         /// <summary>

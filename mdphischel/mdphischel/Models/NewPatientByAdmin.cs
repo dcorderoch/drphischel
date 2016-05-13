@@ -7,7 +7,7 @@ namespace mdphischel.Models
 {
     public class NewPatientByAdmin
     {
-        public string IdNumber { get; set; }
+        public string UserId { get; set; }
         public string Pass { get; set; }
         public string Name { get; set; }
         public string LastName1 { get; set; }
