@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using mdphischel.DAL.Models;
 
 namespace mdphischel.DAL
@@ -160,12 +158,12 @@ namespace mdphischel.DAL
                     while (reader.Read())
                     {
                         MedicalRecord medRecord = new MedicalRecord();
-                        medRecord.MedicalRecordId = (int) reader[0];
-                        medRecord.DoctorId = (string) reader[1];
-                        medRecord.AppointmentDate = (string) reader[2];
-                        medRecord.Description = (string) reader[3];
-                        medRecord.Diagnosis = (string) reader[4];
-                        medRecord.PrescriptionId = (string) reader[5];
+                        medRecord.MedicalRecordId = (int) Int32.Parse(reader[0].ToString());
+                        medRecord.DoctorId = (string) reader[1].ToString();
+                        medRecord.AppointmentDate = (string) reader[2].ToString();
+                        medRecord.Description = (string) reader[3].ToString();
+                        medRecord.Diagnosis = (string) reader[4].ToString();
+                        medRecord.PrescriptionId = (string) reader[5].ToString();
                         patientMedRecords.Add(medRecord);
                     }
                     reader.Close();

@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Web;
 using mdphischel.DAL.Models;
 
 namespace mdphischel.DAL
@@ -242,11 +238,11 @@ namespace mdphischel.DAL
                     while (reader.Read())
                     {
                         DoctorsCharge newcharge = new DoctorsCharge();
-                        newcharge.DoctorName =  (string) reader[0];
-                        newcharge.DoctorLastName1 = (string) reader[1];
-                        newcharge.DoctorLastName2 = (string) reader[2];
-                        newcharge.DoctorId = (string) reader[3];
-                        newcharge.Charge = (decimal) reader[4];
+                        newcharge.DoctorName =  (string) reader[0].ToString();
+                        newcharge.DoctorLastName1 = (string) reader[1].ToString();
+                        newcharge.DoctorLastName2 = (string) reader[2].ToString();
+                        newcharge.DoctorId = (string) reader[3].ToString();
+                        newcharge.Charge = decimal.Parse(reader[4].ToString());
                         chargesReport.AddCharge(newcharge);
 
                     }
@@ -290,31 +286,34 @@ namespace mdphischel.DAL
             List<Doctor> docList = new List<Doctor>();
 
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
-            using (SqlCommand cmd = new SqlCommand("usp_getPendingDoctors", connection))
+
             {
-
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                connection.Open();
-                using (var reader = cmd.ExecuteReader())
+                using (SqlCommand cmd = new SqlCommand("usp_getPendingDoctors", connection))
                 {
-                    while (reader.Read())
-                    {
-                        Doctor newDoc = new Doctor();
-                        newDoc.DoctorId = (string)reader[0];
-                        newDoc.OfficeAddress = (string)reader[1];
-                        newDoc.CreditCardNumber = (string)reader[2];
-                        newDoc.Name = (string)reader[3];
-                        newDoc.LastName1 = (string)reader[4];
-                        newDoc.LastName2 = (string) reader[5];
-                        newDoc.PlaceResidence = (string) reader[6];
-                        newDoc.BirthDate = (string) reader[7];
-                        docList.Add(newDoc);
-                    }
-                    reader.Close();
-                }
 
-                connection.Close();
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    connection.Open();
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Doctor newDoc = new Doctor();
+                            newDoc.DoctorId = (string) reader[0].ToString();
+                            newDoc.OfficeAddress = (string) reader[1].ToString();
+                            newDoc.CreditCardNumber = (string) reader[2].ToString();
+                            newDoc.Name = (string) reader[3].ToString();
+                            newDoc.LastName1 = (string) reader[4].ToString();
+                            newDoc.LastName2 = (string) reader[5].ToString();
+                            newDoc.PlaceResidence = (string) reader[6].ToString();
+                            newDoc.BirthDate = (string) reader[7].ToString();
+                            docList.Add(newDoc);
+                        }
+                        reader.Close();
+                    }
+
+                    connection.Close();
+                }
             }
             return docList;
         }
@@ -339,13 +338,13 @@ namespace mdphischel.DAL
                     while (reader.Read())
                     {
                         User newUser = new User();
-                        newUser.UserId = (int) reader[0];
-                        newUser.Name = (string) reader[1];
-                        newUser.LastName1 = (string) reader[2];
-                        newUser.LastName2 = (string) reader[3];
-                        newUser.IdNumber = (string) reader[4];
-                        newUser.PlaceResidence = (string) reader[5];
-                        newUser.BirthDate = (string) reader[6];
+                        newUser.UserId = (int) Int32.Parse(reader[0].ToString());
+                        newUser.Name = (string) reader[1].ToString();
+                        newUser.LastName1 = (string) reader[2].ToString();
+                        newUser.LastName2 = (string) reader[3].ToString();
+                        newUser.IdNumber = (string) reader[4].ToString();
+                        newUser.PlaceResidence = (string) reader[5].ToString();
+                        newUser.BirthDate = (string) reader[6].ToString();
                         patientList.Add(newUser);
                     }
                     reader.Close();

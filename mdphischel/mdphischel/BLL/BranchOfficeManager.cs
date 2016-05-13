@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using mdphischel.DAL;
 using mdphischel.DAL.Models;
 
@@ -10,10 +7,10 @@ namespace mdphischel.BLL
     public class BranchOfficeManager
     {
 
-        public List<BranchOffice> GetAllBranchOffices(string doctorId)
+        public List<BranchOffice> GetAllBranchOffices()
         {
             DBBranchOffice branchOfficeDAL = new DBBranchOffice();
-            return branchOfficeDAL.GetPrescriptionByDoctor(doctorId);
+            return branchOfficeDAL.GetPrescriptionByDoctor("");
         }
     }
 }

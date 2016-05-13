@@ -3,9 +3,9 @@ using Android.Widget;
 using Android.OS;
 using Android.Content;
 using Android.Locations;
-using drphischel_mobile_android.Models;
 using Newtonsoft.Json;
 using System;
+using drphischel.Models;
 
 namespace drphischel
 {
@@ -70,7 +70,7 @@ namespace drphischel
             {
                 intent = new Intent(this, typeof(PatientActivity));
             }
-            intent.PutExtra("UserId", User.UserId);
+            intent.PutExtra("CurrentUserId", User.UserId);
             StartActivity(intent);
         }
         /// <summary>
@@ -79,9 +79,9 @@ namespace drphischel
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void RoleSelection(object sender, EventArgs e)
+        private static void RoleSelection(object sender, EventArgs e)
         {
-            RadioButton rb = (RadioButton) sender;
+            var rb = (RadioButton) sender;
             if(rb.Text.Equals("medic"))
             {
                 UserRole = 2;

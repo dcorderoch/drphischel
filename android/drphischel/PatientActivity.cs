@@ -4,7 +4,6 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Widget;
-using drphischel_mobile_android.Models;
 
 namespace drphischel
 {
@@ -18,7 +17,7 @@ namespace drphischel
         /// <param name="savedInstanceState"></param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            CurrentUserId = base.Intent.GetStringExtra("UserId");
+            CurrentUserId = base.Intent.GetStringExtra("CurrentUserId");
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Patient);
 

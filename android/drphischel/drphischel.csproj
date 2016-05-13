@@ -55,21 +55,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API-Client.cs" />
+    <Compile Include="AddPatientActivity.cs" />
+    <Compile Include="ApiClient.cs" />
+    <Compile Include="AppointmentActivity.cs" />
+    <Compile Include="DatePickerFragment.cs" />
     <Compile Include="MedicActivity.cs" />
     <Compile Include="MedicalRecordsActivity.cs" />
     <Compile Include="MedicListActivity.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Models\AppointmentData.cs" />
     <Compile Include="Models\LoggedUserData.cs" />
     <Compile Include="Models\LoginData.cs" />
+    <Compile Include="Models\Medicine.cs" />
     <Compile Include="Models\MedicListItem.cs" />
+    <Compile Include="Models\MedRecord.cs" />
+    <Compile Include="Models\NewPatient.cs" />
+    <Compile Include="Models\Patient.cs" />
+    <Compile Include="Models\ReturnStatus.cs" />
     <Compile Include="Models\UserInfo.cs" />
     <Compile Include="PatientActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimePickerFragment.cs" />
+    <Compile Include="ViewCalendarActivity.cs" />
+    <Compile Include="ViewPatientsActivity.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
@@ -81,6 +92,18 @@
       <SubType>AndroidResource</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Medic.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\AddPatient.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\MedicalRecords.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ViewCalendar.axml">
+      <SubType>AndroidResource</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\ViewPatients.axml">
       <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>

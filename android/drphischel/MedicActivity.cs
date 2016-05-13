@@ -12,7 +12,7 @@ namespace drphischel
         public static string CurrentUserId = null;
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            CurrentUserId = base.Intent.GetStringExtra("UserId");
+            CurrentUserId = base.Intent.GetStringExtra("CurrentUserId");
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.Medic);
 
@@ -29,17 +29,23 @@ namespace drphischel
 
         private void AddPatient(object sender, EventArgs e)
         {
-            //NEED NEW ACTIVITY HERE
+            var intent = new Intent(this, typeof(AddPatientActivity));
+            intent.PutExtra("MedicUserId", CurrentUserId);
+            StartActivity(intent);
         }
 
         private void ViewPatients(object sender, EventArgs e)
         {
-            //NEED NEW ACTIVITY HERE
+            var intent = new Intent(this, typeof(ViewPatientsActivity));
+            intent.PutExtra("MedicUserId", CurrentUserId);
+            StartActivity(intent);
         }
 
         private void ViewCalendar(object sender, EventArgs e)
         {
-            //NEED NEW ACTIVITY HERE
+            var intent = new Intent(this, typeof(ViewCalendarActivity));
+            intent.PutExtra("MedicUserId", CurrentUserId);
+            StartActivity(intent);
         }
 
         private void LogOut(object sender, EventArgs e)
