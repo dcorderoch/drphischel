@@ -13,12 +13,12 @@ namespace mdphischel.Controllers
     public class DoctorController : ApiController
     {
         [HttpPost]
-        public JsonResult<ReturnStatus> LoadPatients()
+        public JsonResult<ReturnStatus> LoadPatients(LoadPatientsData pData)
         {
-            //var
+            var patManager = new PatientManager();
             var retVal = new ReturnStatus();
 
-            //retVal.StatusCode
+            retVal.StatusCode = patManager.ProcessSpreadSheet(pData.File, pData.DoctorId);
 
             return Json(retVal);
         }
