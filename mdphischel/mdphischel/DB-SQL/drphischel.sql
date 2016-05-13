@@ -892,12 +892,13 @@ SET NOCOUNT ON
 END
 GO
 
+
 -- *************************************************** Medicines ****************************************************************************
 
 -- Insert medicine into branch office stored procedure.
 
 GO
-CREATE PROCEDURE uspInsertMedicineIntoBranchOffice @BranchOfficeId uniqueidentifier, @MedicineId uniqueidentifier, @Quantity int, @Sales int, @Price decimal(10,2), @result int OUTPUT, @errorNum int OUTPUT
+CREATE PROCEDURE uspInsertMedicineIntoBranchOffice @BranchOfficeId nvarchar(100), @MedicineId nvarchar(100), @Quantity int, @Sales int, @Price nvarchar(30), @result int OUTPUT, @errorNum int OUTPUT
 AS
 BEGIN
 SET NOCOUNT ON
@@ -965,6 +966,7 @@ INNER JOIN Medicine
 ON MedicinesPerBranchOffice.MedicineId = Medicine.MedicineId
 WHERE BranchOfficeId = @BranchOfficeId
 END
+
 -- *************************************************** Users ****************************************************************************
 
 -- Log In stored procedure. 
