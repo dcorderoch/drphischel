@@ -163,7 +163,7 @@ namespace mdphischel.DAL
                 branchOfficeParameter.Value = branchOffice;
 
                 cmd.CommandType = CommandType.StoredProcedure;
-
+                
                 connection.Open();
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -173,14 +173,13 @@ namespace mdphischel.DAL
                         newMedicine.BranchOfficeId = reader[0].ToString();
                         newMedicine.MedicineId = reader[1].ToString();
                         newMedicine.MedicineName = reader[2].ToString();
-                        newMedicine.Price = reader[3].ToString();
-                        newMedicine.Quantity = (int)reader[4];
-                        newMedicine.Sales = (int)reader[5];
-                        medicines.Add(newMedicine);
+                        newMedicine.Quantity = Int32.Parse(reader[3].ToString());
+                        newMedicine.Sales = Int32.Parse(reader[4].ToString());
+                        newMedicine.Price = reader[5].ToString();
 
+                        medicines.Add(newMedicine);
                     }
                     reader.Close();
-
                 }
                 connection.Close();
             }
