@@ -15,7 +15,7 @@ namespace mdphischel.DAL
         /// <returns></returns>
         public int[] CreatePrescription(string doctorCode, int patientId)
         {
-            int[] resultCodes = new int[2];
+            int[] resultCodes = new int[3];
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
             using (SqlCommand cmd = new SqlCommand("usp_createPrescription", connection))
             {
@@ -24,6 +24,8 @@ namespace mdphischel.DAL
                 errorCodeParameter.Direction = ParameterDirection.Output;
                 SqlParameter resultCodeParameter = cmd.Parameters.Add("@resultcode", SqlDbType.Int);
                 resultCodeParameter.Direction = ParameterDirection.Output;
+                SqlParameter generatedIdParameter = cmd.Parameters.Add("@generatedId", SqlDbType.Uniqueidentifier);
+                generatedIdParameter.Direction = ParameterDirection.Output;
                 SqlParameter patientIdParameter = cmd.Parameters.Add("@patientId", SqlDbType.Int);
                 patientIdParameter.Direction = ParameterDirection.Input;
                 patientIdParameter.Value = patientId;
@@ -38,12 +40,14 @@ namespace mdphischel.DAL
 
                 var resultCode = resultCodeParameter.Value;
                 var errorNumCode = errorCodeParameter.Value;
+                var generatedId = generatedIdParameter.Value;
                 if (resultCode != DBNull.Value)
                 {
                     resultCodes[0] = int.Parse(resultCode.ToString());
                     if (errorNumCode == DBNull.Value)
                     {
                         resultCodes[1] = 0;
+                        resultCodes[2] = generatedId.ToString();
                     }
                     else
                     {
@@ -55,6 +59,7 @@ namespace mdphischel.DAL
                 {
                     resultCodes[0] = 0;
                     resultCodes[1] = 0;
+                    resultCodes[2] = 0;
                 }
 
                 connection.Close();

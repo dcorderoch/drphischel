@@ -18,7 +18,7 @@ namespace mdphischel.BLL
         {
             DBPrescription prescriptionDAL = new DBPrescription();
             int[] result = prescriptionDAL.CreatePrescription(doctorId, patientId);
-            return result[0];
+            return result[2];
         }
 
         /// <summary>
