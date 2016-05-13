@@ -158,6 +158,10 @@ namespace mdphischel.DAL
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
             using (SqlCommand cmd = new SqlCommand("uspGetMedicinesByBranchOffice", connection))
             {
+                SqlParameter branchOfficeParameter = cmd.Parameters.Add("@BranchOfficeId", SqlDbType.NVarChar);
+                branchOfficeParameter.Direction = ParameterDirection.Input;
+                branchOfficeParameter.Value = branchOffice;
+
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 connection.Open();
