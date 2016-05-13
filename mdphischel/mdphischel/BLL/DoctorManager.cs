@@ -23,7 +23,10 @@ namespace mdphischel.BLL
         /// <param name="officeAddres"></param>
         /// <param name="creditCardNum"></param>
         /// <returns>1 if succes, 0 if found any errors</returns>
-        public int PreregisterDoctor(String docCode, String pass, String idNumber, String name, String lastName1, String lastName2, String residencePlace, String birthdate, String officeAddres, String creditCardNum)
+        public int PreregisterDoctor(String docCode,
+            String pass, String idNumber, String name,
+            String lastName1, String lastName2, String residencePlace,
+            String birthdate, String officeAddres, String creditCardNum)
         {
             DBDoctor doctorDAL= new DBDoctor();
             int[] result=doctorDAL.PreRegistation(docCode, pass, idNumber, name, lastName1, lastName2, residencePlace, birthdate,
@@ -40,7 +43,7 @@ namespace mdphischel.BLL
         public int AcceptDoctor(string docId)
         {
             DBDoctor doctorDAL = new DBDoctor();
-            int[] result = doctorDAL.AcceptDoctor(docCode);
+            int[] result = doctorDAL.AcceptDoctor(docId);
             return result[0];
         }
 
