@@ -39,7 +39,7 @@ namespace mdphischel.BLL
             int[] result = medicalRecordDAL.UpdateMedicalRecordEntry(medicalRecordId, appointmentId, description,
                 diagnosis, prescriptionId);
             return result[0];
-        }
+        } 
 
         /// <summary>
         /// This method gets all the records for the given patient id

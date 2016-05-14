@@ -106,6 +106,7 @@ namespace mdphischel.DAL
                 prescriptionIdParameter.Direction = ParameterDirection.Input;
                 prescriptionIdParameter.Value = prescriptionId;
 
+
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 connection.Open();
@@ -151,6 +152,9 @@ namespace mdphischel.DAL
             {
 
                 cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter userIdParameter = cmd.Parameters.Add("@userId", SqlDbType.Int);
+                userIdParameter.Direction = ParameterDirection.Input;
+                userIdParameter.Value = patientId;
 
                 connection.Open();
                 using (var reader = cmd.ExecuteReader())
