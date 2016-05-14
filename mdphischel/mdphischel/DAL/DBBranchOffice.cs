@@ -18,6 +18,9 @@ namespace mdphischel.DAL
             using (SqlConnection connection = new SqlConnection(DBConfigurator.ConnectionString))
             using (SqlCommand cmd = new SqlCommand("usp_getBranchOffices", connection))
             {
+                SqlParameter doctorIdParameter = cmd.Parameters.Add("@doctorId", SqlDbType.NVarChar);
+                doctorIdParameter.Direction =ParameterDirection.Input;
+                doctorIdParameter.Value = doctorId;
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 connection.Open();
