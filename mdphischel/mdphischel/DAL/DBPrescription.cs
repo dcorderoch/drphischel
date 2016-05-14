@@ -289,20 +289,30 @@ namespace mdphischel.DAL
                 prescriptionIdParam.Direction = ParameterDirection.Input;
                 prescriptionIdParam.Value = doctorId;
 
-                cmd.CommandType = CommandType.StoredProcedure;
+                try
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
 
                 connection.Open();
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
+                
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        Prescription presc = new Prescription();
-                        presc.PrescriptionId = (string)reader[0];
-                        presc.DoctorId = (string)reader[1];
-                        presc.UserId = (int) reader[2];
-                        prescriptionList.Add(presc);
+                        while (reader.Read())
+                        {
+                            Prescription presc = new Prescription();
+                            presc.PrescriptionId = (string) reader[0];
+                            presc.DoctorId = (string) reader[1];
+                            presc.UserId = (int) reader[2];
+                            prescriptionList.Add(presc);
+                        }
+                        reader.Close();
                     }
-                    reader.Close();
+                }
+                catch (Exception e)
+                {
+                    connection.Close();
+                    prescriptionList.Add(new Prescription() { DoctorId = e.Message + e.StackTrace, PrescriptionId = e.Source, UserId = 0 });
+                    return prescriptionList;
                 }
 
 

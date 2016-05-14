@@ -81,8 +81,17 @@ namespace mdphischel.BLL
         /// <returns></returns>
         public List<Prescription> GetPrescriptionByDoctor(string doctorId)
         {
-            DBPrescription prescriptionDAL=new DBPrescription();
-            return prescriptionDAL.GetPrescriptionByDoctor(doctorId);
+            var retVal = new List<Prescription>();
+            try
+            {
+                DBPrescription prescriptionDAL = new DBPrescription();
+                return prescriptionDAL.GetPrescriptionByDoctor(doctorId);
+            }
+            catch (KeyNotFoundException e)
+            {
+                retVal.Add(new Prescription() {DoctorId = e.Message, PrescriptionId = e.Source, UserId = 0});
+                return retVal;
+            }
         } 
     }
 }

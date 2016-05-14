@@ -60,7 +60,7 @@ namespace mdphischel.Controllers
             //var retVal = tmp.Select(presc => new ShowPrescription() {PrescriptionId = presc.PrescriptionId}).ToList();
             foreach (var presc in tmp)
             {
-                retVal.Add(new ShowPrescription() {PrescriptionId = presc.PrescriptionId});
+                retVal.Add(new ShowPrescription() {PrescriptionId = presc.PrescriptionId + " " + presc.DoctorId + " " + presc.UserId.ToString()});
             }
 
             return Json(retVal);
