@@ -48,6 +48,7 @@ namespace mdphischel.Controllers
             return Json(retVal);
         }
 
+        [HttpPost]
         public JsonResult<List<ShowPrescription>> getbydoctorid(MedicIdData pMedic)
         {
             var prescmanager = new PrescriptionManager();

@@ -51,9 +51,9 @@ namespace mdphischel.Controllers
                 while (resultfrombll.Count > 0)
                 {
                     Appointment tmp = new Appointment();
-                    tmp.DoctorId = resultfrombll.ToArray()[0];
+                    tmp.title = resultfrombll.ToArray()[0];
                     tmp.UserId = resultfrombll.ToArray()[1];
-                    tmp.AppointmentDate = resultfrombll.ToArray()[2];
+                    tmp.start = resultfrombll.ToArray()[2];
 
                     resultfrombll.RemoveAt(0);
                     resultfrombll.RemoveAt(0);

@@ -2,8 +2,8 @@
 {
     public class Appointment
     {
-        public string DoctorId { get; set; }
+        public string title { get; set; }
         public string UserId { get; set; }
-        public string AppointmentDate { get; set; }
+        public string start { get; set; }
     }
 }
